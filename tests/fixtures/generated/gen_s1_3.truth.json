@@ -1,0 +1,404 @@
+{
+  "id": "s1_3",
+  "generator_model": "sonnet",
+  "field": "ecology",
+  "persona": "Same field biologist, running monthly stream water-quality and macroinvertebrate monitoring at 3 stations across a field season, kept as a running workbook with one tab added per month",
+  "source_style": "hand-entered into Excel from a paper field notebook after each monthly sampling trip, workbook grown incrementally month to month without going back to standardize earlier tabs",
+  "file": "gen_s1_3.xlsx",
+  "file_kind": "xlsx",
+  "sheets": [
+    {
+      "name": "Site Key",
+      "is_data": false,
+      "header_row": 1,
+      "n_data_rows": 3,
+      "columns": [
+        {
+          "name": "Station",
+          "true_type": "categorical",
+          "notes": "matches Station values on the monthly sheets"
+        },
+        {
+          "name": "Description",
+          "true_type": "text",
+          "notes": "reach description"
+        },
+        {
+          "name": "Latitude",
+          "true_type": "numeric",
+          "notes": "decimal degrees"
+        },
+        {
+          "name": "Longitude",
+          "true_type": "numeric",
+          "notes": "decimal degrees"
+        }
+      ]
+    },
+    {
+      "name": "May",
+      "is_data": true,
+      "header_row": 2,
+      "n_data_rows": 6,
+      "columns": [
+        {
+          "name": "Date",
+          "true_type": "date",
+          "notes": "row 3 (Site 1, 5/3) is entered as the literal text '5/3' with no year while the other two same-day rows are real Excel dates for 2024-05-03"
+        },
+        {
+          "name": "Station",
+          "true_type": "categorical",
+          "notes": "Site 1 / Site 2 / Site 3, consistently spelled on this sheet"
+        },
+        {
+          "name": "Time",
+          "true_type": "text",
+          "notes": "HH:MM 24-hour, typed text"
+        },
+        {
+          "name": "Water Temp C",
+          "true_type": "numeric",
+          "notes": "under the merged 'Water Quality Parameters' title in row 1 (D1:F1); real header is row 2"
+        },
+        {
+          "name": "pH",
+          "true_type": "numeric",
+          "notes": "under the same merged title"
+        },
+        {
+          "name": "DO mg/L",
+          "true_type": "numeric",
+          "notes": "one value coded 'n/a' (text) for Site 3 on 5/17 instead of a blank cell"
+        },
+        {
+          "name": "Taxa Count",
+          "true_type": "numeric",
+          "notes": "number of distinct macroinvertebrate taxa identified"
+        },
+        {
+          "name": "Notes",
+          "true_type": "text",
+          "notes": "blank except the trailing AVG row"
+        }
+      ]
+    },
+    {
+      "name": "June",
+      "is_data": true,
+      "header_row": 1,
+      "n_data_rows": 5,
+      "columns": [
+        {
+          "name": "Date",
+          "true_type": "date",
+          "notes": "real Excel dates throughout"
+        },
+        {
+          "name": "Station",
+          "true_type": "categorical",
+          "notes": "capitalization/spacing drifts row to row: 'Site 1', 'SITE 2', 'Site 3', 'site 1', 'Site 2 ' (trailing space) all refer to the same 2 or 3 stations"
+        },
+        {
+          "name": "Time",
+          "true_type": "text",
+          "notes": "HH:MM"
+        },
+        {
+          "name": "Temp C",
+          "true_type": "numeric",
+          "notes": "same quantity as May's 'Water Temp C', renamed"
+        },
+        {
+          "name": "pH",
+          "true_type": "numeric",
+          "notes": "clean"
+        },
+        {
+          "name": null,
+          "true_type": "text",
+          "notes": "column F: no header, entirely empty for every row -- a stray leftover gap, not a real variable"
+        },
+        {
+          "name": "DO mg/L",
+          "true_type": "numeric",
+          "notes": "clean"
+        },
+        {
+          "name": "Taxa Count",
+          "true_type": "numeric",
+          "notes": "clean"
+        },
+        {
+          "name": "Notes",
+          "true_type": "text",
+          "notes": "blank on real data rows; the explanatory row about the flood is not a Notes value, it is its own merged full-row record"
+        }
+      ]
+    },
+    {
+      "name": "July",
+      "is_data": true,
+      "header_row": 1,
+      "n_data_rows": 7,
+      "columns": [
+        {
+          "name": "Date",
+          "true_type": "date",
+          "notes": "real Excel dates throughout"
+        },
+        {
+          "name": "Station",
+          "true_type": "categorical",
+          "notes": "consistently spelled this month"
+        },
+        {
+          "name": "Time",
+          "true_type": "text",
+          "notes": "HH:MM"
+        },
+        {
+          "name": "Temp (C)",
+          "true_type": "numeric",
+          "notes": "third distinct header spelling for the same quantity across the workbook ('Water Temp C' / 'Temp C' / 'Temp (C)'). The 3 rows from 7/22 store the value as text with a unit suffix, e.g. '20.1 C', instead of a plain number; the 7/8 rows are plain numeric"
+        },
+        {
+          "name": "pH",
+          "true_type": "numeric",
+          "notes": "one value coded '-' (text dash) for Site 2 on 7/8 instead of blank or 'NA'"
+        },
+        {
+          "name": "DO (mg/L)",
+          "true_type": "numeric",
+          "notes": "one true empty cell (Site 3, 7/22) with no marker at all -- a third missing-value convention on top of May's 'n/a' and July's own '-'"
+        },
+        {
+          "name": "Taxa Count",
+          "true_type": "numeric",
+          "notes": "clean"
+        },
+        {
+          "name": "Notes",
+          "true_type": "text",
+          "notes": "mostly blank"
+        }
+      ]
+    }
+  ],
+  "clean_table": [
+    {
+      "sheet": "May",
+      "date": "2024-05-03",
+      "station": "Site 1",
+      "time": "08:15",
+      "temp_c": 12.4,
+      "ph": 7.8,
+      "do_mgL": 9.6,
+      "taxa_count": 14,
+      "notes": ""
+    },
+    {
+      "sheet": "May",
+      "date": "2024-05-03",
+      "station": "Site 2",
+      "time": "08:40",
+      "temp_c": 13.1,
+      "ph": 7.6,
+      "do_mgL": 8.9,
+      "taxa_count": 11,
+      "notes": ""
+    },
+    {
+      "sheet": "May",
+      "date": "2024-05-03",
+      "station": "Site 3",
+      "time": "09:05",
+      "temp_c": 13.8,
+      "ph": 7.4,
+      "do_mgL": 8.1,
+      "taxa_count": 9,
+      "notes": ""
+    },
+    {
+      "sheet": "May",
+      "date": "2024-05-17",
+      "station": "Site 1",
+      "time": "08:20",
+      "temp_c": 14.0,
+      "ph": 7.9,
+      "do_mgL": 9.4,
+      "taxa_count": 15,
+      "notes": ""
+    },
+    {
+      "sheet": "May",
+      "date": "2024-05-17",
+      "station": "Site 2",
+      "time": "08:45",
+      "temp_c": 14.6,
+      "ph": 7.7,
+      "do_mgL": 8.7,
+      "taxa_count": 12,
+      "notes": ""
+    },
+    {
+      "sheet": "May",
+      "date": "2024-05-17",
+      "station": "Site 3",
+      "time": "09:10",
+      "temp_c": 15.2,
+      "ph": 7.5,
+      "do_mgL": null,
+      "taxa_count": 8,
+      "notes": ""
+    },
+    {
+      "sheet": "June",
+      "date": "2024-06-03",
+      "station": "Site 1",
+      "time": "08:25",
+      "temp_c": 16.8,
+      "ph": 7.6,
+      "do_mgL": 9.2,
+      "taxa_count": 12,
+      "notes": ""
+    },
+    {
+      "sheet": "June",
+      "date": "2024-06-03",
+      "station": "Site 2",
+      "time": "08:50",
+      "temp_c": 17.4,
+      "ph": 7.3,
+      "do_mgL": 8.5,
+      "taxa_count": 9,
+      "notes": ""
+    },
+    {
+      "sheet": "June",
+      "date": "2024-06-03",
+      "station": "Site 3",
+      "time": "09:15",
+      "temp_c": 17.9,
+      "ph": 7.1,
+      "do_mgL": 8.0,
+      "taxa_count": 8,
+      "notes": ""
+    },
+    {
+      "sheet": "June",
+      "date": "2024-06-17",
+      "station": "Site 1",
+      "time": "08:30",
+      "temp_c": 17.5,
+      "ph": 7.7,
+      "do_mgL": 9.0,
+      "taxa_count": 13,
+      "notes": ""
+    },
+    {
+      "sheet": "June",
+      "date": "2024-06-17",
+      "station": "Site 2",
+      "time": "08:55",
+      "temp_c": 18.0,
+      "ph": 7.4,
+      "do_mgL": 8.3,
+      "taxa_count": 10,
+      "notes": ""
+    },
+    {
+      "sheet": "July",
+      "date": "2024-07-08",
+      "station": "Site 1",
+      "time": "08:30",
+      "temp_c": 18.6,
+      "ph": 7.2,
+      "do_mgL": 9.8,
+      "taxa_count": 13,
+      "notes": ""
+    },
+    {
+      "sheet": "July",
+      "date": "2024-07-08",
+      "station": "Site 1",
+      "time": "08:30",
+      "temp_c": 18.6,
+      "ph": 7.2,
+      "do_mgL": 9.8,
+      "taxa_count": 13,
+      "notes": ""
+    },
+    {
+      "sheet": "July",
+      "date": "2024-07-08",
+      "station": "Site 2",
+      "time": "08:55",
+      "temp_c": 19.0,
+      "ph": null,
+      "do_mgL": 9.1,
+      "taxa_count": 10,
+      "notes": ""
+    },
+    {
+      "sheet": "July",
+      "date": "2024-07-08",
+      "station": "Site 3",
+      "time": "09:20",
+      "temp_c": 19.5,
+      "ph": 7.0,
+      "do_mgL": 8.4,
+      "taxa_count": 7,
+      "notes": ""
+    },
+    {
+      "sheet": "July",
+      "date": "2024-07-22",
+      "station": "Site 1",
+      "time": "08:35",
+      "temp_c": 20.1,
+      "ph": 7.3,
+      "do_mgL": 9.5,
+      "taxa_count": 14,
+      "notes": ""
+    },
+    {
+      "sheet": "July",
+      "date": "2024-07-22",
+      "station": "Site 2",
+      "time": "09:00",
+      "temp_c": 20.6,
+      "ph": 7.1,
+      "do_mgL": 9.0,
+      "taxa_count": 11,
+      "notes": ""
+    },
+    {
+      "sheet": "July",
+      "date": "2024-07-22",
+      "station": "Site 3",
+      "time": "09:25",
+      "temp_c": 21.0,
+      "ph": 6.9,
+      "do_mgL": null,
+      "taxa_count": 6,
+      "notes": "low flow observed"
+    }
+  ],
+  "intended_analysis": "Do stream temperature, pH, and dissolved oxygen differ among the 3 stations and change across the May-July sampling season, and how does macroinvertebrate taxa richness relate to those water-quality variables?",
+  "mess_applied": [
+    "two-row merged header on the May sheet ('Water Quality Parameters' spans D1:F1 over Water Temp C/pH/DO mg/L) -- the real header is row 2",
+    "the same temperature variable is spelled 3 different ways across the workbook's 3 monthly sheets: 'Water Temp C' (May), 'Temp C' (June), 'Temp (C)' (July)",
+    "one date on the May sheet is stored as the ambiguous text '5/3' (no year) while the other rows for the identical calendar day are real Excel date values",
+    "station names are inconsistently capitalized/spaced within the June sheet: 'Site 1', 'SITE 2', 'Site 3', 'site 1', 'Site 2 ' (trailing space) all denote the same handful of stations",
+    "missing values are coded 4 different ways across the workbook: blank/true-empty (July DO), 'n/a' text (May DO), '-' text (July pH), and simply omitting the row entirely (June has no Site 3 row on 6/17 at all)",
+    "a non-sample 'AVG' summary row is appended directly below the real data on the May sheet, inside the same contiguous data block",
+    "blank separator rows appear inside the data block on the May and June sheets",
+    "a full-width merged note row ('Site 3 flooded after storm - no sample collected 6/17') sits inside the June data block explaining a missing observation; it is not itself a data record",
+    "the June sheet has a stray column (F) with no header and no values at all, wedged between pH and DO mg/L",
+    "half of July's temperature values (the 7/22 batch) are stored as text with a trailing unit, e.g. '20.1 C', while the 7/8 batch is plain numeric in the same column",
+    "an accidental duplicate data entry on the July sheet: the Site 1, 7/8 row appears twice with identical values",
+    "a separate 'Site Key' reference sheet (station descriptions and coordinates) sits in the same workbook as the 3 monthly data sheets and is not itself data"
+  ],
+  "what_a_naive_reader_would_get_wrong": "A naive reader would likely ingest the May AVG row and June's merged flood-note row as real observations, misread June's blank column F as a genuine (empty) variable, silently drop or mis-parse the text date '5/3' and the unit-suffixed July temperatures ('20.1 C') as non-numeric/NaN, fail to recognize 'Site 1'/'site 1'/'SITE 2'/'Site 2 ' as the same 2-3 stations (inflating the apparent number of groups), and double-count the duplicated July Site 1 (7/8) row when computing station means or sample sizes."
+}

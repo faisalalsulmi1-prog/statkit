@@ -1,0 +1,131 @@
+{
+  "id": "s2_1",
+  "generator_model": "sonnet",
+  "field": "business / marketing",
+  "persona": "MBA student running an in-person customer satisfaction intercept survey for a local cafe as part of a marketing capstone project",
+  "source_style": "typed by hand into Excel each evening from paper survey forms filled out by customers in the cafe",
+  "file": "gen_s2_1.xlsx",
+  "file_kind": "xlsx",
+  "sheets": [
+    {
+      "name": "Survey Data",
+      "is_data": true,
+      "header_row": 3,
+      "n_data_rows": 52,
+      "columns": [
+        {
+          "name": "RespondentID",
+          "true_type": "id",
+          "notes": "Zero-padded text IDs R01-R52, one per row in order collected"
+        },
+        {
+          "name": "Age",
+          "true_type": "numeric",
+          "notes": "Age in years, integer, range 19-64"
+        },
+        {
+          "name": "Gender",
+          "true_type": "categorical",
+          "notes": "Female / Male / Prefer not to say"
+        },
+        {
+          "name": "VisitFrequency",
+          "true_type": "ordinal",
+          "notes": "Daily > 2-3 times a week > Once a week > A few times a month > Rarely"
+        },
+        {
+          "name": "SatisfactionScore_1to5",
+          "true_type": "ordinal",
+          "notes": "1=very dissatisfied ... 5=very satisfied Likert item; commonly analyzed as numeric/interval by researchers; integer values only"
+        },
+        {
+          "name": "WouldRecommend",
+          "true_type": "binary",
+          "notes": "Yes / No"
+        },
+        {
+          "name": "AvgWeeklySpend_USD",
+          "true_type": "numeric",
+          "notes": "US dollars, 2 decimals; cell display uses currency number format ($#,##0.00) but underlying stored value is a plain float"
+        }
+      ]
+    }
+  ],
+  "clean_table": {
+    "n": 52,
+    "rule": "freq drawn from {Daily,2-3 times a week,Once a week,A few times a month,Rarely} with weights [10,25,30,25,10]; SatisfactionScore = round(clip(N(freq_mean,0.7),1,5)) with freq_mean in {Daily:4.6, 2-3/wk:4.2, 1/wk:3.8, few/month:3.4, Rarely:3.0}; WouldRecommend='Yes' w.p. 0.90 if score>=4, 0.40 if score==3, 0.10 otherwise; AvgWeeklySpend_USD = round(max(2, N(freq_spend_mean,4)),2) with freq_spend_mean in {Daily:32, 2-3/wk:22, 1/wk:14, few/month:9, Rarely:5}; Age ~ Uniform(19,64) integer; Gender weights [Female 46, Male 46, Prefer not to say 8]. Seed=20260920.",
+    "first_5_rows": [
+      {
+        "RespondentID": "R01",
+        "Age": 64,
+        "Gender": "Female",
+        "VisitFrequency": "Once a week",
+        "SatisfactionScore_1to5": 3,
+        "WouldRecommend": "Yes",
+        "AvgWeeklySpend_USD": 16.15
+      },
+      {
+        "RespondentID": "R02",
+        "Age": 41,
+        "Gender": "Female",
+        "VisitFrequency": "Rarely",
+        "SatisfactionScore_1to5": 3,
+        "WouldRecommend": "No",
+        "AvgWeeklySpend_USD": 2.0
+      },
+      {
+        "RespondentID": "R03",
+        "Age": 44,
+        "Gender": "Female",
+        "VisitFrequency": "Rarely",
+        "SatisfactionScore_1to5": 3,
+        "WouldRecommend": "Yes",
+        "AvgWeeklySpend_USD": 8.92
+      },
+      {
+        "RespondentID": "R04",
+        "Age": 49,
+        "Gender": "Male",
+        "VisitFrequency": "Once a week",
+        "SatisfactionScore_1to5": 4,
+        "WouldRecommend": "Yes",
+        "AvgWeeklySpend_USD": 20.05
+      },
+      {
+        "RespondentID": "R05",
+        "Age": 41,
+        "Gender": "Male",
+        "VisitFrequency": "A few times a month",
+        "SatisfactionScore_1to5": 2,
+        "WouldRecommend": "Yes",
+        "AvgWeeklySpend_USD": 7.37
+      }
+    ],
+    "last_2_rows": [
+      {
+        "RespondentID": "R51",
+        "Age": 21,
+        "Gender": "Female",
+        "VisitFrequency": "A few times a month",
+        "SatisfactionScore_1to5": 2,
+        "WouldRecommend": "No",
+        "AvgWeeklySpend_USD": 3.78
+      },
+      {
+        "RespondentID": "R52",
+        "Age": 32,
+        "Gender": "Male",
+        "VisitFrequency": "A few times a month",
+        "SatisfactionScore_1to5": 4,
+        "WouldRecommend": "Yes",
+        "AvgWeeklySpend_USD": 10.52
+      }
+    ]
+  },
+  "intended_analysis": "Does satisfaction differ across visit-frequency groups (one-way ANOVA / correlation between frequency rank and satisfaction score)? Does average weekly spend differ by gender or by whether the customer would recommend the cafe (independent t-test)? Is satisfaction score associated with likelihood to recommend (chi-square / logistic)?",
+  "mess_applied": [
+    "Header is on row 3, not row 1 -- a merged title spans row 1 and row 2 is a blank spacer row before the real header",
+    "AvgWeeklySpend_USD is displayed with a currency number format in Excel but the underlying cell value is a plain float, not text"
+  ],
+  "what_a_naive_reader_would_get_wrong": "A reader that assumes the header is always row 1 would read the merged title text as column names and treat row 2 (blank) as the first data row, shifting everything down and producing all-null columns."
+}

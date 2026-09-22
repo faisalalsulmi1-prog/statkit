@@ -1,0 +1,180 @@
+{
+  "file": "gen_w2_7_1.xlsx",
+  "fixture_id": "w2_7_1",
+  "wave": 2,
+  "source_kind": "xlsx",
+  "authored_from_bytes": true,
+  "sheets": [
+    {
+      "name": "Gradebook",
+      "role": "data",
+      "header_row": 1,
+      "two_row": true,
+      "header_row2": 2,
+      "units_row": null,
+      "data_start_row": 3,
+      "n_rows": 15,
+      "n_cols": 7,
+      "layout": "long",
+      "dropped_rows": [
+        {
+          "row": 7,
+          "reason": "summary 'Class A Average' (snag12)"
+        },
+        {
+          "row": 13,
+          "reason": "summary 'Class B Average' (snag12)"
+        },
+        {
+          "row": 20,
+          "reason": "summary 'Class C Average' (snag12)"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Name",
+          "col_index": 1,
+          "kind": "id",
+          "kinds": [
+            "id"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": null,
+          "flags": [
+            "15 student names all-distinct -> ID (free text)"
+          ],
+          "notes": ""
+        },
+        {
+          "name": "Class",
+          "col_index": 2,
+          "kind": "categorical",
+          "kinds": [
+            "categorical"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": 3,
+          "flags": [
+            "snag13/§4.2: vertically merged group cells (B3:B6/B8:B12/B14:B19) filled down -> 3 levels, 0 missing"
+          ],
+          "notes": ""
+        },
+        {
+          "name": "Term 1 – Test",
+          "col_index": 3,
+          "kind": "numeric",
+          "kinds": [
+            "numeric"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": null,
+          "flags": [
+            "duplicate header 'Test' -> deduped; two-row group 'Term 1'"
+          ],
+          "notes": ""
+        },
+        {
+          "name": "Term 1 – Quiz",
+          "col_index": 4,
+          "kind": "numeric",
+          "kinds": [
+            "numeric"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": null,
+          "flags": [
+            "duplicate header 'Quiz'"
+          ],
+          "notes": ""
+        },
+        {
+          "name": "Term 2 – Test",
+          "col_index": 5,
+          "kind": "numeric",
+          "kinds": [
+            "numeric"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": null,
+          "flags": [
+            "duplicate header 'Test (2)'"
+          ],
+          "notes": ""
+        },
+        {
+          "name": "Term 2 – Quiz",
+          "col_index": 6,
+          "kind": "numeric",
+          "kinds": [
+            "numeric",
+            "ordinal",
+            "categorical"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": null,
+          "flags": [
+            "duplicate header 'Quiz (2)'"
+          ],
+          "notes": ""
+        },
+        {
+          "name": "Final – Grade",
+          "col_index": 7,
+          "kind": "numeric",
+          "kinds": [
+            "numeric"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": null,
+          "flags": [
+            "final grade (has .25/.5 -> numeric)"
+          ],
+          "notes": ""
+        }
+      ],
+      "expect_block": {
+        "served": true,
+        "block_reason": null,
+        "layout": "long",
+        "target_tests": [
+          "describe",
+          "anova_1w"
+        ],
+        "checks_expected": [],
+        "snags_applied": [
+          12,
+          13
+        ],
+        "note": "snag12: group-prefixed subtotal rows ('Class A Average') excluded -> 15 students (NOT 18); snag13: two-row header keeps Term1/Term2 group labels; duplicate headers Test/Quiz deduped; Class merged down rows -> filled."
+      }
+    }
+  ]
+}

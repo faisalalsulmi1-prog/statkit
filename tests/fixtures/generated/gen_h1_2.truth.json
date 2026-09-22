@@ -1,0 +1,84 @@
+{
+  "id": "h1_2",
+  "generator_model": "haiku",
+  "field": "clinical medicine",
+  "persona": "Medical resident coordinating a small drug efficacy trial, data entered across multiple shifts from paper forms",
+  "source_style": "manually transcribed from paper CRFs into Excel by different team members, then exported as CSV",
+  "file": "gen_h1_2.csv",
+  "file_kind": "csv",
+  "sheets": [
+    {
+      "name": "default (single sheet)",
+      "is_data": true,
+      "header_row": 1,
+      "n_data_rows": 10,
+      "columns": [
+        {
+          "name": "SubjectID",
+          "true_type": "id",
+          "notes": "Mixed formats: S-101, S102, S-103, JD, initials; true canonical: S-101 through S-110"
+        },
+        {
+          "name": "Enrollment_Date",
+          "true_type": "date",
+          "notes": "Three different date formats in file: YYYY-MM-DD, DD/MM/YYYY, DD-Mon-YYYY; canonical: YYYY-MM-DD"
+        },
+        {
+          "name": "Baseline_Response_0-10",
+          "true_type": "numeric",
+          "notes": "Scale 0-10; one subject has 'medium' (text); canonical is numeric"
+        },
+        {
+          "name": "Week2_Response",
+          "true_type": "numeric",
+          "notes": "Numeric on same 0-10 scale; one subject has 'medium-low' (text)"
+        },
+        {
+          "name": "Week4_Resp_%",
+          "true_type": "numeric",
+          "notes": "Percentage improvement 0-50%; one missing value; written as '45%', '~30%'"
+        },
+        {
+          "name": "Week8_Response_scale",
+          "true_type": "ordinal",
+          "notes": "Ordinal: Minimal(1)/Mild(2)/Moderate(3)/Good(4)/Marked(5); also written in parens as (1/5) etc; canonical: Minimal, Mild, Moderate, Good, Marked"
+        },
+        {
+          "name": "Dose_mg",
+          "true_type": "numeric",
+          "notes": "Dose in mg; written as 100, 0.1g (=100mg), 150, 100-150 (=125 mid-point); one written as '75mg'"
+        },
+        {
+          "name": "Adverse_Event",
+          "true_type": "categorical",
+          "notes": "No / Yes with description; possible values: No, Headache, Nausea, Dizziness, Rash"
+        },
+        {
+          "name": "Notes",
+          "true_type": "text",
+          "notes": "Free text; includes markers like 'DUPLICATE', 'lost to follow-up', 'Discontinued'"
+        }
+      ]
+    }
+  ],
+  "clean_table": {
+    "superseded_by": "gen_h1_2.expect.json",
+    "reason": "original clean_table was a broken Wave-1 oracle: it contained a literal '... (5 more rows)' list element and coerced values the reader will NOT (Dose_mg 0.1g->100, Week4 ~30%->30, month-name dates). See gen_h1_2.expect.json (authored from bytes) for the authoritative oracle."
+  },
+  "intended_analysis": "What is the correlation between dose and treatment response? Do adverse events predict poor response? What dose is optimal?",
+  "mess_applied": [
+    "Three different date formats (YYYY-MM-DD, DD/MM/YYYY, DD-Mon-YYYY) mixed within same column",
+    "Units inconsistently placed: '0.1g' instead of '100 mg', '75mg' attached to number",
+    "Subject IDs in different formats: S-101, S102, S-103, JD (initials), inconsistent hyphenation",
+    "Response data in three different scales: 0-10 numeric, percentage, and 5-level ordinal with codes in parens",
+    "One near-duplicate entry (S-104 appears twice with slight variation)",
+    "Missing data: Week 4 response for S-103, baseline for S-110",
+    "Free text where numeric expected: 'medium', 'medium-low' for baseline/week2 responses",
+    "Ordinal categories written inconsistently: 'Moderate (3/5)' vs 'Moderate' vs 'Mild (2/5)'",
+    "Empty notes cells vs filled cells with varying detail levels"
+  ],
+  "what_a_naive_reader_would_get_wrong": "Treating response scales as directly comparable (0-10 vs % vs ordinal); not recognizing S-104 duplicate; parsing dose as text and missing the mg unit; treating missing baseline for S-110 as zero instead of missing.",
+  "_corrections": [
+    "clean_table replaced with a superseded-by pointer (was broken)."
+  ]
+}

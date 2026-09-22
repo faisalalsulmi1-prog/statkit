@@ -1,0 +1,234 @@
+{
+  "id": "s2_2",
+  "generator_model": "sonnet",
+  "field": "business / marketing",
+  "persona": "Same MBA student running an online concept-test survey via SurveyMonkey for a new subscription snack-box service, for a marketing research course project",
+  "source_style": "raw export from SurveyMonkey (Analyze Results > Export All Responses > Excel), then lightly hand-edited without being cleaned",
+  "file": "gen_s2_2.xlsx",
+  "file_kind": "xlsx",
+  "sheets": [
+    {
+      "name": "Subscription Box Concept Test",
+      "is_data": true,
+      "header_row": null,
+      "n_data_rows": 40,
+      "columns": [
+        {
+          "name": "Respondent ID",
+          "true_type": "id",
+          "notes": "SurveyMonkey numeric respondent id, 100234501-100234538; one value (index 4) appears twice due to an accidental copy-paste duplicate row"
+        },
+        {
+          "name": "Collector ID",
+          "true_type": "id",
+          "notes": "Constant 456789001 for every row -- single anonymous web-link collector"
+        },
+        {
+          "name": "Start Date",
+          "true_type": "date",
+          "notes": "Datetime the response was started; all real datetimes EXCEPT one row where it was manually retyped as a text string 'MM/DD/YYYY HH:MM'"
+        },
+        {
+          "name": "End Date",
+          "true_type": "date",
+          "notes": "Same quirk as Start Date -- one row is a text string, rest are real datetimes"
+        },
+        {
+          "name": "IP Address",
+          "true_type": "text",
+          "notes": "Synthetic IPv4 addresses, one per respondent"
+        },
+        {
+          "name": "How likely are you to purchase this subscription box service?",
+          "true_type": "ordinal",
+          "notes": "5-level text Likert: Extremely likely > Somewhat likely > Neither likely nor unlikely > Somewhat unlikely > Extremely unlikely; blank when skipped"
+        },
+        {
+          "name": "The price ($29.99/month) is reasonable",
+          "true_type": "ordinal",
+          "notes": "Sub-column of the matrix question in row 1 (G1:I1 merged); 5-level agreement scale; blank when skipped"
+        },
+        {
+          "name": "This product fits my lifestyle",
+          "true_type": "ordinal",
+          "notes": "Matrix sub-column, same agreement scale, blank when skipped"
+        },
+        {
+          "name": "I trust this brand",
+          "true_type": "ordinal",
+          "notes": "Matrix sub-column, same agreement scale, blank when skipped"
+        },
+        {
+          "name": "What is your age range?",
+          "true_type": "categorical",
+          "notes": "18-24 / 25-34 / 35-44 / 45-54 / 55-64 / 65+"
+        },
+        {
+          "name": "Amazon",
+          "true_type": "binary",
+          "notes": "Multi-select sub-column (K1:N1 merged group); cell = literal text 'Amazon' if selected, else blank (NOT True/False)"
+        },
+        {
+          "name": "Instagram Shop",
+          "true_type": "binary",
+          "notes": "Multi-select sub-column; cell = 'Instagram Shop' if selected, else blank"
+        },
+        {
+          "name": "Retailer's own website",
+          "true_type": "binary",
+          "notes": "Multi-select sub-column; cell = \"Retailer's own website\" if selected, else blank"
+        },
+        {
+          "name": "Other (please specify)",
+          "true_type": "text",
+          "notes": "Multi-select 'Other' free-text sub-column; blank unless respondent typed a custom retailer"
+        },
+        {
+          "name": "Any additional comments?",
+          "true_type": "text",
+          "notes": "Open-ended free text, blank for most respondents"
+        }
+      ]
+    }
+  ],
+  "clean_table": {
+    "n": 38,
+    "rule": "38 unique respondents, RespondentID = 100234501+i. Likelihood ~ weighted choice over 5 categories + skip (weights 20/25/20/15/12/8). Agreement items (PriceReasonable, FitsLifestyle, TrustBrand) each independently drawn with weights shifted toward 'agree' when Likelihood is a purchase-likely category and toward 'disagree' when unlikely, plus an 8/100 chance of being skipped (blank). AgeRange weighted toward younger brackets [30,30,20,10,7,3]. Amazon/InstagramShop/RetailerWebsite are independent Bernoulli(0.6/0.3/0.4); OtherChannel is blank ~55% of the time else one of {Etsy, TikTok Shop, Walmart.com, Costco online}. Comments filled for ~16% of respondents from a fixed pool. Seed=20260921. The physical file additionally contains: one exact duplicate of respondent #5's row (inserted at physical row 12), one fully blank row (inserted at physical row 23, a cleared disqualified respondent), and one row (physical row ~33) whose Start/End Date were manually retyped as text -- none of these three are real respondents beyond the 38 above.",
+    "first_5_rows": [
+      {
+        "RespondentID": 100234501,
+        "CollectorID": 456789001,
+        "StartDate": "2026-08-19 01:00:59.235914",
+        "EndDate": "2026-08-19 01:03:04.236770",
+        "IPAddress": "35.80.194.178",
+        "Likelihood": "Extremely likely",
+        "PriceReasonable": "Agree",
+        "FitsLifestyle": "Strongly agree",
+        "TrustBrand": "Strongly disagree",
+        "AgeRange": "35-44",
+        "Amazon": "Amazon",
+        "InstagramShop": null,
+        "RetailerWebsite": null,
+        "OtherChannel": "Etsy",
+        "Comments": null
+      },
+      {
+        "RespondentID": 100234502,
+        "CollectorID": 456789001,
+        "StartDate": "2026-08-16 20:41:23.726979",
+        "EndDate": "2026-08-16 20:48:33.217133",
+        "IPAddress": "97.237.64.17",
+        "Likelihood": "Extremely unlikely",
+        "PriceReasonable": "Disagree",
+        "FitsLifestyle": "Agree",
+        "TrustBrand": "Neutral",
+        "AgeRange": "25-34",
+        "Amazon": null,
+        "InstagramShop": null,
+        "RetailerWebsite": null,
+        "OtherChannel": "Walmart.com",
+        "Comments": null
+      },
+      {
+        "RespondentID": 100234503,
+        "CollectorID": 456789001,
+        "StartDate": "2026-08-12 00:57:33.461352",
+        "EndDate": "2026-08-12 01:00:05.594645",
+        "IPAddress": "107.202.195.23",
+        "Likelihood": "Extremely likely",
+        "PriceReasonable": "Disagree",
+        "FitsLifestyle": "Neutral",
+        "TrustBrand": "Agree",
+        "AgeRange": "35-44",
+        "Amazon": null,
+        "InstagramShop": null,
+        "RetailerWebsite": null,
+        "OtherChannel": null,
+        "Comments": null
+      },
+      {
+        "RespondentID": 100234504,
+        "CollectorID": 456789001,
+        "StartDate": "2026-08-14 10:42:18.183162",
+        "EndDate": "2026-08-14 10:46:11.516584",
+        "IPAddress": "26.1.64.232",
+        "Likelihood": "Somewhat unlikely",
+        "PriceReasonable": "Disagree",
+        "FitsLifestyle": "Neutral",
+        "TrustBrand": "Disagree",
+        "AgeRange": "18-24",
+        "Amazon": "Amazon",
+        "InstagramShop": null,
+        "RetailerWebsite": null,
+        "OtherChannel": null,
+        "Comments": null
+      },
+      {
+        "RespondentID": 100234505,
+        "CollectorID": 456789001,
+        "StartDate": "2026-08-19 20:19:05.662977",
+        "EndDate": "2026-08-19 20:26:22.348705",
+        "IPAddress": "81.5.79.178",
+        "Likelihood": "Extremely likely",
+        "PriceReasonable": "Agree",
+        "FitsLifestyle": "Strongly agree",
+        "TrustBrand": "Agree",
+        "AgeRange": "25-34",
+        "Amazon": "Amazon",
+        "InstagramShop": "Instagram Shop",
+        "RetailerWebsite": null,
+        "OtherChannel": "TikTok Shop",
+        "Comments": null
+      }
+    ],
+    "last_2_rows": [
+      {
+        "RespondentID": 100234537,
+        "CollectorID": 456789001,
+        "StartDate": "2026-08-17 22:40:56.018189",
+        "EndDate": "2026-08-17 22:47:08.267176",
+        "IPAddress": "79.241.81.128",
+        "Likelihood": "Somewhat likely",
+        "PriceReasonable": "Strongly agree",
+        "FitsLifestyle": "Agree",
+        "TrustBrand": "Disagree",
+        "AgeRange": "18-24",
+        "Amazon": null,
+        "InstagramShop": null,
+        "RetailerWebsite": null,
+        "OtherChannel": null,
+        "Comments": null
+      },
+      {
+        "RespondentID": 100234538,
+        "CollectorID": 456789001,
+        "StartDate": "2026-08-19 09:01:04.835753",
+        "EndDate": "2026-08-19 09:08:46.124061",
+        "IPAddress": "71.17.200.81",
+        "Likelihood": "Extremely likely",
+        "PriceReasonable": "Strongly disagree",
+        "FitsLifestyle": "Agree",
+        "TrustBrand": "Strongly disagree",
+        "AgeRange": "35-44",
+        "Amazon": "Amazon",
+        "InstagramShop": null,
+        "RetailerWebsite": null,
+        "OtherChannel": "Costco online",
+        "Comments": null
+      }
+    ]
+  },
+  "intended_analysis": "What share of respondents are likely/extremely likely to purchase? Is purchase likelihood associated with agreement that the price is reasonable (ordinal correlation / chi-square)? Does age range relate to which shopping channels respondents already use? Read the open-ended comments for themes.",
+  "mess_applied": [
+    "Two-row header: row 1 holds question text (with two multi-column questions merged across their sub-columns, e.g. G1:I1 and K1:N1), row 2 holds the sub-question/answer-option labels for those merged groups only -- there is no single 'real header row'",
+    "Column headers are the verbatim, long question text (with punctuation, parentheses, a dollar amount) rather than short field names",
+    "Likert/agreement scales stored as text labels, not numeric codes",
+    "Multi-select checkbox question exported as one column per option, containing the option's own label text when checked and blank when not (not True/False or 1/0)",
+    "Respondent #5's entire row is duplicated verbatim elsewhere in the file (accidental copy-paste while adding notes)",
+    "One entirely blank row sitting among the data rows (a disqualified respondent whose answers were cleared but whose row was never deleted)",
+    "Start Date / End Date are real Excel datetimes for every row except one, where they were manually retyped as plain text strings",
+    "Substantial blank-cell nonresponse scattered throughout (skipped questions), not concentrated in any one column",
+    "IP Address and Collector ID columns present but analytically useless (Collector ID is constant)"
+  ],
+  "what_a_naive_reader_would_get_wrong": "Treating row 1 alone as the header would merge the multi-select and matrix question text into single garbled column names and lose the per-option labels in row 2; counting physical rows as 38 respondents would overstate n by including the duplicate and blank rows; treating the mixed date column as uniformly typed would error or silently coerce the one text date to null; treating blank multi-select cells as False and a filled cell as True would work, but assuming they're boolean 1/0 rather than reading the literal label would misparse them."
+}

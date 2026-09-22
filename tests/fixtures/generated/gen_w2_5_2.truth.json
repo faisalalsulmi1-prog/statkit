@@ -1,0 +1,85 @@
+{
+  "id": "w2_5_2",
+  "generator_model": "haiku",
+  "field": "genetics",
+  "persona": "Undergraduate genetics student analyzing F2 generation from a dihybrid cross",
+  "source_style": "hand-counted phenotypes from lab experiment, tallied and entered into Excel",
+  "file": "gen_w2_5_2.xlsx",
+  "file_kind": "xlsx",
+  "sheets": [
+    {
+      "name": "FlowerPhenotypes",
+      "is_data": true,
+      "header_row": 3,
+      "n_data_rows": 4,
+      "columns": [
+        {
+          "name": "Phenotype",
+          "true_type": "categorical",
+          "notes": "Observed phenotype classes: Red/Round, Red/Wrinkled, Yellow/Round, Yellow/Wrinkled"
+        },
+        {
+          "name": "Count",
+          "true_type": "count",
+          "notes": "Observed count of individuals in each phenotype class"
+        },
+        {
+          "name": "% of Total",
+          "true_type": "percentage",
+          "notes": "Calculated percentage of total (derived column)"
+        }
+      ]
+    }
+  ],
+  "clean_table": {
+    "Red, Round": 142,
+    "Red, Wrinkled": 51,
+    "Yellow, Round": 48,
+    "Yellow, Wrinkled": 17,
+    "Total": 258
+  },
+  "clean_table_percentages": {
+    "Red, Round": 55.04,
+    "Red, Wrinkled": 19.77,
+    "Yellow, Round": 18.6,
+    "Yellow, Wrinkled": 6.59,
+    "Total": 100.0
+  },
+  "intended_analysis": "Goodness-of-fit test (chi-square) comparing observed phenotype distribution to expected 9:3:3:1 Mendelian ratio",
+  "expected_ratio": "9:3:3:1 (54.7% : 18.2% : 18.2% : 8.9%)",
+  "mess_applied": [
+    "counts not raw rows (summary count grid format)",
+    "percentage column is derived (not raw data)",
+    "merged title in row 1",
+    "Source footer line below data",
+    "Total row included"
+  ],
+  "what_a_naive_reader_would_get_wrong": "A naive reader might not recognize the 9:3:3:1 ratio expectation, might confuse phenotypic categories with genotypic ratios, might treat percentage column as independent raw data rather than derived from counts, or might incorrectly calculate expected counts for the goodness-of-fit test without accounting for the dihybrid cross design",
+  "verified_by_readback": true,
+  "readback_counts": {
+    "merged_title": "F2 Flower Phenotype Distribution (Dihybrid Cross) (row 1, A1:C1)",
+    "header_row": 3,
+    "data_rows": "4-8 (including Total)",
+    "source_footer": "Row 10",
+    "row_1_red_round": {
+      "count": 142,
+      "percentage": 55.04
+    },
+    "row_2_red_wrinkled": {
+      "count": 51,
+      "percentage": 19.77
+    },
+    "row_3_yellow_round": {
+      "count": 48,
+      "percentage": 18.6
+    },
+    "row_4_yellow_wrinkled": {
+      "count": 17,
+      "percentage": 6.59
+    },
+    "row_5_total": {
+      "count": 258,
+      "percentage": 100.0
+    }
+  }
+}

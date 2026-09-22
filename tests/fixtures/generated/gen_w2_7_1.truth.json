@@ -1,0 +1,231 @@
+{
+  "id": "w2_7_1",
+  "generator_model": "haiku",
+  "field": "education",
+  "persona": "High school English teacher managing quarterly grades",
+  "source_style": "Real teacher's Excel gradebook with merged headers and embedded subtotals",
+  "file": "gen_w2_7_1.xlsx",
+  "file_kind": "xlsx",
+  "sheets": [
+    {
+      "name": "Gradebook",
+      "is_data": true,
+      "header_row": 2,
+      "n_data_rows": 15,
+      "columns": [
+        {
+          "name": "Name",
+          "true_type": "text",
+          "notes": "Student first names (15 unique individuals)"
+        },
+        {
+          "name": "Class",
+          "true_type": "text",
+          "notes": "Class label (A/B/C); values merged vertically across all students in that class (B3:B6, B8:B12, B14:B19)"
+        },
+        {
+          "name": "Test",
+          "true_type": "numeric",
+          "notes": "Term 1 Test score; identical header 'Test' appears again in column E for Term 2"
+        },
+        {
+          "name": "Quiz",
+          "true_type": "numeric",
+          "notes": "Term 1 Quiz score; identical header 'Quiz' appears again in column F for Term 2"
+        },
+        {
+          "name": "Test",
+          "true_type": "numeric",
+          "notes": "Term 2 Test score (duplicate header name from column C)"
+        },
+        {
+          "name": "Quiz",
+          "true_type": "numeric",
+          "notes": "Term 2 Quiz score (duplicate header name from column D)"
+        },
+        {
+          "name": "Grade",
+          "true_type": "numeric",
+          "notes": "Final overall grade (average of tests and quizzes)"
+        }
+      ]
+    }
+  ],
+  "clean_table": [
+    {
+      "name": "Alice",
+      "class": "Class A",
+      "term_1_test": 85,
+      "term_1_quiz": 90,
+      "term_2_test": 88,
+      "term_2_quiz": 92,
+      "final_grade": 89.5
+    },
+    {
+      "name": "Bob",
+      "class": "Class A",
+      "term_1_test": 78,
+      "term_1_quiz": 85,
+      "term_2_test": 82,
+      "term_2_quiz": 88,
+      "final_grade": 83.25
+    },
+    {
+      "name": "Charlie",
+      "class": "Class A",
+      "term_1_test": 92,
+      "term_1_quiz": 88,
+      "term_2_test": 95,
+      "term_2_quiz": 90,
+      "final_grade": 91.25
+    },
+    {
+      "name": "David",
+      "class": "Class A",
+      "term_1_test": 88,
+      "term_1_quiz": 92,
+      "term_2_test": 90,
+      "term_2_quiz": 94,
+      "final_grade": 91
+    },
+    {
+      "name": "Diana",
+      "class": "Class B",
+      "term_1_test": 88,
+      "term_1_quiz": 92,
+      "term_2_test": 90,
+      "term_2_quiz": 95,
+      "final_grade": 91.25
+    },
+    {
+      "name": "Eve",
+      "class": "Class B",
+      "term_1_test": 75,
+      "term_1_quiz": 80,
+      "term_2_test": 78,
+      "term_2_quiz": 82,
+      "final_grade": 78.75
+    },
+    {
+      "name": "Frank",
+      "class": "Class B",
+      "term_1_test": 95,
+      "term_1_quiz": 93,
+      "term_2_test": 96,
+      "term_2_quiz": 94,
+      "final_grade": 94.5
+    },
+    {
+      "name": "Grace",
+      "class": "Class B",
+      "term_1_test": 82,
+      "term_1_quiz": 86,
+      "term_2_test": 84,
+      "term_2_quiz": 88,
+      "final_grade": 85
+    },
+    {
+      "name": "Henry",
+      "class": "Class B",
+      "term_1_test": 90,
+      "term_1_quiz": 88,
+      "term_2_test": 92,
+      "term_2_quiz": 90,
+      "final_grade": 90
+    },
+    {
+      "name": "Ivy",
+      "class": "Class C",
+      "term_1_test": 88,
+      "term_1_quiz": 90,
+      "term_2_test": 89,
+      "term_2_quiz": 91,
+      "final_grade": 89.5
+    },
+    {
+      "name": "Jack",
+      "class": "Class C",
+      "term_1_test": 79,
+      "term_1_quiz": 81,
+      "term_2_test": 80,
+      "term_2_quiz": 82,
+      "final_grade": 80.5
+    },
+    {
+      "name": "Karen",
+      "class": "Class C",
+      "term_1_test": 91,
+      "term_1_quiz": 94,
+      "term_2_test": 92,
+      "term_2_quiz": 96,
+      "final_grade": 93.25
+    },
+    {
+      "name": "Liam",
+      "class": "Class C",
+      "term_1_test": 85,
+      "term_1_quiz": 87,
+      "term_2_test": 86,
+      "term_2_quiz": 88,
+      "final_grade": 86.5
+    },
+    {
+      "name": "Mia",
+      "class": "Class C",
+      "term_1_test": 92,
+      "term_1_quiz": 89,
+      "term_2_test": 94,
+      "term_2_quiz": 91,
+      "final_grade": 91.5
+    },
+    {
+      "name": "Noah",
+      "class": "Class C",
+      "term_1_test": 77,
+      "term_1_quiz": 79,
+      "term_2_test": 78,
+      "term_2_quiz": 80,
+      "final_grade": 78.5
+    }
+  ],
+  "intended_analysis": "Compare average performance across three classes; examine improvement from Term 1 to Term 2; identify Test vs Quiz performance patterns",
+  "mess_applied": [
+    "Two-row header structure: row 1 contains merged 'Term 1' and 'Term 2' spanning two columns each; row 2 contains sub-headers",
+    "Merged cells in column B for class labels (B3:B6 for Class A, B8:B12 for Class B, B14:B19 for Class C) spanning all students in each class",
+    "Subtotal/average rows embedded between class data blocks (row 7: 'Class A Average', row 13: 'Class B Average', row 20: 'Class C Average')",
+    "Duplicate header names: 'Test' appears in both C2 (Term 1) and E2 (Term 2); 'Quiz' appears in both D2 (Term 1) and F2 (Term 2)"
+  ],
+  "what_a_naive_reader_would_get_wrong": [
+    "Including subtotal rows in analysis as if they were individual students (e.g., treating 'Class A Average' as a 16th student)",
+    "Not recognizing duplicate column headers; may accidentally sum or average 'Test' columns together",
+    "Misinterpreting merged cells: assuming each student has their own class label rather than recognizing the vertical span",
+    "Flattening without respecting the two-row header; losing the Term 1/Term 2 context",
+    "Assuming all rows are uniform data rather than filtering out aggregate/subtotal rows",
+    "Reading the class value from only the first student in a merged block and missing it for subsequent rows"
+  ],
+  "verified_by_readback": true,
+  "readback_counts": {
+    "total_rows": 20,
+    "header_rows": 2,
+    "data_rows": 15,
+    "subtotal_rows": 3,
+    "merged_cell_ranges": 5,
+    "merged_ranges_detail": [
+      "C1:D1 (Term 1 header)",
+      "E1:F1 (Term 2 header)",
+      "B3:B6 (Class A, 4 students)",
+      "B8:B12 (Class B, 5 students)",
+      "B14:B19 (Class C, 6 students)"
+    ],
+    "students_per_class": {
+      "Class A": 4,
+      "Class B": 5,
+      "Class C": 6
+    },
+    "total_unique_students": 15,
+    "duplicate_headers": [
+      "Test",
+      "Quiz"
+    ]
+  }
+}

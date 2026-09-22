@@ -1,0 +1,122 @@
+{
+  "id": "w2_4_1",
+  "generator_model": "sonnet",
+  "field": "business / finance (managerial accounting)",
+  "persona": "Undergraduate finance student completing a managerial-accounting case study: reconciling budget-to-actual monthly cash flow for a small business client (a local cafe) across a fiscal year, pulling budget figures from a planning worksheet and actuals partly from bank-statement PDFs (explains the unicode minus signs) and partly from a general-ledger export (explains the accounting parenthesis negatives and $-formatted text).",
+  "source_style": "manually maintained Excel cash-flow ledger, with some amounts copy-pasted from a bank statement PDF and a GL export rather than typed fresh, so number formatting is inconsistent across rows",
+  "file": "gen_w2_4_1.xlsx",
+  "file_kind": "xlsx",
+  "sheets": [
+    {
+      "name": "Cash Flow Ledger",
+      "is_data": true,
+      "header_row": 1,
+      "n_data_rows": 50,
+      "columns": [
+        {
+          "name": "Txn ID",
+          "true_type": "id",
+          "notes": "Real Excel integer, 1001-1050, sequential."
+        },
+        {
+          "name": "Date",
+          "true_type": "date",
+          "notes": "Real Excel date (yyyy-mm-dd number format), spaced ~6-7 days apart across Jan-Oct 2025."
+        },
+        {
+          "name": "Category",
+          "true_type": "categorical",
+          "notes": "One of 12 budget-line categories cycled in order: Rent, Payroll, Utilities, Marketing, Software Subscriptions, Travel, Office Supplies, Insurance, Bank Fees, Equipment Lease, Consulting Revenue, Product Sales."
+        },
+        {
+          "name": "Budgeted (USD)",
+          "true_type": "numeric",
+          "notes": "REQUIRED QUIRKS live here: 44 of 50 cells are real Excel numbers (float, '#,##0.00' format). 6 cells are TEXT strings instead: 2 currency-text ('$1,200' row 9, '$3,100' row 28), 2 plain US-thousands-text ('12,345' row 13, '6,750' row 21), 1 unicode-minus text ('−500' row 16), 1 parens-negative text ('(2,000)' row 45)."
+        },
+        {
+          "name": "Actual (USD)",
+          "true_type": "numeric",
+          "notes": "REQUIRED QUIRKS live here too: 44 of 50 cells are real Excel numbers. 6 cells are TEXT strings: 2 parens-negative ('(1,200)' row 6, '(450)' row 19), 1 currency-text ('$1,750' row 39), 1 plain US-thousands-text ('9,500' row 31), 2 unicode-minus ('−1,850' row 23, '−12' row 34)."
+        },
+        {
+          "name": "Variance (USD)",
+          "true_type": "formula",
+          "notes": "REQUIRED QUIRK: every one of the 50 rows holds the formula '=E{r}-D{r}' (Actual-Budgeted) written via xlsxwriter with an explicit cached value, so openpyxl(data_only=True) returns a float for all 50 cells (confirmed none are None) even though 12 of those rows reference a text cell that real Excel would show as #VALUE! on a forced recalculation."
+        },
+        {
+          "name": "Account Code",
+          "true_type": "id",
+          "notes": "REQUIRED QUIRK: this whole column (G) is hidden via column-level hidden=True; internal GL code 'GL-4001'..'GL-4050', not meant to appear in the printed report."
+        },
+        {
+          "name": "Status",
+          "true_type": "categorical",
+          "notes": "'Posted' for 47 rows; 'VOID - <reason>' for the 3 rows (Excel rows 11, 26, 47) that are also the REQUIRED hidden rows -- the student hid rather than deleted duplicate/reversed/erroneous entries to keep an audit trail, and those 3 rows should be excluded from any budget-variance analysis."
+        }
+      ]
+    }
+  ],
+  "clean_table": {
+    "description": "50 data rows, one per transaction, no missing values in any column. To clean: for the 6 messy Budgeted cells and 6 messy Actual cells, strip '$', strip ',' thousands separators, convert a parenthesized amount '(X)' to -X, and convert a unicode minus '−' (U+2212, NOT ASCII hyphen U+002D) prefix to a negative sign, then cast to float. The Variance column's cached formula value already equals Actual_true - Budgeted_true for every row (verified for all 50 by read-back) so it does not need to be recomputed, but a naive Excel recalculation of the 12 rows with text inputs would raise #VALUE!. Exclude the 3 hidden VOID rows before computing any total/average variance.",
+    "true_value_examples": [
+      {"raw": "(1,200)", "field": "Actual (USD)", "excel_row": 6, "true_value": -1200.0},
+      {"raw": "$1,200", "field": "Budgeted (USD)", "excel_row": 9, "true_value": 1200.0},
+      {"raw": "12,345", "field": "Budgeted (USD)", "excel_row": 13, "true_value": 12345.0},
+      {"raw": "−500", "field": "Budgeted (USD)", "excel_row": 16, "true_value": -500.0},
+      {"raw": "(450)", "field": "Actual (USD)", "excel_row": 19, "true_value": -450.0},
+      {"raw": "6,750", "field": "Budgeted (USD)", "excel_row": 21, "true_value": 6750.0},
+      {"raw": "−1,850", "field": "Actual (USD)", "excel_row": 23, "true_value": -1850.0},
+      {"raw": "$3,100", "field": "Budgeted (USD)", "excel_row": 28, "true_value": 3100.0},
+      {"raw": "9,500", "field": "Actual (USD)", "excel_row": 31, "true_value": 9500.0},
+      {"raw": "−12", "field": "Actual (USD)", "excel_row": 34, "true_value": -12.0},
+      {"raw": "$1,750", "field": "Actual (USD)", "excel_row": 39, "true_value": 1750.0},
+      {"raw": "(2,000)", "field": "Budgeted (USD)", "excel_row": 45, "true_value": -2000.0}
+    ],
+    "sample_cleaned_first_3_rows": [
+      {"Txn ID": 1001, "Date": "2025-01-11", "Category": "Rent", "Budgeted_true": 1225.11, "Actual_true": 1190.82, "Variance_true": -34.29, "Status": "Posted"},
+      {"Txn ID": 1002, "Date": "2025-01-18", "Category": "Payroll", "Budgeted_true": 8094.28, "Actual_true": 9450.59, "Variance_true": 1356.31, "Status": "Posted"},
+      {"Txn ID": 1003, "Date": "2025-01-25", "Category": "Utilities", "Budgeted_true": 431.13, "Actual_true": 435.07, "Variance_true": 3.94, "Status": "Posted"}
+    ],
+    "hidden_void_rows": [
+      {"excel_row": 11, "Txn ID": 1010, "Category": "Equipment Lease", "Status": "VOID - duplicate entry (re-keyed same charge twice)", "Budgeted_true": 744.89, "Actual_true": 732.55, "Variance_true": -12.34},
+      {"excel_row": 26, "Txn ID": 1025, "Category": "Rent", "Status": "VOID - reversed by bank same day", "Budgeted_true": 1205.03, "Actual_true": 1011.57, "Variance_true": -193.46},
+      {"excel_row": 47, "Txn ID": 1046, "Category": "Equipment Lease", "Status": "VOID - data entry error, corrected in the next entry", "Budgeted_true": 729.43, "Actual_true": 698.56, "Variance_true": -30.87}
+    ]
+  },
+  "intended_analysis": "Compute total and per-category budget variance (Actual - Budgeted) for the fiscal year, excluding the 3 VOID transactions, to identify which cost/revenue categories are running over or under budget and by how much.",
+  "mess_applied": [
+    "Accounting-style negatives as TEXT in parentheses, e.g. '(1,200)' (3 cells)",
+    "US thousands-separator numbers stored as TEXT (no currency/parens), e.g. '12,345' (3 cells)",
+    "Currency-formatted TEXT, e.g. '$1,200' (3 cells)",
+    "Unicode MINUS SIGN (U+2212, not ASCII hyphen) as in '−12', pasted from a bank-statement PDF (3 cells)",
+    "3 hidden rows (Excel rows 11, 26, 47) holding VOID/duplicate/reversed transactions the student hid instead of deleting",
+    "1 hidden column ('Account Code', column G) carrying an internal GL reference not meant for the report",
+    "A Variance formula column ('=E{r}-D{r}') with explicit cached values on every row, including the 12 rows whose formula references a text cell"
+  ],
+  "what_a_naive_reader_would_get_wrong": "A tool that reads cell values without checking type would silently coerce the 12 messy Budgeted/Actual text cells to NaN/missing (or, worse, mis-parse '(2,000)' as the string 'text' rather than -2000, and '12,345'/'6,750'/'9,500' as unrelated text rather than numbers with commas stripped), undercounting the true totals for those categories. A reader that does not special-case U+2212 (treating it as non-numeric) would fail to parse '−12' and '−1,850' at all, since Python's float() and most numeric coercions only recognize ASCII '-'. A reader using a library that skips hidden rows/columns by default (e.g. some spreadsheet viewers, or pandas with certain engines) would silently drop the 3 VOID rows without the analyst choosing to exclude them -- which happens to be the 'right' outcome here by accident, but for the wrong reason, and would be wrong if a hidden row were NOT supposed to be excluded. Conversely a reader that always includes hidden rows would double-count the duplicate/reversed transactions and inflate variance. A naive reader that also pulls the hidden 'Account Code' column into an analysis (rather than treating it as a hidden internal-only field) would waste effort trying to make a categorical/id column out of what is just a GL reference. Finally, a reader that trusts the Variance column via a full re-open-and-recalculate in Excel (rather than reading the cached value) would see #VALUE! errors on the 12 rows with text inputs, even though the cached value read via openpyxl(data_only=True) is a valid number.",
+  "verified_by_readback": true,
+  "readback_counts": {
+    "n_data_rows": 50,
+    "n_hidden_rows": 3,
+    "hidden_rows_excel": [11, 26, 47],
+    "n_hidden_columns": 1,
+    "hidden_column_letter": "G",
+    "n_parens_negative_text_cells": 3,
+    "n_us_thousands_text_cells": 3,
+    "n_currency_text_cells": 3,
+    "n_unicode_minus_cells": 3,
+    "n_formula_cells_with_cached_values": 50,
+    "n_formula_cells_missing_cached_value": 0,
+    "all_variance_formulas_consistent_with_true_values": true,
+    "per_column_non_empty_counts": {
+      "Txn ID": 50,
+      "Date": 50,
+      "Category": 50,
+      "Budgeted (USD)": 50,
+      "Actual (USD)": 50,
+      "Variance (USD)": 50,
+      "Account Code": 50,
+      "Status": 50
+    }
+  }
+}

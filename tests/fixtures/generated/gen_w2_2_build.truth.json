@@ -1,0 +1,88 @@
+{
+  "id": "w2_2",
+  "generator_model": "haiku",
+  "field": "Sports physiology / wearable device research",
+  "persona": "Researcher exporting 6 weeks of continuous accelerometer and vital-signs data from a wearable monitor worn by 150 study participants in a physical-activity intervention trial; data collected at 6-hour intervals (4 readings per day)",
+  "source_style": "Automated export from wearable device manufacturer's API; timestamps and participant IDs appended by study coordinator; notes column populated during manual verification events",
+  "file": "gen_w2_2_build.py",
+  "file_kind": "builder-script",
+  "sheets": [
+    {
+      "name": "Wearable Monitor Export",
+      "is_data": true,
+      "header_row": 1,
+      "n_data_rows": 60900,
+      "columns": [
+        {
+          "name": "Reading_Date",
+          "true_type": "datetime",
+          "notes": "Timestamp YYYY-MM-DD HH:MM; advanced every 6 hours per participant"
+        },
+        {
+          "name": "Participant_ID",
+          "true_type": "categorical",
+          "notes": "150 levels (P0001-P0150), d/m=0.0025 << 0.9 -> CATEGORICAL + FLAG '>20 levels' per PLAN 4.4 (same as h3_3 Participant ID). NOT Kind.ID."
+        },
+        {
+          "name": "Heart_Rate_bpm",
+          "true_type": "numeric",
+          "notes": "Beats per minute; ~97% present (~3 intentional blanks per participant to simulate device dropout); range 65-145 based on activity level"
+        },
+        {
+          "name": "Systolic_BP_mmHg",
+          "true_type": "numeric",
+          "notes": "Systolic blood pressure in mmHg; no missing values; range 110-130 due to repeated-measures variation"
+        },
+        {
+          "name": "Diastolic_BP_mmHg",
+          "true_type": "numeric",
+          "notes": "Diastolic blood pressure in mmHg; no missing values; range 70-85"
+        },
+        {
+          "name": "Step_Count_hourly",
+          "true_type": "numeric",
+          "notes": "Hourly step count from accelerometer; range 0-300+; realistic sedentary-to-active variation"
+        },
+        {
+          "name": "Activity_Type",
+          "true_type": "categorical",
+          "notes": "Inferred activity level; values: 'Rest', 'Light Activity', 'Moderate Activity', 'Vigorous Activity'; cycles through in fixed order"
+        },
+        {
+          "name": "Signal_Quality",
+          "true_type": "binary",
+          "notes": "Device signal quality as 0 (poor) or 1 (good); ~92% = 1, ~8% = 0; deterministic pattern (reading_idx % 13 != 0)"
+        },
+        {
+          "name": "Notes",
+          "true_type": "text",
+          "notes": "Free-text annotations; mostly empty; populated at rows 1 mod 50 ('Manual verification performed') and 1 mod 75 ('Device synchronized with server')"
+        }
+      ]
+    }
+  ],
+  "clean_table": "Rule: 150 participants × 406 readings per participant = 60,900 rows. Dates start 2025-01-15 and advance daily (every 4 readings). Participant IDs cycle P0001–P0150. Heart rate defaults to base 65 + (pid%20) + activity bonus + small variation, except for deterministic sparse blanks (every 20th reading, up to 3 per participant). Blood pressures increment slightly per participant and reading. Step count varies with activity. Signal quality is binary and deterministic. Activity type cycles Rest→Light→Moderate→Vigorous. Notes are sparse.\nFirst 3 data rows (abbreviated):\n[1] 2025-01-15 00:00 | P0001 | 73 | 110 | 70 | 200 | Rest | 1 | (blank)\n[2] 2025-01-15 06:00 | P0001 | (blank) | 111 | 71 | 195 | Light Activity | 0 | (blank)\n[3] 2025-01-15 12:00 | P0001 | 89 | 112 | 72 | 185 | Moderate Activity | 1 | (blank)",
+  "intended_analysis": "How does heart rate vary across activity types? Is there a systematic blood-pressure trend across the 6-week study period? Does signal quality degrade at particular activity levels or times of day? Are there participant-level differences in step count or vital signs? Do blanks in heart rate correlate with specific activity types or time windows (indicating device dropout patterns)?",
+  "mess_applied": [
+    "Very large sheet (60,900 data rows × 9 cols = 548,100 cells) — triggers large-sheet fallback in the reader (streaming/chunked read required)",
+    "Numeric column with sparse blanks: Heart_Rate_bpm has ~3 missing readings per participant (simulating realistic device dropout), distributed deterministically to test listwise deletion and reporting of n_dropped",
+    "Binary numeric column (Signal_Quality) as 0/1 to test recognition of binary kind despite numeric storage",
+    "Datetime column in text format (YYYY-MM-DD HH:MM) that must be recognized as datetime, not text",
+    "Repeated-measures structure: multiple rows per participant, but no explicit subject/group column (reader must infer or student must declare roles)",
+    "Sparse categorical column (Notes): ~96% empty, ~4% populated, to test handling of mostly-missing text columns",
+    "Participant_ID has 150 levels -> CATEGORICAL + '>20 levels' flag (NOT Kind.ID, per PLAN 4.4)"
+  ],
+  "what_a_naive_reader_would_get_wrong": "Treating blank cells in Heart_Rate_bpm as zero instead of missing; silently summing or averaging the blanks with listwise deletion forgotten. Misclassifying Signal_Quality as a true numeric column (integer) instead of binary. Treating Reading_Date as text instead of parsing it as datetime. Ignoring the repeated-measures structure and treating all 60,900 rows as independent observations instead of 406 per participant, biasing hypothesis tests and confidence intervals downward. Inferring participant-level random effects from the clustering without explicit modeling.",
+  "verified_by_readback": true,
+  "readback_counts": {
+    "rows_confirmed": 60900,
+    "cols_confirmed": 9,
+    "total_cells_confirmed": 548100,
+    "verification_method": "gen_w2_2_build.py: built to temp file, reopened with openpyxl.load_workbook(read_only=True, data_only=True), iterated over ws.iter_rows(), confirmed row/col counts, deleted temp file"
+  },
+  "_corrections": [
+    "Participant_ID true_type 'id' -> 'categorical' (150 levels, >20-levels flag per PLAN 4.4).",
+    "removed the false Kind-ID recommendation for Participant_ID (it is categorical, >20 levels).",
+    "NOTE: clean_table narrative sample values are fabricated -- row 1 actual = HR blank, sys 111, dia 71, steps 201, signal 0, notes 'Manual verification performed'; HR actual range 65-114 (not 65-145). See gen_w2_2_build.expect.json."
+  ]
+}

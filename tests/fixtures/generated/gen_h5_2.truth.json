@@ -1,0 +1,98 @@
+{
+  "id": "h5_2",
+  "generator_model": "haiku",
+  "field": "sports science",
+  "persona": "High school strength coach recording sprint times during field testing, written down quickly",
+  "source_style": "Hand-entered into CSV from field test clipboard notes, dates in mixed formats",
+  "file": "gen_h5_2.csv",
+  "file_kind": "csv",
+  "sheets": [
+    {
+      "name": null,
+      "is_data": true,
+      "header_row": 1,
+      "n_data_rows": 23,
+      "columns": [
+        {
+          "name": "Name",
+          "true_type": "text",
+          "notes": "Athlete names inconsistent (some nicknames, some initials, some full names; 2 rows blank)"
+        },
+        {
+          "name": "Date Tested",
+          "true_type": "date",
+          "notes": "Three different date formats: MM/DD/YYYY, MM-DD-YY, DD-MM-YYYY"
+        },
+        {
+          "name": "10m Sprint (s)",
+          "true_type": "numeric",
+          "notes": "Sprint time in seconds, 0.01s precision"
+        },
+        {
+          "name": "30m Sprint",
+          "true_type": "numeric",
+          "notes": "Sprint time in seconds, header missing unit"
+        },
+        {
+          "name": "Agility T-Test",
+          "true_type": "numeric",
+          "notes": "T-test time in seconds, header missing unit"
+        },
+        {
+          "name": "Notes",
+          "true_type": "text",
+          "notes": "Field notes, mostly empty; includes remarks like 'Good form', 'Tired', 'check sheet'"
+        }
+      ]
+    }
+  ],
+  "clean_table": [
+    {
+      "name": "Marcus Johnson",
+      "date": "2024-09-14",
+      "sprint_10m_s": 1.52,
+      "sprint_30m_s": 3.84,
+      "t_test_s": 9.23
+    },
+    {
+      "name": "James Chen",
+      "date": "2024-09-14",
+      "sprint_10m_s": 1.58,
+      "sprint_30m_s": 3.91,
+      "t_test_s": 9.18
+    },
+    {
+      "name": "Derek Thompson",
+      "date": "2024-09-14",
+      "sprint_10m_s": 1.49,
+      "sprint_30m_s": 3.76,
+      "t_test_s": 9.05
+    },
+    {
+      "name": "Tyrone Robinson",
+      "date": "2024-09-14",
+      "sprint_10m_s": 1.61,
+      "sprint_30m_s": 3.98,
+      "t_test_s": 9.41
+    },
+    {
+      "name": "Andre Williams",
+      "date": "2024-09-14",
+      "sprint_10m_s": 1.55,
+      "sprint_30m_s": 3.87,
+      "t_test_s": 9.27
+    },
+    {
+      "rows_note": "athlete 6 missing name in original, rows 6 and 11 have blank athlete names"
+    }
+  ],
+  "intended_analysis": "For each athlete, did sprint times (10m and 30m) improve from test date 1 to test date 2? What is the relationship between 10m sprint time and T-test agility time?",
+  "mess_applied": [
+    "Athlete names are inconsistent: some are nicknames (Marcus J., Derek T), some are full names, some are initials, and 2 rows are blank with notes asking who they are",
+    "Dates in three different formats: MM/DD/YYYY (09/14/2024), MM-DD-YY (09-14-24), and DD-MM-YYYY (14-09-2024)",
+    "30m Sprint and Agility T-Test column headers are missing units (should say '(s)' for seconds)",
+    "Missing athlete names in two rows (rows 6 and 11) with annotations in Notes column",
+    "Notes column has random observations mixed in (Good form, Tired, Wind?, check sheet) instead of being for actual notes"
+  ],
+  "what_a_naive_reader_would_get_wrong": "A parser might read dates in mixed formats as three different columns or fail entirely. Blank athlete names could cause row alignment to shift. The column headers don't specify units for two time-based columns, so a reader would need to infer they are seconds like the first one."
+}

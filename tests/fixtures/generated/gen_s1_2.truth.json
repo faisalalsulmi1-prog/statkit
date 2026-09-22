@@ -1,0 +1,152 @@
+{
+  "id": "s1_2",
+  "generator_model": "sonnet",
+  "field": "ecology",
+  "persona": "Same field biologist's forest-inventory collaborator, running fixed-area tree plots for a stand-structure survey",
+  "source_style": "exported from R with write.csv(df, file, row.names=FALSE) after entering plot tallies into a data frame",
+  "file": "gen_s1_2.csv",
+  "file_kind": "csv",
+  "sheets": [
+    {
+      "name": null,
+      "is_data": true,
+      "header_row": 1,
+      "n_data_rows": 47,
+      "columns": [
+        {
+          "name": "plot_id",
+          "true_type": "id",
+          "notes": "4 fixed-area plots, P01-P04"
+        },
+        {
+          "name": "tree_id",
+          "true_type": "id",
+          "notes": "integer, renumbered 1..n within each plot (not globally unique)"
+        },
+        {
+          "name": "species_code",
+          "true_type": "categorical",
+          "notes": "USDA-style 4-letter species code; SPECIES_NAMES map: ACSA=Acer saccharum, QURU=Quercus rubra, BEPA=Betula papyrifera, PIST=Pinus strobus, FAGR=Fagus grandifolia, TSCA=Tsuga canadensis"
+        },
+        {
+          "name": "dbh_cm",
+          "true_type": "numeric",
+          "notes": "diameter at breast height, cm, 1 decimal, species-specific realistic range"
+        },
+        {
+          "name": "height_m",
+          "true_type": "numeric",
+          "notes": "total height, m, 1 decimal; correlated with dbh (height = 1.3 + 0.35*dbh + noise), floor of 3.0"
+        },
+        {
+          "name": "status",
+          "true_type": "binary",
+          "notes": "'alive' or 'dead', P(alive)=0.85"
+        },
+        {
+          "name": "decay_class",
+          "true_type": "ordinal",
+          "notes": "1 (recently dead) to 5 (highly decayed) snag decay class; only scored for dead trees. R's write.csv prints the literal unquoted text 'NA' for alive trees' missing value, not a blank cell"
+        },
+        {
+          "name": "date_measured",
+          "true_type": "date",
+          "notes": "ISO yyyy-mm-dd, one date per plot (all trees in a plot measured the same field day)"
+        }
+      ]
+    }
+  ],
+  "clean_table": {
+    "first_5_rows": [
+      [
+        "P01",
+        1,
+        "TSCA",
+        24.9,
+        8.2,
+        "alive",
+        "NA",
+        "2024-07-08"
+      ],
+      [
+        "P01",
+        2,
+        "ACSA",
+        32.5,
+        14.3,
+        "alive",
+        "NA",
+        "2024-07-08"
+      ],
+      [
+        "P01",
+        3,
+        "ACSA",
+        27.5,
+        9.9,
+        "alive",
+        "NA",
+        "2024-07-08"
+      ],
+      [
+        "P01",
+        4,
+        "ACSA",
+        32.0,
+        14.3,
+        "alive",
+        "NA",
+        "2024-07-08"
+      ],
+      [
+        "P01",
+        5,
+        "BEPA",
+        9.1,
+        4.8,
+        "alive",
+        "NA",
+        "2024-07-08"
+      ]
+    ],
+    "last_2_rows": [
+      [
+        "P04",
+        12,
+        "PIST",
+        37.2,
+        16.2,
+        "alive",
+        "NA",
+        "2024-07-10"
+      ],
+      [
+        "P04",
+        13,
+        "ACSA",
+        29.1,
+        10.8,
+        "alive",
+        "NA",
+        "2024-07-10"
+      ]
+    ],
+    "n": 47,
+    "columns_in_order": [
+      "plot_id",
+      "tree_id",
+      "species_code",
+      "dbh_cm",
+      "height_m",
+      "status",
+      "decay_class",
+      "date_measured"
+    ],
+    "generation_rule": "One row per tree, grouped by plot in the fixed order P01 (2024-07-08), P02 (2024-07-08), P03 (2024-07-09), P04 (2024-07-10). Per plot, n_trees = rng.randint(10,15), then tree_id runs 1..n_trees. Each tree draws species_code via rng.choices(['ACSA','QURU','BEPA','PIST','FAGR','TSCA'], weights=[0.28,0.22,0.15,0.12,0.15,0.08]). dbh_cm = round(rng.uniform(lo,hi),1) where (lo,hi) is the species' range: ACSA(15,45), QURU(20,55), BEPA(8,25), PIST(25,60), FAGR(10,35), TSCA(15,40). height_m = round(1.3 + 0.35*dbh_cm + rng.uniform(-2,2), 1), floored at 3.0. status='alive' if rng.random()<0.85 else 'dead'. decay_class = the literal string 'NA' if alive, else rng.randint(1,5). All randomness from random.Random(7), consumed per tree in order: species_code, dbh, height, alive-roll, decay (if dead), looping trees within each plot, plots in the fixed order above."
+  },
+  "intended_analysis": "Does mean tree diameter (or species composition, or the proportion of standing dead trees) differ among the 4 plots? Also used to fit a simple height-diameter allometric relationship across species.",
+  "mess_applied": [
+    "none, it is clean"
+  ],
+  "what_a_naive_reader_would_get_wrong": "Reading decay_class as a numeric column and choking on (or silently coercing) the literal text 'NA' for every alive tree, rather than recognizing it as R's missing-value marker for a variable that is structurally undefined (not just unmeasured) when status='alive'."
+}

@@ -1,0 +1,55 @@
+{
+  "id": "h3_3",
+  "generator_model": "haiku",
+  "field": "education research",
+  "persona": "Cognitive psychology student running a reaction time experiment with 30 participants, exported from E-Prime stimulus presentation software",
+  "source_style": "exported directly from E-Prime behavioral experiment log to CSV",
+  "file": "gen_h3_3.csv",
+  "file_kind": "csv",
+  "sheets": [
+    {
+      "name": null,
+      "is_data": true,
+      "header_row": 1,
+      "n_data_rows": 1440,
+      "columns": [
+        {
+          "name": "Participant ID",
+          "true_type": "id",
+          "notes": "P01\u2013P30, n=30 participants"
+        },
+        {
+          "name": "Trial",
+          "true_type": "ordinal",
+          "notes": "Trial number 1\u201348 per participant"
+        },
+        {
+          "name": "Condition",
+          "true_type": "categorical",
+          "notes": "Visual or Auditory stimulus modality"
+        },
+        {
+          "name": "Stimulus Type",
+          "true_type": "categorical",
+          "notes": "Target (goal stimulus) or Distractor (irrelevant stimulus)"
+        },
+        {
+          "name": "Reaction Time (ms)",
+          "true_type": "numeric",
+          "notes": "Latency in milliseconds from stimulus onset to button press, range ~220\u2013750ms"
+        },
+        {
+          "name": "Accuracy",
+          "true_type": "binary",
+          "notes": "1=correct response, 0=incorrect/missed response"
+        }
+      ]
+    }
+  ],
+  "clean_table": "First 5 rows + last 2 rows. Total 1440 data rows (30 participants \u00d7 48 trials). Generation rule: RT = base_condition_stimulus + participant_offset + N(0, 60); accuracy 85\u201398% conditional on stimulus type and modality. Visual targets fastest (~420ms, 94% accuracy), auditory distractors slowest (~510ms, 83% accuracy). All rows complete, no missing values.",
+  "intended_analysis": "Does reaction time differ by condition (visual vs. auditory)? Is there a stimulus type effect (target vs. distractor)? What is the interaction: are visual targets faster than auditory targets? What proportion of responses are accurate in each condition? Is there a speed-accuracy tradeoff?",
+  "mess_applied": [
+    "none, it is clean"
+  ],
+  "what_a_naive_reader_would_get_wrong": "Nothing obvious\u2014this is a standard, tidy CSV export from a behavioral experiment. Column types are consistent throughout. A naive reader should parse it correctly."
+}

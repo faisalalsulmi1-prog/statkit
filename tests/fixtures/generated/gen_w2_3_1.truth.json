@@ -1,0 +1,133 @@
+{
+  "id": "w2_3_1",
+  "generator_model": "sonnet",
+  "field": "food science / biotechnology",
+  "persona": "Dutch exchange student (Sanne de Vries) keeping her own fermentation batch log in a food-science lab, entering numbers the way she learned at home (comma decimal, dot thousands separator, dd.mm.yyyy dates) even though the lab's template is English-labeled",
+  "source_style": "personal lab notebook kept in Excel, one row per fermentation batch over a month",
+  "file": "gen_w2_3_1.xlsx",
+  "file_kind": "xlsx",
+  "sheets": [
+    {
+      "name": "Fermentation Log",
+      "is_data": true,
+      "header_row": 1,
+      "n_data_rows": 31,
+      "columns": [
+        {
+          "name": "BatchID",
+          "true_type": "id",
+          "notes": "B001..B031, sequential"
+        },
+        {
+          "name": "Date",
+          "true_type": "text",
+          "notes": "European day.month.year format stored as text, e.g. '02.02.2026'; a naive US-locale date parser would misread day/month for the first 12 days"
+        },
+        {
+          "name": "Substrate",
+          "true_type": "categorical",
+          "notes": "Glucose, Sucrose, Maltose, or Lactose"
+        },
+        {
+          "name": "Temperature_C",
+          "true_type": "numeric",
+          "notes": "Real Excel number (General format), 20.0-28.0, one decimal. Normal control column with NO locale quirk, for contrast against the two required-quirk columns."
+        },
+        {
+          "name": "Yield_Percent",
+          "true_type": "numeric",
+          "notes": "REQUIRED QUIRK: stored as a real float fraction between 0.60 and 0.98 with cell.number_format == '0%', so e.g. stored value 0.63 displays as '63%'. Confirmed by read-back: all 31 cells have number_format '0%' and hold a float in [0,1], not the displayed percent integer."
+        },
+        {
+          "name": "TotalSugar_mg_per_L",
+          "true_type": "text",
+          "notes": "REQUIRED QUIRK: European-formatted numbers stored as TEXT strings (dot = thousands separator, comma = decimal separator). Row 2 = '1.234,5' (true value 1234.5), row 3 = '3,5' (true value 3.5). About 1 in 4 rows uses a value >=1000 mg/L (thousands-dot form), the rest are small values with a plain decimal comma."
+        },
+        {
+          "name": "Operator_Initials",
+          "true_type": "categorical",
+          "notes": "SdV, JH, MK, or TB"
+        },
+        {
+          "name": "Notes",
+          "true_type": "text",
+          "notes": "Free text, mostly empty (13 of 31 rows filled); values like 'sample lost', 'repeat run', 'diluted 1:10', 'contamination suspected'"
+        }
+      ]
+    }
+  ],
+  "clean_table": {
+    "description": "After cleaning: Yield_Percent already numeric (multiply by 100 only if you want a percent-scaled number rather than a proportion -- do NOT re-divide by 100, the stored value already IS the proportion). TotalSugar_mg_per_L must be re-parsed from European convention: strip '.' thousands separators, replace ',' with '.', then cast to float ('1.234,5' -> 1234.5, '3,5' -> 3.5). Date should be parsed as dd.mm.yyyy, not mm.dd.yyyy. 31 data rows, no missing BatchID/Substrate/Temperature/Yield/Sugar/Operator; Notes has 18 blanks.",
+    "structure": "One row per BatchID (B001..B031), no repeats or nesting.",
+    "total_rows": 31,
+    "sample_cleaned": [
+      {
+        "BatchID": "B001",
+        "Date": "2026-02-02",
+        "Substrate": "Sucrose",
+        "Temperature_C": 20.3,
+        "Yield_Percent": 0.63,
+        "TotalSugar_mg_per_L": 1234.5,
+        "Operator_Initials": "JH",
+        "Notes": "sample lost"
+      },
+      {
+        "BatchID": "B002",
+        "Date": "2026-02-03",
+        "Substrate": "Maltose",
+        "Temperature_C": 21.5,
+        "Yield_Percent": 0.73,
+        "TotalSugar_mg_per_L": 3.5,
+        "Operator_Initials": "MK",
+        "Notes": ""
+      },
+      {
+        "BatchID": "B003",
+        "Date": "2026-02-04",
+        "Substrate": "Lactose",
+        "Temperature_C": 27.9,
+        "Yield_Percent": 0.68,
+        "TotalSugar_mg_per_L": 85.8,
+        "Operator_Initials": "JH",
+        "Notes": "sample lost"
+      }
+    ]
+  },
+  "intended_analysis": "Compare fermentation yield (%) and total sugar concentration across substrates and operators; correlate temperature with yield.",
+  "mess_applied": [
+    "Yield_Percent stored as a raw fraction (0-1) but DISPLAYED as a whole percent via a '%' cell number_format -- reading the underlying value without respecting the format silently gives a number 100x too small",
+    "TotalSugar_mg_per_L stored as TEXT in European number convention: '.' as thousands separator, ',' as decimal separator (e.g. '1.234,5' = 1234.5; '3,5' = 3.5)",
+    "Date column is text in dd.mm.yyyy order, ambiguous with mm.dd.yyyy for day values <=12",
+    "Notes column mostly empty (free text)"
+  ],
+  "what_a_naive_reader_would_get_wrong": "A tool that reads the raw Yield_Percent cell values without checking number_format would treat 0.63 as '63% yield' being stored as 0.63 -- fine if it knows to treat it as a proportion, but a naive summary that assumes percent columns are stored 0-100 would report yields around 0.7% instead of 70%. Separately, a naive numeric parser (or one that strips '.' as a thousands separator using US conventions) applied to TotalSugar_mg_per_L would parse '1.234,5' as 1.2345 (dropping 3 orders of magnitude) and would either fail to parse '3,5' at all or read it as '35' if the comma is stripped as if it were a thousands separator. The dd.mm.yyyy Date strings would also be silently misread as month/day for any day-of-month <=12.",
+  "verified_by_readback": true,
+  "readback_counts": {
+    "n_data_rows": 31,
+    "per_column_non_empty_counts": {
+      "BatchID": 31,
+      "Date": 31,
+      "Substrate": 31,
+      "Temperature_C": 31,
+      "Yield_Percent": 31,
+      "TotalSugar_mg_per_L": 31,
+      "Operator_Initials": 31,
+      "Notes": 13
+    },
+    "yield_percent_number_formats_seen": [
+      "0%"
+    ],
+    "yield_percent_python_type": "float",
+    "yield_percent_range_confirmed_0_to_1": true,
+    "total_sugar_python_type": "str",
+    "total_sugar_literal_examples_confirmed_present": [
+      "1.234,5",
+      "3,5"
+    ],
+    "total_sugar_has_thousands_dot_comma_decimal_form": true,
+    "total_sugar_has_plain_comma_decimal_form": true
+  },
+  "_corrections": [
+    "clean_table.sample_cleaned B003: Operator_Initials null -> 'JH', Notes '' -> 'sample lost' (verified from bytes)."
+  ]
+}

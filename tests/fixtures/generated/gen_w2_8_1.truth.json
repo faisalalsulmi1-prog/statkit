@@ -1,0 +1,103 @@
+{
+  "id": "w2_8_1",
+  "generator_model": "haiku",
+  "field": "Clinical Psychology / Behavioral Health",
+  "persona": "University psychology researcher (experimental design group)",
+  "source_style": "Real pre-post intervention study with naturalistic dropout",
+  "file": "gen_w2_8_1.xlsx",
+  "file_kind": "xlsx",
+  "sheets": [
+    {
+      "name": "Sheet1",
+      "is_data": false,
+      "header_row": null,
+      "n_data_rows": 0,
+      "columns": [],
+      "purpose": "Empty placeholder (common in real workbooks)"
+    },
+    {
+      "name": "Data",
+      "is_data": true,
+      "header_row": 1,
+      "n_data_rows": 47,
+      "columns": [
+        {
+          "name": "Subject",
+          "true_type": "text",
+          "notes": "Participant ID, format PT-XXX (PT-001 to PT-025). TEXT not integer."
+        },
+        {
+          "name": "Time",
+          "true_type": "categorical",
+          "notes": "Measurement timepoint: 'Pre' or 'Post'. Categorical condition variable."
+        },
+        {
+          "name": "AnxietyScore",
+          "true_type": "numeric",
+          "notes": "GAD-7 anxiety scale score (range 0-63; higher = greater anxiety severity)"
+        }
+      ]
+    },
+    {
+      "name": "Notes",
+      "is_data": false,
+      "header_row": null,
+      "n_data_rows": 11,
+      "columns": [],
+      "purpose": "Study metadata, data quality notes, and analysis guidance"
+    }
+  ],
+  "clean_table": {
+    "format": "LONG (tall) format",
+    "observations_per_subject": "2 (or 1 if missing Post)",
+    "rows_per_observation": 1,
+    "structure": "Each row = one subject × one timepoint. Subject PT-001 appears in rows 2-3 (Pre, Post), PT-002 in rows 4-5, etc."
+  },
+  "intended_analysis": {
+    "primary": "Paired t-test (Pre vs Post anxiety scores)",
+    "secondary": "Wilcoxon signed-rank test (non-parametric alternative if scores non-normal)",
+    "repeated_measures": "One-way repeated measures ANOVA (Pre vs Post, accounting for subject nesting)",
+    "valid_pairs": 22,
+    "incomplete_pairs": 3,
+    "intent": "Evaluate efficacy of cognitive behavioral therapy (CBT) intervention in reducing anxiety"
+  },
+  "mess_applied": {
+    "structure_quirk": "Empty first sheet followed by data on second sheet (mimics real-world workbook organization)",
+    "incompleteness": "3 subjects (PT-008, PT-015, PT-022) missing Post measurements (post-intervention attrition/no-show)",
+    "column_order": "LONG format requires awareness of grouping structure; naive reader might treat rows independently",
+    "categorical_encoding": "Time is text ('Pre'/'Post') not numeric (1/2) or ordinal"
+  },
+  "what_a_naive_reader_would_get_wrong": {
+    "mistake_1": "Treating rows as independent observations rather than nested within subjects (loses pairing information)",
+    "mistake_2": "Attempting t-test on all 47 rows (n=47) instead of recognizing 25 subjects with 22 valid pairs",
+    "mistake_3": "Including rows from subjects with only Pre (or only Post) as separate groups instead of removing them for paired analysis",
+    "mistake_4": "Computing summary statistics per row rather than per subject per timepoint",
+    "mistake_5": "Not noticing the empty first sheet and attempting to read from the wrong range/sheet",
+    "correct_approach": "Pivot or group by Subject; identify complete pairs (n=22); compute Pre-Post difference per subject; test mean difference"
+  },
+  "realistic_context": {
+    "study_design": "Randomized controlled trial of cognitive behavioral therapy for generalized anxiety disorder",
+    "measure": "GAD-7 (Generalized Anxiety Disorder-7) self-report screening scale",
+    "intervention": "8-week manualized CBT delivered individually",
+    "timepoints": "Pre-intervention baseline, Post-intervention (immediately after 8 weeks)",
+    "sample_size": "N=25 enrolled; N=22 completed both assessments (3 post-intervention dropouts)",
+    "data_quality": "All scores double-checked by research assistant; no missing data within completed assessments"
+  },
+  "verified_by_readback": true,
+  "readback_counts": {
+    "n_subjects": 25,
+    "n_rows_total": 47,
+    "n_rows_pre": 25,
+    "n_rows_post": 22,
+    "n_incomplete_pairs": 3,
+    "subjects_missing_post": ["PT-008", "PT-015", "PT-022"]
+  },
+  "all_quirks_present": {
+    "1_empty_first_sheet": true,
+    "2_long_format": true,
+    "3_text_subject_ids": true,
+    "4_missing_conditions": true,
+    "5_notes_sheet": true,
+    "6_min_20_subjects_2_timepoints": true
+  }
+}

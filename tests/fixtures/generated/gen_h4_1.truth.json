@@ -1,0 +1,75 @@
+{
+  "id": "h4_1",
+  "generator_model": "haiku",
+  "field": "agronomy",
+  "persona": "Graduate student testing wheat cultivars under different N fertilizer and irrigation regimes in a randomized complete block design.",
+  "source_style": "manually recorded field measurements and lab analysis of harvested grain",
+  "file": "gen_h4_1.xlsx",
+  "file_kind": "xlsx",
+  "sheets": [
+    {
+      "name": "Yield Data",
+      "is_data": true,
+      "header_row": 1,
+      "n_data_rows": 72,
+      "columns": [
+        {
+          "name": "Plot_ID",
+          "true_type": "id",
+          "notes": "P001\u2013P072, unique plot identifier"
+        },
+        {
+          "name": "Block",
+          "true_type": "ordinal",
+          "notes": "1, 2, or 3; blocking variable"
+        },
+        {
+          "name": "Variety",
+          "true_type": "categorical",
+          "notes": "Zagros, Dena, Chamran, or Alvand"
+        },
+        {
+          "name": "Fertilizer_Level_kg_ha",
+          "true_type": "numeric",
+          "notes": "0, 150, or 300 kg/ha N fertilizer"
+        },
+        {
+          "name": "Irrigation_Type",
+          "true_type": "categorical",
+          "notes": "Rainfed or Supplemental"
+        },
+        {
+          "name": "Plant_Height_cm",
+          "true_type": "numeric",
+          "notes": "height at maturity, cm"
+        },
+        {
+          "name": "Grain_Yield_kg_ha",
+          "true_type": "numeric",
+          "notes": "final harvested grain yield"
+        },
+        {
+          "name": "Test_Weight_kg_per_100seeds",
+          "true_type": "numeric",
+          "notes": "test weight in kg/100 seeds"
+        },
+        {
+          "name": "Protein_Percent",
+          "true_type": "numeric",
+          "notes": "grain protein content %"
+        },
+        {
+          "name": "Harvest_Date",
+          "true_type": "date",
+          "notes": "YYYY-MM-DD format"
+        }
+      ]
+    }
+  ],
+  "clean_table": "First 3 rows: [{'Plot_ID': 'P001', 'Block': 1, 'Variety': 'Zagros', 'Fertilizer_Level_kg_ha': 0, 'Irrigation_Type': 'Rainfed', 'Plant_Height_cm': 64.8, 'Grain_Yield_kg_ha': 2425, 'Test_Weight_kg_per_100seeds': 38.19, 'Protein_Percent': 12.6, 'Harvest_Date': '2024-06-15'}, ...]; n=72 total rows; generated from a 4-variety \u00d7 3-fertilizer \u00d7 2-irrigation \u00d7 3-block factorial design with systematic effects (variety \u00b1200 kg/ha, fertilizer ~3.5 kg/ha per unit, irrigation +1300 kg/ha base effect) plus Gaussian noise (\u03c3 \u2248 150 for yield).",
+  "intended_analysis": "Two-way or three-way ANOVA to test main effects of variety, fertilizer level, and irrigation type on grain yield; regression to quantify yield response to N; block effect control.",
+  "mess_applied": [
+    "none, it is clean"
+  ],
+  "what_a_naive_reader_would_get_wrong": "None; this is a properly formatted field trial dataset ready for analysis."
+}

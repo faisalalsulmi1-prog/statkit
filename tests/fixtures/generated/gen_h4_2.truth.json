@@ -1,0 +1,100 @@
+{
+  "id": "h4_2",
+  "generator_model": "haiku",
+  "field": "agronomy",
+  "persona": "Master's student excavating root systems from rice cultivars over a growing season, recording measurements and notes as field conditions allow.",
+  "source_style": "field notes + lab bench measurements, manually entered into Excel with ad-hoc formatting",
+  "file": "gen_h4_2.xlsx",
+  "file_kind": "xlsx",
+  "sheets": [
+    {
+      "name": "Root Data",
+      "is_data": true,
+      "header_row": 1,
+      "n_data_rows": 20,
+      "columns": [
+        {
+          "name": "Date Sampled",
+          "true_type": "date",
+          "notes": "mixed format: YYYY-MM-DD, MM/DD/YY, M/DD/YYYY"
+        },
+        {
+          "name": "Plot",
+          "true_type": "id",
+          "notes": "1\u201320, plot identifier"
+        },
+        {
+          "name": "Cultivar",
+          "true_type": "categorical",
+          "notes": "IR64, BR11, or Binam"
+        },
+        {
+          "name": "Root Depth (cm)",
+          "true_type": "numeric",
+          "notes": "maximum rooting depth in cm"
+        },
+        {
+          "name": "Lateral Roots",
+          "true_type": "numeric",
+          "notes": "count per excavated root, some entries as text string"
+        },
+        {
+          "name": "Root Biomass (g)",
+          "true_type": "numeric",
+          "notes": "dry weight, some rows from scale malfunction (row 13)"
+        },
+        {
+          "name": "Soil Texture",
+          "true_type": "categorical",
+          "notes": "Clay loam, Loam, or Sandy loam"
+        },
+        {
+          "name": "Soil Moisture %",
+          "true_type": "numeric",
+          "notes": "% by weight, contains 'N/A', 'missing', and numeric gaps"
+        },
+        {
+          "name": "Notes",
+          "true_type": "text",
+          "notes": "free-form observations, blank cells common"
+        }
+      ]
+    },
+    {
+      "name": "Lab Notes",
+      "is_data": false,
+      "header_row": 1,
+      "n_data_rows": 7,
+      "columns": [
+        {
+          "name": "Date",
+          "true_type": "date",
+          "notes": "measurement date, format MM/DD/YYYY"
+        },
+        {
+          "name": "Cultivar",
+          "true_type": "categorical",
+          "notes": "specific cultivar or 'All'"
+        },
+        {
+          "name": "Notes / Issues",
+          "true_type": "text",
+          "notes": "equipment status, procedural notes"
+        }
+      ]
+    }
+  ],
+  "clean_table": "Root Data first 3 rows: [{'Date Sampled': '2024-04-15', 'Plot': 1, 'Cultivar': 'IR64', 'Root Depth (cm)': 18.5, 'Lateral Roots': 14, 'Root Biomass (g)': 2.3, 'Soil Texture': 'Clay loam', 'Soil Moisture %': 22.5, 'Notes': 'normal growth'}, {'Date Sampled': '2024-04-15', 'Plot': 2, 'Cultivar': 'IR64', 'Root Depth (cm)': 19.2, 'Lateral Roots': 15, 'Root Biomass (g)': 2.5, 'Soil Texture': 'Clay loam', 'Soil Moisture %': 22.5, 'Notes': ''}, {'Date Sampled': '2024-04-15', 'Plot': 3, 'Cultivar': 'BR11', 'Root Depth (cm)': 22.1, 'Lateral Roots': 18, 'Root Biomass (g)': 3.8, 'Soil Texture': 'Loam', 'Soil Moisture %': 24, 'Notes': 'good lateral root development'}, ...]; n=20 total; sampling dates span April 15 \u2013 May 20, 2024; three rice cultivars (IR64, BR11, Binam) measured at 3\u20134 time points each with 4\u20135 replicates per date.",
+  "intended_analysis": "How does rooting depth and biomass vary among cultivars? Mixed-model regression accounting for date and cultivar effects; treatment of missing/suspect measurements (rows 4, 9, 13, 17); assessment of measurement reliability from lab notes.",
+  "mess_applied": [
+    "mixed date formats (YYYY-MM-DD, MM/DD/YY, M/DD/YYYY)",
+    "numeric column (Lateral Roots, row 5) contains a text string '16'",
+    "missing soil moisture marked as 'N/A' (row 9) and 'missing' (row 17)",
+    "equipment/scale issues flagged in lab notes (rows 4, 9, 13, 17) affecting measurement confidence",
+    "free-form notes column with blanks, abbreviations, and qualitative remarks",
+    "no unit labels in column headers (units in Notes only)",
+    "sparse formatting, no alignment consistency",
+    "row 13 biomass flagged as 'estimated' due to equipment malfunction"
+  ],
+  "what_a_naive_reader_would_get_wrong": "A tool that doesn't account for date format variation will misparse dates or fail on rows 4 and 13. Numeric parsing will crash or coerce row 5 incorrectly. A simple mean() will silently include estimated/suspect values without flagging measurement-quality differences."
+}

@@ -1,0 +1,161 @@
+{
+  "id": "s2_3",
+  "generator_model": "sonnet",
+  "field": "business / marketing",
+  "persona": "Same MBA student, analyzing a client's online-store order data for a marketing-analytics course project on channel performance",
+  "source_style": "exported order-level data from the Shopify admin for April, then again for May, and pasted the two monthly CSV exports together in Excel before re-saving as one CSV",
+  "file": "gen_s2_3.csv",
+  "file_kind": "csv",
+  "sheets": [
+    {
+      "name": null,
+      "is_data": true,
+      "header_row": 1,
+      "n_data_rows": 92,
+      "columns": [
+        {
+          "name": "OrderID",
+          "true_type": "id",
+          "notes": "ORD-1001..ORD-1090, sequential by creation order (not by date); one order (ORD-1023) appears twice"
+        },
+        {
+          "name": "OrderDate",
+          "true_type": "date",
+          "notes": "Rows 1-45 (April, US-locale export) use M/D/YYYY text; rows after the repeated header (May export) use YYYY-MM-DD; the same underlying dates in canonical form are April/May 2026"
+        },
+        {
+          "name": "Channel",
+          "true_type": "categorical",
+          "notes": "Online Store / Instagram Ads / Retail Partner / Email Campaign"
+        },
+        {
+          "name": "Region",
+          "true_type": "categorical",
+          "notes": "West / Midwest / Northeast / South; 4 rows have the value missing, written inconsistently as empty string or literal 'N/A'"
+        },
+        {
+          "name": "UnitsSold",
+          "true_type": "numeric",
+          "notes": "Integer units per order, 1-5"
+        },
+        {
+          "name": "UnitPrice",
+          "true_type": "numeric",
+          "notes": "USD unit price from a fixed catalog {19.99,24.99,29.99,34.99,44.99,54.99}; 8 scattered rows were hand-edited and show it as currency text with a $ and thousands comma instead of a plain number"
+        },
+        {
+          "name": "Discount_pct",
+          "true_type": "numeric",
+          "notes": "Percent off (0/10/15/20/25); when 0, most rows leave the cell blank but 4 rows instead show a literal '-' -- neither means missing, both mean no discount"
+        },
+        {
+          "name": "TotalRevenue",
+          "true_type": "numeric",
+          "notes": "= UnitsSold * UnitPrice * (1 - Discount_pct/100), rounded to cents; same 8 rows as UnitPrice are hand-edited to currency text with $ and thousands comma"
+        },
+        {
+          "name": "PaymentMethod",
+          "true_type": "categorical",
+          "notes": "Credit Card / PayPal / Apple Pay / Gift Card"
+        }
+      ]
+    }
+  ],
+  "clean_table": {
+    "n": 90,
+    "rule": "45 April-2026 orders + 45 May-2026 orders (90 total), OrderID=ORD-1001..ORD-1090 assigned in creation order then each month's rows sorted by date for export (mirroring how Shopify exports one month at a time, date-ascending). Channel ~ weighted choice over 4 categories [45,20,25,10]; Region ~ weighted choice [30,25,25,20]; UnitsSold ~ Uniform{1..5}; UnitPrice ~ Uniform choice over catalog {19.99,24.99,29.99,34.99,44.99,54.99}; Discount_pct ~ weighted choice over {0(x3 weight),10,15,20,25} (0 is 3x as likely as any other single value); TotalRevenue = round(UnitsSold*UnitPrice*(1-Discount_pct/100),2); PaymentMethod ~ weighted choice [55,25,15,5]. Seed=20260922. The physical file additionally contains: a second copy of the header row where the May export was pasted in, one duplicated order row (ORD-1023, the April order at true index 22, repeated once more near the end), and a bottom 'TOTAL' row (OrderID='TOTAL', UnitsSold=sum of all 90 UnitsSold, TotalRevenue=sum of all 90 TotalRevenue formatted as currency text) -- none of these three extra physical rows are real orders beyond the 90 above.",
+    "first_5_rows": [
+      {
+        "OrderID": "ORD-1001",
+        "OrderDate": "2026-04-02",
+        "Channel": "Online Store",
+        "Region": "West",
+        "UnitsSold": 5,
+        "UnitPrice": 54.99,
+        "Discount_pct": 0,
+        "TotalRevenue": 274.95,
+        "PaymentMethod": "Apple Pay"
+      },
+      {
+        "OrderID": "ORD-1002",
+        "OrderDate": "2026-04-03",
+        "Channel": "Retail Partner",
+        "Region": "West",
+        "UnitsSold": 1,
+        "UnitPrice": 24.99,
+        "Discount_pct": 0,
+        "TotalRevenue": 24.99,
+        "PaymentMethod": "PayPal"
+      },
+      {
+        "OrderID": "ORD-1003",
+        "OrderDate": "2026-04-04",
+        "Channel": "Retail Partner",
+        "Region": "Midwest",
+        "UnitsSold": 3,
+        "UnitPrice": 19.99,
+        "Discount_pct": 0,
+        "TotalRevenue": 59.97,
+        "PaymentMethod": "Credit Card"
+      },
+      {
+        "OrderID": "ORD-1004",
+        "OrderDate": "2026-04-05",
+        "Channel": "Online Store",
+        "Region": "West",
+        "UnitsSold": 2,
+        "UnitPrice": 19.99,
+        "Discount_pct": 20,
+        "TotalRevenue": 31.98,
+        "PaymentMethod": "PayPal"
+      },
+      {
+        "OrderID": "ORD-1005",
+        "OrderDate": "2026-04-05",
+        "Channel": "Instagram Ads",
+        "Region": "West",
+        "UnitsSold": 5,
+        "UnitPrice": 44.99,
+        "Discount_pct": 25,
+        "TotalRevenue": 168.71,
+        "PaymentMethod": "Credit Card"
+      }
+    ],
+    "last_2_rows": [
+      {
+        "OrderID": "ORD-1089",
+        "OrderDate": "2026-05-29",
+        "Channel": "Online Store",
+        "Region": "Northeast",
+        "UnitsSold": 4,
+        "UnitPrice": 24.99,
+        "Discount_pct": 10,
+        "TotalRevenue": 89.96,
+        "PaymentMethod": "Credit Card"
+      },
+      {
+        "OrderID": "ORD-1090",
+        "OrderDate": "2026-05-31",
+        "Channel": "Retail Partner",
+        "Region": "Midwest",
+        "UnitsSold": 3,
+        "UnitPrice": 34.99,
+        "Discount_pct": 20,
+        "TotalRevenue": 83.98,
+        "PaymentMethod": "Credit Card"
+      }
+    ]
+  },
+  "intended_analysis": "Does average order value (TotalRevenue) differ by marketing channel (one-way ANOVA / Kruskal-Wallis across Online Store / Instagram Ads / Retail Partner / Email Campaign)? Is there a relationship between discount percentage and units sold? Did total revenue grow from April to May?",
+  "mess_applied": [
+    "File is two monthly exports pasted together, so the header row ('OrderID,OrderDate,...') appears twice in the file -- once at the very top and once again where May's export begins",
+    "OrderDate format changes partway through the file: M/D/YYYY for the April block, YYYY-MM-DD for the May block, because the two monthly exports used different locale settings",
+    "UnitPrice and TotalRevenue are plain numbers for most rows but currency-formatted text (e.g. \"$1,234.50\") for 8 scattered rows that were manually re-typed",
+    "Discount_pct uses two different conventions for 'no discount': a blank cell in most rows, a literal '-' character in 4 rows",
+    "Region is missing for 4 rows, written inconsistently as an empty string in some and the literal text 'N/A' in others",
+    "One order (ORD-1023) is duplicated -- its row appears a second time near the May/duplicate boundary from a copy-paste while merging the two files",
+    "A spurious 'TOTAL' row with column sums sits at the very bottom, left over from an Excel SUM() column the student added before re-exporting",
+    "File is saved with a UTF-8 byte-order mark (Excel's default 'CSV UTF-8' save) and has two trailing blank lines at the end"
+  ],
+  "what_a_naive_reader_would_get_wrong": "A reader that doesn't detect the repeated header line would ingest it as a bogus data row (all-text 'OrderDate' etc. breaking numeric parsing for that row); naively parsing OrderDate as one fixed format would either error or silently misread month/day for one of the two blocks (e.g. 4/3/2026 vs 2026-05-04 ambiguity); summing TotalRevenue including the bottom TOTAL row would double the true total; not deduping ORD-1023 would inflate n to 91 (plus the TOTAL row makes 92 apparent rows) instead of the true 90 orders; treating blank and '-' as different discount values (rather than both = 0) would create a spurious category."
+}

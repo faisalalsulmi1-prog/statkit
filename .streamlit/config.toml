@@ -1,0 +1,15 @@
+# StatKit Streamlit configuration.
+# Part of the L3 "no AI / no network / no tracking" guarantee: this turns OFF
+# Streamlit's usage telemetry (a written promise the code alone could not keep)
+# and caps uploads. Checked in so the promise is enforced by config, not prose.
+# Verified by tests/test_no_ai_no_io.py::test_streamlit_config_disables_telemetry_and_caps_uploads.
+
+[browser]
+# Do not phone home with anonymous usage statistics.
+gatherUsageStats = false
+
+[server]
+# Students' messy sheets are small; cap uploads and stay headless (no auto-open
+# browser / no email prompt on first run).
+maxUploadSize = 25
+headless = true

@@ -1,0 +1,96 @@
+﻿OrderID,OrderDate,Channel,Region,UnitsSold,UnitPrice,Discount_pct,TotalRevenue,PaymentMethod
+ORD-1001,4/2/2026,Online Store,West,5,54.99,,274.95,Apple Pay
+ORD-1002,4/3/2026,Retail Partner,West,1,24.99,,24.99,PayPal
+ORD-1003,4/4/2026,Retail Partner,Midwest,3,19.99,-,59.97,Credit Card
+ORD-1004,4/5/2026,Online Store,West,2,19.99,20,31.98,PayPal
+ORD-1005,4/5/2026,Instagram Ads,West,5,44.99,25,168.71,Credit Card
+ORD-1006,4/6/2026,Online Store,West,3,19.99,10,53.97,PayPal
+ORD-1007,4/6/2026,Email Campaign,Midwest,3,19.99,25,44.98,Credit Card
+ORD-1008,4/8/2026,Online Store,West,5,19.99,10,89.95,Credit Card
+ORD-1009,4/8/2026,Email Campaign,Midwest,5,34.99,20,139.96,Credit Card
+ORD-1010,4/8/2026,Instagram Ads,Northeast,2,29.99,10,53.98,Credit Card
+ORD-1011,4/8/2026,Retail Partner,Midwest,4,54.99,10,197.96,PayPal
+ORD-1012,4/10/2026,Online Store,Midwest,4,54.99,25,164.97,Credit Card
+ORD-1013,4/10/2026,Instagram Ads,West,5,54.99,15,233.71,PayPal
+ORD-1014,4/11/2026,Online Store,South,4,44.99,25,134.97,Credit Card
+ORD-1015,4/11/2026,Email Campaign,Midwest,3,$34.99,,$104.97,Credit Card
+ORD-1016,4/11/2026,Online Store,West,2,24.99,10,44.98,Credit Card
+ORD-1017,4/11/2026,Instagram Ads,South,2,54.99,,109.98,Gift Card
+ORD-1018,4/12/2026,Instagram Ads,South,5,24.99,,124.95,PayPal
+ORD-1019,4/12/2026,Online Store,Northeast,5,54.99,,274.95,Credit Card
+ORD-1020,4/13/2026,Retail Partner,West,1,34.99,,34.99,Apple Pay
+ORD-1021,4/14/2026,Retail Partner,Midwest,2,54.99,,109.98,Apple Pay
+ORD-1022,4/14/2026,Online Store,Midwest,5,24.99,,124.95,Credit Card
+ORD-1023,4/15/2026,Online Store,Northeast,5,54.99,25,206.21,Credit Card
+ORD-1024,4/15/2026,Retail Partner,Midwest,3,24.99,15,63.72,Credit Card
+ORD-1025,4/18/2026,Instagram Ads,Midwest,1,54.99,20,43.99,PayPal
+ORD-1026,4/19/2026,Retail Partner,West,2,44.99,25,67.48,Credit Card
+ORD-1027,4/19/2026,Email Campaign,West,4,44.99,15,152.97,PayPal
+ORD-1028,4/20/2026,Online Store,Midwest,5,29.99,,149.95,Credit Card
+ORD-1029,4/21/2026,Instagram Ads,South,1,24.99,25,18.74,PayPal
+ORD-1030,4/21/2026,Online Store,West,2,34.99,,69.98,Credit Card
+ORD-1031,4/22/2026,Online Store,South,1,44.99,15,38.24,Credit Card
+ORD-1032,4/22/2026,Instagram Ads,South,5,29.99,25,112.46,Credit Card
+ORD-1033,4/23/2026,Retail Partner,Northeast,3,24.99,10,67.47,Credit Card
+ORD-1034,4/24/2026,Online Store,South,3,29.99,-,89.97,PayPal
+ORD-1035,4/25/2026,Instagram Ads,South,2,24.99,,49.98,PayPal
+ORD-1036,4/25/2026,Email Campaign,Midwest,4,24.99,15,84.97,Gift Card
+ORD-1037,4/26/2026,Online Store,N/A,1,34.99,,34.99,Credit Card
+ORD-1038,4/27/2026,Online Store,West,4,19.99,,79.96,PayPal
+ORD-1039,4/27/2026,Instagram Ads,Midwest,4,24.99,10,89.96,PayPal
+ORD-1040,4/28/2026,Instagram Ads,South,5,$54.99,25,$206.21,Credit Card
+ORD-1041,4/29/2026,Retail Partner,Northeast,1,44.99,,44.99,Credit Card
+ORD-1042,4/29/2026,Online Store,West,1,34.99,-,34.99,PayPal
+ORD-1043,4/30/2026,Retail Partner,West,4,29.99,10,107.96,Credit Card
+ORD-1044,4/30/2026,Online Store,West,3,54.99,,164.97,Credit Card
+ORD-1045,4/30/2026,Instagram Ads,Northeast,2,54.99,,109.98,PayPal
+OrderID,OrderDate,Channel,Region,UnitsSold,UnitPrice,Discount_pct,TotalRevenue,PaymentMethod
+ORD-1046,2026-05-01,Retail Partner,Midwest,1,54.99,,54.99,Credit Card
+ORD-1047,2026-05-02,Online Store,West,1,24.99,,24.99,PayPal
+ORD-1048,2026-05-03,Online Store,South,2,29.99,,59.98,Credit Card
+ORD-1049,2026-05-03,Retail Partner,West,2,24.99,20,39.98,Credit Card
+ORD-1050,2026-05-03,Retail Partner,South,3,34.99,15,89.22,Credit Card
+ORD-1051,2026-05-04,Online Store,N/A,3,19.99,25,44.98,PayPal
+ORD-1052,2026-05-04,Online Store,Midwest,1,29.99,,29.99,Apple Pay
+ORD-1053,2026-05-07,Online Store,Northeast,3,24.99,,74.97,Apple Pay
+ORD-1054,2026-05-07,Instagram Ads,Northeast,2,29.99,10,53.98,Credit Card
+ORD-1055,2026-05-07,Email Campaign,Midwest,4,34.99,,139.96,Credit Card
+ORD-1056,2026-05-08,Retail Partner,West,4,44.99,,179.96,Credit Card
+ORD-1057,2026-05-08,Instagram Ads,Midwest,5,$44.99,15,$191.21,PayPal
+ORD-1058,2026-05-08,Online Store,Northeast,2,24.99,20,39.98,PayPal
+ORD-1059,2026-05-09,Instagram Ads,West,4,44.99,25,134.97,Credit Card
+ORD-1060,2026-05-10,Email Campaign,Midwest,2,19.99,20,31.98,PayPal
+ORD-1061,2026-05-10,Email Campaign,West,3,24.99,,74.97,PayPal
+ORD-1062,2026-05-11,Instagram Ads,West,3,44.99,20,107.98,Credit Card
+ORD-1063,2026-05-11,Instagram Ads,Northeast,3,19.99,,59.97,Apple Pay
+ORD-1064,2026-05-12,Online Store,South,5,44.99,15,191.21,PayPal
+ORD-1065,2026-05-13,Retail Partner,Northeast,1,29.99,10,26.99,Apple Pay
+ORD-1066,2026-05-13,Retail Partner,N/A,2,44.99,,89.98,Credit Card
+ORD-1067,2026-05-14,Retail Partner,,2,19.99,10,35.98,PayPal
+ORD-1068,2026-05-15,Retail Partner,Midwest,2,29.99,20,47.98,Credit Card
+ORD-1069,2026-05-15,Email Campaign,Midwest,4,54.99,,219.96,Credit Card
+ORD-1070,2026-05-15,Online Store,Midwest,4,29.99,25,89.97,Credit Card
+ORD-1071,2026-05-16,Online Store,West,4,44.99,20,143.97,Credit Card
+ORD-1072,2026-05-16,Online Store,Northeast,5,34.99,10,157.46,Credit Card
+ORD-1073,2026-05-16,Online Store,Midwest,2,54.99,25,82.48,PayPal
+ORD-1074,2026-05-16,Retail Partner,Northeast,2,19.99,,39.98,Credit Card
+ORD-1075,2026-05-18,Instagram Ads,Northeast,5,24.99,25,93.71,Credit Card
+ORD-1076,2026-05-19,Email Campaign,West,3,24.99,,74.97,Gift Card
+ORD-1077,2026-05-19,Online Store,Northeast,4,44.99,15,152.97,Gift Card
+ORD-1078,2026-05-23,Retail Partner,West,2,54.99,20,87.98,Credit Card
+ORD-1079,2026-05-23,Retail Partner,Midwest,2,19.99,,39.98,PayPal
+ORD-1080,2026-05-24,Instagram Ads,South,4,$24.99,,$99.96,Credit Card
+ORD-1081,2026-05-25,Retail Partner,Northeast,3,34.99,15,89.22,Credit Card
+ORD-1082,2026-05-26,Retail Partner,Northeast,3,$19.99,,$59.97,Credit Card
+ORD-1083,2026-05-26,Online Store,Midwest,1,$24.99,,$24.99,Apple Pay
+ORD-1084,2026-05-26,Online Store,West,5,$29.99,15,$127.46,PayPal
+ORD-1085,2026-05-28,Retail Partner,Midwest,3,29.99,10,80.97,Credit Card
+ORD-1086,2026-05-28,Retail Partner,West,2,34.99,15,59.48,Credit Card
+ORD-1087,2026-05-29,Instagram Ads,West,3,19.99,25,44.98,PayPal
+ORD-1088,2026-05-29,Retail Partner,Midwest,3,54.99,20,131.98,Credit Card
+ORD-1089,2026-05-29,Online Store,Northeast,4,$24.99,10,$89.96,Credit Card
+ORD-1090,2026-05-31,Retail Partner,Midwest,3,34.99,20,83.98,Credit Card
+ORD-1023,4/15/2026,Online Store,Northeast,5,54.99,25,206.21,Credit Card
+TOTAL,,,,273,,,"$8,597.52",
+
+

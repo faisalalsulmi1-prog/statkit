@@ -1,0 +1,139 @@
+{
+  "id": "s3_2",
+  "generator_model": "sonnet",
+  "field": "food science / chemistry",
+  "persona": "Food chemist running a Folin-Ciocalteu total phenolic content (TPC) assay on eight plant/spice extracts, using a UV-Vis spectrophotometer whose software exports a raw report, into which the researcher then typed their own formula columns.",
+  "source_style": "lab instrument software export (UVProbe) with researcher-added Excel formula columns layered on top",
+  "file": "gen_s3_2.xlsx",
+  "file_kind": "xlsx",
+  "sheets": [
+    {
+      "name": "Sheet1",
+      "is_data": true,
+      "header_row": 17,
+      "n_data_rows": 8,
+      "columns": [
+        {
+          "name": "Sample Name",
+          "true_type": "categorical",
+          "notes": "8 distinct plant/spice extracts, free text"
+        },
+        {
+          "name": "Abs 1",
+          "true_type": "numeric",
+          "notes": "Raw absorbance reading 1 at 765nm; one cell (Thyme, row 25) holds the text 'n.d.' instead of a number"
+        },
+        {
+          "name": "Abs 2",
+          "true_type": "numeric",
+          "notes": "Raw absorbance reading 2 at 765nm"
+        },
+        {
+          "name": "Abs 3",
+          "true_type": "numeric",
+          "notes": "Raw absorbance reading 3 at 765nm"
+        },
+        {
+          "name": "Mean Abs",
+          "true_type": "numeric",
+          "notes": "Stored as the Excel formula '=AVERAGE(B:D)' for that row, NOT a static value; file has no cached result because it was generated programmatically rather than saved by Excel. Excel's AVERAGE ignores the 'n.d.' text cell for Thyme, averaging only the 2 numeric reads."
+        },
+        {
+          "name": "Dilution Factor",
+          "true_type": "numeric",
+          "notes": "1 for undiluted samples, 5 for the three samples diluted 1:5 before reading"
+        },
+        {
+          "name": "TPC (mg GAE/g)",
+          "true_type": "numeric",
+          "notes": "Stored as the Excel formula '=((MeanAbs-0.0123)/0.0089)*DilutionFactor*0.025' referencing the Mean Abs and Dilution Factor cells of the same row; also has no cached value in this file. True values given in clean_table."
+        }
+      ]
+    }
+  ],
+  "clean_table": [
+    {
+      "Sample Name": "Rosemary Extract",
+      "Abs 1": 0.508,
+      "Abs 2": 0.515,
+      "Abs 3": 0.513,
+      "Mean Abs": 0.512,
+      "Dilution Factor": 1,
+      "TPC (mg GAE/g)": 1.404
+    },
+    {
+      "Sample Name": "Green Tea Extract",
+      "Abs 1": 0.687,
+      "Abs 2": 0.695,
+      "Abs 3": 0.69,
+      "Mean Abs": 0.6907,
+      "Dilution Factor": 1,
+      "TPC (mg GAE/g)": 1.906
+    },
+    {
+      "Sample Name": "Turmeric Extract",
+      "Abs 1": 0.298,
+      "Abs 2": 0.305,
+      "Abs 3": 0.301,
+      "Mean Abs": 0.3013,
+      "Dilution Factor": 1,
+      "TPC (mg GAE/g)": 0.812
+    },
+    {
+      "Sample Name": "Ginger Extract",
+      "Abs 1": 0.415,
+      "Abs 2": 0.409,
+      "Abs 3": 0.421,
+      "Mean Abs": 0.415,
+      "Dilution Factor": 1,
+      "TPC (mg GAE/g)": 1.131
+    },
+    {
+      "Sample Name": "Clove Extract",
+      "Abs 1": 0.876,
+      "Abs 2": 0.881,
+      "Abs 3": 0.869,
+      "Mean Abs": 0.8753,
+      "Dilution Factor": 1,
+      "TPC (mg GAE/g)": 2.424
+    },
+    {
+      "Sample Name": "Cinnamon Extract",
+      "Abs 1": 0.203,
+      "Abs 2": 0.198,
+      "Abs 3": 0.207,
+      "Mean Abs": 0.2027,
+      "Dilution Factor": 5,
+      "TPC (mg GAE/g)": 2.674
+    },
+    {
+      "Sample Name": "Black Pepper Extract",
+      "Abs 1": 0.156,
+      "Abs 2": 0.161,
+      "Abs 3": 0.152,
+      "Mean Abs": 0.1563,
+      "Dilution Factor": 5,
+      "TPC (mg GAE/g)": 2.023
+    },
+    {
+      "Sample Name": "Thyme Extract",
+      "Abs 1": "n.d.",
+      "Abs 2": 0.234,
+      "Abs 3": 0.229,
+      "Mean Abs": 0.2315,
+      "Dilution Factor": 5,
+      "TPC (mg GAE/g)": 3.079
+    }
+  ],
+  "intended_analysis": "Compare TPC (mg GAE/g) across the 8 extracts (one-way ANOVA + Tukey post-hoc, or simple ranking) to identify which spice/plant extracts have the highest total phenolic content; the calibration block is a reference curve, not part of the comparison dataset.",
+  "mess_applied": [
+    "Two stacked tables in one sheet: a 6-row calibration-standards block (rows 8-14) sits above the real sample data table (header at row 17) with no blank-column/sheet separation, only a blank row and an italic label row between them",
+    "5 rows of free-text instrument-header junk (rows 1-5) before any tabular data, including a merged title cell A1:G1",
+    "Default sheet name 'Sheet1' rather than a descriptive name",
+    "The 'Mean Abs' and 'TPC (mg GAE/g)' columns are Excel formulas with NO cached value (file built by a script, not saved by Excel), so a reader that doesn't evaluate formulas gets either the literal formula string or nothing at all for every sample's computed columns",
+    "One raw replicate (Thyme Extract, Abs 1) holds the text 'n.d.' instead of a number, inside an otherwise numeric column; Excel's AVERAGE silently drops it, so the true Mean Abs for that row is the average of only 2 of the 3 cells, not 3",
+    "3 free-text footer rows after the data (dilution note, calibration equation, and a legend for 'n.d.') that a naive reader might try to parse as more data rows",
+    "Sample naming inconsistent with the footer note: samples are called 'Cinnamon Extract' etc. in the table but referred to as 'Samples 6-8' in the footer, requiring positional cross-reference to know which rows were diluted"
+  ],
+  "what_a_naive_reader_would_get_wrong": "A tool that just grabs 'the first table on the sheet' will scoop up the 6-row calibration standards as if they were sample data (or concatenate them with the real samples). A tool that reads cell values without formula evaluation will get None/blank or the raw formula text for every Mean Abs and TPC value instead of a number, and a tool that averages Abs1:Abs3 naively (treating 'n.d.' as 0 or as NaN-that-poisons-the-mean) will get the wrong Mean Abs for Thyme Extract instead of the 2-value average Excel actually computes."
+}

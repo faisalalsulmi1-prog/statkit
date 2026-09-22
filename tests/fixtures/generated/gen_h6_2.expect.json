@@ -1,0 +1,161 @@
+{
+  "file": "gen_h6_2.csv",
+  "fixture_id": "h6_2",
+  "wave": 1,
+  "source_kind": "csv",
+  "authored_from_bytes": true,
+  "sheets": [
+    {
+      "name": "(single)",
+      "role": "data",
+      "header_row": 1,
+      "two_row": false,
+      "header_row2": null,
+      "units_row": null,
+      "data_start_row": 2,
+      "n_rows": 70,
+      "n_cols": 7,
+      "layout": "long",
+      "dropped_rows": [],
+      "columns": [
+        {
+          "name": "PatCode",
+          "col_index": 1,
+          "kind": "id",
+          "kinds": [
+            "id"
+          ],
+          "n_missing": 6,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": null,
+          "flags": [
+            "text ids, 6 blank = 6 missing; d/m>0.9 -> ID"
+          ],
+          "notes": ""
+        },
+        {
+          "name": "MedicationName",
+          "col_index": 2,
+          "kind": "categorical",
+          "kinds": [
+            "categorical"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": 12,
+          "flags": [
+            "12 case variants of 6 drugs; propose_merges folds casefold -> 6 (surface, not auto)"
+          ],
+          "notes": ""
+        },
+        {
+          "name": "Dose",
+          "col_index": 3,
+          "kind": "numeric",
+          "kinds": [
+            "numeric",
+            "ordinal",
+            "categorical"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": null,
+          "flags": [],
+          "notes": ""
+        },
+        {
+          "name": "DoseUnit",
+          "col_index": 4,
+          "kind": "binary",
+          "kinds": [
+            "binary",
+            "categorical"
+          ],
+          "n_missing": 8,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": 2,
+          "flags": [
+            "8 blank = 8 missing; mg/mL"
+          ],
+          "notes": ""
+        },
+        {
+          "name": "Time_Administered",
+          "col_index": 5,
+          "kind": "categorical",
+          "kinds": [
+            "categorical"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": 70,
+          "flags": [
+            "mixed HH:MM / decimal time (f=0.33<0.5) -> text/categorical"
+          ],
+          "notes": ""
+        },
+        {
+          "name": "NurseInitials",
+          "col_index": 6,
+          "kind": "categorical",
+          "kinds": [
+            "categorical"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": 12,
+          "flags": [
+            "case variants (JM/jm...) -> propose_merges surface"
+          ],
+          "notes": ""
+        },
+        {
+          "name": "Notes",
+          "col_index": 7,
+          "kind": "categorical",
+          "kinds": [
+            "categorical"
+          ],
+          "n_missing": 7,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": 10,
+          "flags": [],
+          "notes": ""
+        }
+      ],
+      "expect_block": {
+        "served": true,
+        "block_reason": null,
+        "layout": "long",
+        "target_tests": [
+          "chi2_gof",
+          "describe"
+        ],
+        "checks_expected": [],
+        "snags_applied": [],
+        "note": "label-merge fixture: 12 case variants of 6 drug names (propose_merges -> 6); blank PatCode x6, DoseUnit x8; 3 time formats (f=.33 -> text)."
+      }
+    }
+  ]
+}

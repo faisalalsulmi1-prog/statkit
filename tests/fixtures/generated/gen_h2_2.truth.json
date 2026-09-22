@@ -1,0 +1,77 @@
+{
+  "id": "h2_2",
+  "generator_model": "haiku",
+  "field": "psychology",
+  "persona": "Lab tech running attention task, not careful with data entry",
+  "source_style": "lab instrument CSV dump with manual notes added",
+  "file": "gen_h2_2.csv",
+  "file_kind": "csv",
+  "sheets": [
+    {
+      "name": null,
+      "is_data": true,
+      "header_row": 1,
+      "n_data_rows": 75,
+      "columns": [
+        {
+          "name": "SubjectID",
+          "true_type": "id",
+          "notes": "S01, S02, S03, S04"
+        },
+        {
+          "name": "Session",
+          "true_type": "numeric",
+          "notes": "1 or 2, integer"
+        },
+        {
+          "name": "Trial",
+          "true_type": "numeric",
+          "notes": "Trial number per session, 1-20"
+        },
+        {
+          "name": "Stimulus",
+          "true_type": "categorical",
+          "notes": "Visual or Auditory"
+        },
+        {
+          "name": "Correct",
+          "true_type": "binary",
+          "notes": "Yes or No"
+        },
+        {
+          "name": "RT",
+          "true_type": "numeric",
+          "notes": "Reaction time (milliseconds), inconsistent decimal places (0, 1, 2, or ~ prefix)"
+        },
+        {
+          "name": "Notes",
+          "true_type": "text",
+          "notes": "Free-text observer notes, usually empty"
+        }
+      ]
+    }
+  ],
+  "clean_table": {
+    "description": "After cleaning: remove blank row at row 22; RT keeps 3 '~'-prefixed cells as FAILED cells (not silently coerced, snag 7); Correct stays text binary (PLAN never coerces Yes/No to bool). 75 data rows.",
+    "structure": "SubjectID × Session × Trial (mostly 20 trials per session, S04 has 15)",
+    "note": "Truthful data shows S01: 20 trials session 1, S02: 20 trials session 1, S03: 20 trials session 2, S04: 15 trials session 1",
+    "total_rows": 75,
+    "sample_cleaned_removed": "fabricated (did not match the bytes); see gen_h2_2.expect.json"
+  },
+  "intended_analysis": "Compare reaction times across subjects and stimulus types; analyze accuracy by stimulus type using logistic regression",
+  "mess_applied": [
+    "blank row at row 22",
+    "inconsistent decimal precision in RT column (some 0 decimals, some 1, some 2)",
+    "three RT values have a '~' prefix (physical lines 67, 72, 77) -> 3 failed cells (snag 7)",
+    "subject 4 has only 15 trials instead of 20",
+    "no clear separator between subjects/sessions",
+    "free-text notes without structure"
+  ],
+  "what_a_naive_reader_would_get_wrong": "A naive reader would fail to parse the RT column correctly due to mixed decimal precision and the ~ prefix. They might treat the blank row as actual data or misalign subject boundaries. They might interpret 'Yes'/'No' as ordinal rather than binary.",
+  "_corrections": [
+    "n_data_rows 94 -> 75 (real, verified from bytes).",
+    "clean_table.total_rows/description 94 -> 75.",
+    "removed fabricated clean_table.sample_cleaned.",
+    "mess_applied: '~' prefix count 1 -> 3."
+  ]
+}

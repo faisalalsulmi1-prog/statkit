@@ -1,0 +1,28 @@
+﻿ShipmentID;Supplier;Material;Quantity_kg;UnitPrice_EUR_per_kg;Yield_Percent;DeliveryDate;Notes
+SH2026-001;Tereos France SA;Lactose;1.279,2;1,23;98,1;15.01.2026;quality cert attached
+SH2026-002;Nordzucker AG;Maltose;952,6;12,75;92,6;17.01.2026;
+SH2026-003;Tereos France SA;Glucose Syrup;959,8;0,37;90,5;19.01.2026;quality cert attached
+SH2026-004;Cargill Nederland BV;Glucose Syrup;2.855,4;1,04;94,6;21.01.2026;
+SH2026-005;Sudzucker AG;Sucrose;1.016,2;0,96;97,4;23.01.2026;
+SH2026-006;Sudzucker AG;Lactose;2.605,8;1,29;98,0;25.01.2026;
+SH2026-007;Sudzucker AG;Sucrose;806,7;0,40;89,0;27.01.2026;
+SH2026-008;Tereos France SA;Glucose Syrup;2.385,2;0,74;89,2;29.01.2026;quality cert attached
+SH2026-009;Tereos France SA;Lactose;987,3;1,57;89,1;31.01.2026;delayed 2 days
+SH2026-010;Tereos France SA;Glucose Syrup;511,3;0,94;91,3;02.02.2026;on time
+SH2026-011;Nordzucker AG;Maltose;1.623,7;0,68;93,2;04.02.2026;quality cert attached
+SH2026-012;Cargill Nederland BV;Sucrose;2.838,5;1,67;90,1;06.02.2026;
+SH2026-013;Nordzucker AG;Sucrose;1.082,8;1,08;98,6;08.02.2026;quality cert attached
+SH2026-014;Cargill Nederland BV;Sucrose;1.098,0;0,38;97,1;10.02.2026;
+SH2026-015;Nordzucker AG;Glucose Syrup;1.135,4;0,92;96,1;12.02.2026;delayed 2 days
+SH2026-016;Nordzucker AG;Sucrose;1.434,4;1,04;89,1;14.02.2026;
+SH2026-017;Tereos France SA;Maltose;2.932,6;1,33;95,7;16.02.2026;
+SH2026-018;Tereos France SA;Sucrose;463,1;1,78;97,4;18.02.2026;quality cert attached
+SH2026-019;Tereos France SA;Lactose;3.190,2;0,98;89,0;20.02.2026;
+SH2026-020;Sudzucker AG;Glucose Syrup;1.540,4;1,57;99,1;22.02.2026;on time
+SH2026-021;Tereos France SA;Sucrose;2.396,8;0,40;97,8;24.02.2026;
+SH2026-022;Nordzucker AG;Maltose;1.456,8;1,07;94,8;26.02.2026;on time
+SH2026-023;Cargill Nederland BV;Lactose;1.007,6;0,46;93,7;28.02.2026;partial shipment
+SH2026-024;Tereos France SA;Maltose;1.560,5;0,57;98,8;02.03.2026;
+SH2026-025;Nordzucker AG;Lactose;1.521,6;1,10;91,4;04.03.2026;
+SH2026-026;Tereos France SA;Glucose Syrup;2.992,8;0,79;97,3;06.03.2026;quality cert attached
+SH2026-027;Tereos France SA;Maltose;957,3;1,36;88,9;08.03.2026;

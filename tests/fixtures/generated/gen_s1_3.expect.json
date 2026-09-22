@@ -1,0 +1,637 @@
+{
+  "file": "gen_s1_3.xlsx",
+  "fixture_id": "s1_3",
+  "wave": 1,
+  "source_kind": "xlsx",
+  "authored_from_bytes": true,
+  "sheets": [
+    {
+      "name": "Site Key",
+      "role": "non_data",
+      "header_row": 1,
+      "two_row": false,
+      "header_row2": null,
+      "units_row": null,
+      "data_start_row": 2,
+      "n_rows": 3,
+      "n_cols": 4,
+      "layout": "long",
+      "dropped_rows": [],
+      "columns": [
+        {
+          "name": "Station",
+          "col_index": 1,
+          "kind": "categorical",
+          "kinds": [
+            "categorical"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": 3,
+          "flags": [],
+          "notes": ""
+        },
+        {
+          "name": "Description",
+          "col_index": 2,
+          "kind": "categorical",
+          "kinds": [
+            "categorical"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": 3,
+          "flags": [],
+          "notes": ""
+        },
+        {
+          "name": "Latitude",
+          "col_index": 3,
+          "kind": "numeric",
+          "kinds": [
+            "numeric"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": null,
+          "flags": [],
+          "notes": ""
+        },
+        {
+          "name": "Longitude",
+          "col_index": 4,
+          "kind": "numeric",
+          "kinds": [
+            "numeric"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": null,
+          "flags": [],
+          "notes": ""
+        }
+      ],
+      "expect_block": {
+        "served": false,
+        "block_reason": "site lookup sheet (non-data)",
+        "layout": "long",
+        "target_tests": [],
+        "checks_expected": [],
+        "snags_applied": [],
+        "note": "first sheet is a station key, not measurement data."
+      }
+    },
+    {
+      "name": "May",
+      "role": "data",
+      "header_row": 2,
+      "two_row": false,
+      "header_row2": null,
+      "units_row": null,
+      "data_start_row": 3,
+      "n_rows": 6,
+      "n_cols": 8,
+      "layout": "long",
+      "dropped_rows": [
+        {
+          "row": 1,
+          "reason": "merged group title D1:F1 above header"
+        },
+        {
+          "row": 9,
+          "reason": "blank spacer"
+        },
+        {
+          "row": 10,
+          "reason": "summary 'AVG' row"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Date",
+          "col_index": 1,
+          "kind": "categorical",
+          "kinds": [
+            "categorical"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": 3,
+          "flags": [
+            "5 real date cells + 1 text '5/3' (partial) -> mostly date"
+          ],
+          "notes": ""
+        },
+        {
+          "name": "Station",
+          "col_index": 2,
+          "kind": "categorical",
+          "kinds": [
+            "categorical"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": 3,
+          "flags": [],
+          "notes": ""
+        },
+        {
+          "name": "Time",
+          "col_index": 3,
+          "kind": "categorical",
+          "kinds": [
+            "categorical"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": 6,
+          "flags": [],
+          "notes": ""
+        },
+        {
+          "name": "Water Temp C",
+          "col_index": 4,
+          "kind": "numeric",
+          "kinds": [
+            "numeric"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": null,
+          "flags": [],
+          "notes": ""
+        },
+        {
+          "name": "pH",
+          "col_index": 5,
+          "kind": "numeric",
+          "kinds": [
+            "numeric"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": null,
+          "flags": [],
+          "notes": ""
+        },
+        {
+          "name": "DO mg/L",
+          "col_index": 6,
+          "kind": "numeric",
+          "kinds": [
+            "numeric"
+          ],
+          "n_missing": 1,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": "mg/L",
+          "levels": null,
+          "flags": [
+            "1 'n/a' = 1 missing"
+          ],
+          "notes": ""
+        },
+        {
+          "name": "Taxa Count",
+          "col_index": 7,
+          "kind": "numeric",
+          "kinds": [
+            "numeric",
+            "ordinal",
+            "categorical"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": null,
+          "flags": [],
+          "notes": ""
+        },
+        {
+          "name": "Notes",
+          "col_index": 8,
+          "kind": "empty",
+          "kinds": [
+            "empty"
+          ],
+          "n_missing": 6,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": null,
+          "flags": [],
+          "notes": ""
+        }
+      ],
+      "expect_block": {
+        "served": true,
+        "block_reason": null,
+        "layout": "long",
+        "target_tests": [
+          "describe"
+        ],
+        "checks_expected": [
+          {
+            "code": "S21",
+            "why": "n=6/sheet"
+          }
+        ],
+        "snags_applied": [],
+        "note": "group title merged above header (row1); text '5/3' partial date; 'n/a'; AVG summary row dropped."
+      }
+    },
+    {
+      "name": "June",
+      "role": "data",
+      "header_row": 1,
+      "two_row": false,
+      "header_row2": null,
+      "units_row": null,
+      "data_start_row": 2,
+      "n_rows": 5,
+      "n_cols": 9,
+      "layout": "long",
+      "dropped_rows": [
+        {
+          "row": 5,
+          "reason": "full-width merged note row A5:I5 inside data (snag5)"
+        },
+        {
+          "row": 8,
+          "reason": "trailing blank"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Date",
+          "col_index": 1,
+          "kind": "date",
+          "kinds": [
+            "date"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": null,
+          "flags": [],
+          "notes": ""
+        },
+        {
+          "name": "Station",
+          "col_index": 2,
+          "kind": "categorical",
+          "kinds": [
+            "categorical"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": 5,
+          "flags": [
+            "case/space variants Site1/site1/SITE2/'Site 2 ' -> propose_merges surface"
+          ],
+          "notes": ""
+        },
+        {
+          "name": "Time",
+          "col_index": 3,
+          "kind": "categorical",
+          "kinds": [
+            "categorical"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": 5,
+          "flags": [],
+          "notes": ""
+        },
+        {
+          "name": "Temp C",
+          "col_index": 4,
+          "kind": "numeric",
+          "kinds": [
+            "numeric"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": null,
+          "flags": [],
+          "notes": ""
+        },
+        {
+          "name": "pH",
+          "col_index": 5,
+          "kind": "numeric",
+          "kinds": [
+            "numeric"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": null,
+          "flags": [],
+          "notes": ""
+        },
+        {
+          "name": "Column F",
+          "col_index": 6,
+          "kind": "empty",
+          "kinds": [
+            "empty"
+          ],
+          "n_missing": 5,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": null,
+          "flags": [],
+          "notes": ""
+        },
+        {
+          "name": "DO mg/L",
+          "col_index": 7,
+          "kind": "numeric",
+          "kinds": [
+            "numeric"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": null,
+          "flags": [],
+          "notes": ""
+        },
+        {
+          "name": "Taxa Count",
+          "col_index": 8,
+          "kind": "numeric",
+          "kinds": [
+            "numeric",
+            "ordinal",
+            "categorical"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": null,
+          "flags": [],
+          "notes": ""
+        },
+        {
+          "name": "Notes",
+          "col_index": 9,
+          "kind": "empty",
+          "kinds": [
+            "empty"
+          ],
+          "n_missing": 5,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": null,
+          "flags": [],
+          "notes": ""
+        }
+      ],
+      "expect_block": {
+        "served": true,
+        "block_reason": null,
+        "layout": "long",
+        "target_tests": [
+          "describe"
+        ],
+        "checks_expected": [
+          {
+            "code": "S21",
+            "why": "n=5"
+          }
+        ],
+        "snags_applied": [
+          5
+        ],
+        "note": "snag5: merged note row inside data dropped; unnamed empty col F; Site 1/site 1/SITE 2/'Site 2 ' case+space variants."
+      }
+    },
+    {
+      "name": "July",
+      "role": "data",
+      "header_row": 1,
+      "two_row": false,
+      "header_row2": null,
+      "units_row": null,
+      "data_start_row": 2,
+      "n_rows": 7,
+      "n_cols": 8,
+      "layout": "long",
+      "dropped_rows": [],
+      "columns": [
+        {
+          "name": "Date",
+          "col_index": 1,
+          "kind": "date",
+          "kinds": [
+            "date"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": null,
+          "flags": [],
+          "notes": ""
+        },
+        {
+          "name": "Station",
+          "col_index": 2,
+          "kind": "categorical",
+          "kinds": [
+            "categorical"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": 3,
+          "flags": [],
+          "notes": ""
+        },
+        {
+          "name": "Time",
+          "col_index": 3,
+          "kind": "categorical",
+          "kinds": [
+            "categorical"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": 6,
+          "flags": [],
+          "notes": ""
+        },
+        {
+          "name": "Temp (C)",
+          "col_index": 4,
+          "kind": "categorical",
+          "kinds": [
+            "categorical",
+            "numeric"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 3,
+          "failed_examples": [
+            "20.1 C",
+            "20.6 C",
+            "21.0 C"
+          ],
+          "unit": null,
+          "levels": 6,
+          "flags": [
+            "snag8: ' C' suffix on 3/7 cells, below 85% column-unit -> failed cells, f=0.57 mixed"
+          ],
+          "notes": ""
+        },
+        {
+          "name": "pH",
+          "col_index": 5,
+          "kind": "numeric",
+          "kinds": [
+            "numeric"
+          ],
+          "n_missing": 1,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": null,
+          "flags": [
+            "1 '-' = missing"
+          ],
+          "notes": ""
+        },
+        {
+          "name": "DO (mg/L)",
+          "col_index": 6,
+          "kind": "numeric",
+          "kinds": [
+            "numeric"
+          ],
+          "n_missing": 1,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": null,
+          "flags": [],
+          "notes": ""
+        },
+        {
+          "name": "Taxa Count",
+          "col_index": 7,
+          "kind": "numeric",
+          "kinds": [
+            "numeric",
+            "ordinal",
+            "categorical"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": null,
+          "flags": [],
+          "notes": ""
+        },
+        {
+          "name": "Notes",
+          "col_index": 8,
+          "kind": "categorical",
+          "kinds": [
+            "categorical"
+          ],
+          "n_missing": 6,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": 1,
+          "flags": [],
+          "notes": ""
+        }
+      ],
+      "expect_block": {
+        "served": true,
+        "block_reason": null,
+        "layout": "long",
+        "target_tests": [
+          "describe"
+        ],
+        "checks_expected": [
+          {
+            "code": "S21",
+            "why": "n=7"
+          }
+        ],
+        "snags_applied": [
+          8
+        ],
+        "note": "duplicate row (r2=r3, kept); '-' missing; snag8: '20.1 C' unit text on 3/7 -> failed cells (f=.57), no 85% column unit."
+      }
+    }
+  ]
+}

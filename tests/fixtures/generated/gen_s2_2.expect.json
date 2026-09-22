@@ -1,0 +1,320 @@
+{
+  "file": "gen_s2_2.xlsx",
+  "fixture_id": "s2_2",
+  "wave": 1,
+  "source_kind": "xlsx",
+  "authored_from_bytes": true,
+  "sheets": [
+    {
+      "name": "Subscription Box Concept Test",
+      "role": "data",
+      "header_row": 1,
+      "two_row": true,
+      "header_row2": 2,
+      "units_row": null,
+      "data_start_row": 3,
+      "n_rows": 39,
+      "n_cols": 15,
+      "layout": "long",
+      "dropped_rows": [
+        {
+          "row": 23,
+          "reason": "blank spacer"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Respondent ID",
+          "col_index": 1,
+          "kind": "numeric",
+          "kinds": [
+            "numeric"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": null,
+          "flags": [
+            "numeric, 1 duplicate (r12=r7) breaks all-distinct -> numeric (semantically respondent id)"
+          ],
+          "notes": ""
+        },
+        {
+          "name": "Collector ID",
+          "col_index": 2,
+          "kind": "numeric",
+          "kinds": [
+            "numeric"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": null,
+          "flags": [
+            "constant -> numeric (S8 if bound)"
+          ],
+          "notes": ""
+        },
+        {
+          "name": "Start Date",
+          "col_index": 3,
+          "kind": "date",
+          "kinds": [
+            "date"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": null,
+          "flags": [],
+          "notes": ""
+        },
+        {
+          "name": "End Date",
+          "col_index": 4,
+          "kind": "date",
+          "kinds": [
+            "date"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": null,
+          "flags": [],
+          "notes": ""
+        },
+        {
+          "name": "IP Address",
+          "col_index": 5,
+          "kind": "id",
+          "kinds": [
+            "id"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": null,
+          "flags": [
+            "IP address -> free-text ID (d/m>0.9); NOT numeric despite dotted digits"
+          ],
+          "notes": ""
+        },
+        {
+          "name": "How likely are you to purchase this subscription box service?",
+          "col_index": 6,
+          "kind": "categorical",
+          "kinds": [
+            "categorical"
+          ],
+          "n_missing": 1,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": 5,
+          "flags": [
+            "5-point 'likely' scale NOT in ORDERED_VOCABS -> categorical; 1 missing"
+          ],
+          "notes": ""
+        },
+        {
+          "name": "Please rate your agreement with the following statements: – The price ($29.99/month) is reasonable",
+          "col_index": 7,
+          "kind": "ordinal",
+          "kinds": [
+            "ordinal",
+            "categorical"
+          ],
+          "n_missing": 2,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": 5,
+          "flags": [
+            "Likert-5 agree vocab (in ORDERED_VOCABS) -> ordinal; 2 skipped = missing"
+          ],
+          "notes": ""
+        },
+        {
+          "name": "Please rate your agreement with the following statements: – This product fits my lifestyle",
+          "col_index": 8,
+          "kind": "ordinal",
+          "kinds": [
+            "ordinal",
+            "categorical"
+          ],
+          "n_missing": 1,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": 5,
+          "flags": [
+            "agree vocab -> ordinal; 1 missing"
+          ],
+          "notes": ""
+        },
+        {
+          "name": "Please rate your agreement with the following statements: – I trust this brand",
+          "col_index": 9,
+          "kind": "ordinal",
+          "kinds": [
+            "ordinal",
+            "categorical"
+          ],
+          "n_missing": 2,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": 5,
+          "flags": [
+            "agree vocab -> ordinal; 2 missing"
+          ],
+          "notes": ""
+        },
+        {
+          "name": "What is your age range?",
+          "col_index": 10,
+          "kind": "categorical",
+          "kinds": [
+            "categorical"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": 5,
+          "flags": [
+            "age brackets -> categorical (not in ORDERED_VOCABS)"
+          ],
+          "notes": ""
+        },
+        {
+          "name": "Which of these have you used to shop online in the past month? (Select all that apply) – Amazon",
+          "col_index": 11,
+          "kind": "categorical",
+          "kinds": [
+            "categorical"
+          ],
+          "n_missing": 13,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": 1,
+          "flags": [
+            "snag10: presence/absence multi-select (value or blank); constant level -> categorical, 13 blank"
+          ],
+          "notes": ""
+        },
+        {
+          "name": "Which of these have you used to shop online in the past month? (Select all that apply) – Instagram Shop",
+          "col_index": 12,
+          "kind": "categorical",
+          "kinds": [
+            "categorical"
+          ],
+          "n_missing": 31,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": 1,
+          "flags": [
+            "snag10 presence/absence"
+          ],
+          "notes": ""
+        },
+        {
+          "name": "Which of these have you used to shop online in the past month? (Select all that apply) – Retailer's own website",
+          "col_index": 13,
+          "kind": "categorical",
+          "kinds": [
+            "categorical"
+          ],
+          "n_missing": 33,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": 1,
+          "flags": [
+            "snag10 presence/absence"
+          ],
+          "notes": ""
+        },
+        {
+          "name": "Which of these have you used to shop online in the past month? (Select all that apply) – Other (please specify)",
+          "col_index": 14,
+          "kind": "categorical",
+          "kinds": [
+            "categorical"
+          ],
+          "n_missing": 22,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": 4,
+          "flags": [
+            "free-text 'other' -> categorical"
+          ],
+          "notes": ""
+        },
+        {
+          "name": "Any additional comments?",
+          "col_index": 15,
+          "kind": "categorical",
+          "kinds": [
+            "categorical"
+          ],
+          "n_missing": 37,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": 2,
+          "flags": [
+            "free-text comments, 37 blank"
+          ],
+          "notes": ""
+        }
+      ],
+      "expect_block": {
+        "served": true,
+        "block_reason": null,
+        "layout": "long",
+        "target_tests": [
+          "chi2_ind",
+          "fisher",
+          "spearman",
+          "kendall",
+          "prop_1"
+        ],
+        "checks_expected": [
+          {
+            "code": "S16",
+            "why": "many skipped answers -> listwise drops"
+          }
+        ],
+        "snags_applied": [
+          13
+        ],
+        "note": "two-row header (row1 groups merged G1:I1/K1:N1, row2 sub-labels); n=39 (38 unique + dup r12, blank r23 excluded); IP->ID; agree vocab ordinal; likely-scale & age brackets categorical; presence/absence multi-select cols (snag10)."
+      }
+    }
+  ]
+}

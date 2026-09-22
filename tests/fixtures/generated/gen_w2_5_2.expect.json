@@ -1,0 +1,114 @@
+{
+  "file": "gen_w2_5_2.xlsx",
+  "fixture_id": "w2_5_2",
+  "wave": 2,
+  "source_kind": "xlsx",
+  "authored_from_bytes": true,
+  "sheets": [
+    {
+      "name": "FlowerPhenotypes",
+      "role": "data",
+      "header_row": 3,
+      "two_row": false,
+      "header_row2": null,
+      "units_row": null,
+      "data_start_row": 4,
+      "n_rows": 4,
+      "n_cols": 3,
+      "layout": "table",
+      "dropped_rows": [
+        {
+          "row": 1,
+          "reason": "merged title A1:C1"
+        },
+        {
+          "row": 2,
+          "reason": "blank spacer"
+        },
+        {
+          "row": 8,
+          "reason": "summary 'Total' row"
+        },
+        {
+          "row": 9,
+          "reason": "blank spacer"
+        },
+        {
+          "row": 10,
+          "reason": "'Source:' footer"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Phenotype",
+          "col_index": 1,
+          "kind": "categorical",
+          "kinds": [
+            "categorical"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": 4,
+          "flags": [
+            "4 phenotype categories"
+          ],
+          "notes": ""
+        },
+        {
+          "name": "Count",
+          "col_index": 2,
+          "kind": "numeric",
+          "kinds": [
+            "numeric",
+            "ordinal",
+            "categorical"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": null,
+          "flags": [
+            "observed counts for GOF"
+          ],
+          "notes": ""
+        },
+        {
+          "name": "% of Total",
+          "col_index": 3,
+          "kind": "numeric",
+          "kinds": [
+            "numeric"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": "%",
+          "levels": null,
+          "flags": [
+            "snag11: literal 0.0\"%\" format -> percent value NOT scaled (stays ~55.0)"
+          ],
+          "notes": ""
+        }
+      ],
+      "expect_block": {
+        "served": true,
+        "block_reason": null,
+        "layout": "table",
+        "target_tests": [
+          "chi2_gof"
+        ],
+        "checks_expected": [],
+        "snags_applied": [
+          11
+        ],
+        "note": "category+count table (9:3:3:1 dihybrid); snag11: '% of Total' has literal '0.0\"%\"' number format and values ALREADY in percent points (~55.0) -> NOT x100 (must stay ~55, not 5504)."
+      }
+    }
+  ]
+}

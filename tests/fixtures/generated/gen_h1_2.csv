@@ -1,0 +1,11 @@
+SubjectID,Enrollment_Date,Baseline_Response_0-10,Week2_Response,Week4_Resp_%,Week8_Response_scale,Dose_mg,Adverse_Event,Notes
+S-101,2024-01-05,8.5,7.2,45%,Moderate (3/5),100,No,Good tolerability
+S102,15/01/2024,7,6,35%,Mild (2/5),50,Headache,mild HA by day 3
+S-103,01/10/2024,9,8.1,,Good (4/5),0.1g,No,Week 4 lost to follow-up
+S-104,2024-01-20,6.5,5.8,25%,Minimal (1/5),100,Nausea,
+JD,20-Jan-2024,7.5,7,42%,Moderate,150,No,Patient reports good
+S-106,2024-01-25,10,8,50%,Marked (5/5),200,No,"High baseline, good response"
+S107,25 Jan 2024,5.5,5,20%,Minimal (1/5),75mg,Yes - Rash,Discontinued at week 4
+S-104,2024-01-21,6.5,5.8,25%,Minimal,100,Nausea,Reentry - DUPLICATE
+S-109,2024-02-01,8,6.5,38%,Moderate (3/5),100-150,Dizziness,Adjusted dose mid-trial
+S-110,02/02/2024,medium,medium-low,~30%,Mild,100,None,Subjective baseline only

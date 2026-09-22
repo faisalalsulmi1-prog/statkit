@@ -1,0 +1,6 @@
+# StatKit is a Streamlit app deployed via requirements.txt, not a pip-installable
+# package, so there is deliberately no [build-system]/[project] table here. This
+# file exists only to configure pytest (test discovery + import path).
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

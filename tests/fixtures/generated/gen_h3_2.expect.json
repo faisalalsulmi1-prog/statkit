@@ -1,0 +1,193 @@
+{
+  "file": "gen_h3_2.xlsx",
+  "fixture_id": "h3_2",
+  "wave": 1,
+  "source_kind": "xlsx",
+  "authored_from_bytes": true,
+  "sheets": [
+    {
+      "name": "Survey Data",
+      "role": "data",
+      "header_row": 4,
+      "two_row": false,
+      "header_row2": null,
+      "units_row": null,
+      "data_start_row": 5,
+      "n_rows": 18,
+      "n_cols": 7,
+      "layout": "long",
+      "dropped_rows": [
+        {
+          "row": 1,
+          "reason": "merged full-width title"
+        },
+        {
+          "row": 2,
+          "reason": "merged full-width note"
+        },
+        {
+          "row": 3,
+          "reason": "blank spacer"
+        },
+        {
+          "row": 23,
+          "reason": "blank spacer"
+        },
+        {
+          "row": 24,
+          "reason": "footer note"
+        },
+        {
+          "row": 25,
+          "reason": "footer note"
+        }
+      ],
+      "columns": [
+        {
+          "name": "ID",
+          "col_index": 1,
+          "kind": "numeric",
+          "kinds": [
+            "numeric"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": null,
+          "flags": [],
+          "notes": ""
+        },
+        {
+          "name": "How stressed?",
+          "col_index": 2,
+          "kind": "numeric",
+          "kinds": [
+            "numeric",
+            "ordinal",
+            "categorical"
+          ],
+          "n_missing": 1,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": null,
+          "flags": [
+            "Likert 1-10; 1 blank (student 6)"
+          ],
+          "notes": ""
+        },
+        {
+          "name": "Study Hrs/Wk",
+          "col_index": 3,
+          "kind": "numeric",
+          "kinds": [
+            "numeric"
+          ],
+          "n_missing": 1,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": null,
+          "flags": [],
+          "notes": ""
+        },
+        {
+          "name": "Major",
+          "col_index": 4,
+          "kind": "categorical",
+          "kinds": [
+            "categorical"
+          ],
+          "n_missing": 1,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": 10,
+          "flags": [
+            "1 blank (student 13 undeclared)"
+          ],
+          "notes": ""
+        },
+        {
+          "name": "Year",
+          "col_index": 5,
+          "kind": "categorical",
+          "kinds": [
+            "categorical"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": 3,
+          "flags": [],
+          "notes": ""
+        },
+        {
+          "name": "GPA",
+          "col_index": 6,
+          "kind": "numeric",
+          "kinds": [
+            "numeric"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": null,
+          "flags": [],
+          "notes": ""
+        },
+        {
+          "name": "Sleep (hrs)",
+          "col_index": 7,
+          "kind": "numeric",
+          "kinds": [
+            "numeric"
+          ],
+          "n_missing": 1,
+          "n_censored": 0,
+          "failed_cells": 1,
+          "failed_examples": [
+            "~5.5"
+          ],
+          "unit": null,
+          "levels": null,
+          "flags": [
+            "snag7: '~5.5' is a failed cell; G19 text '5' coerces"
+          ],
+          "notes": ""
+        }
+      ],
+      "expect_block": {
+        "served": true,
+        "block_reason": null,
+        "layout": "long",
+        "target_tests": [
+          "spearman",
+          "anova_1w",
+          "pearson",
+          "t_1s"
+        ],
+        "checks_expected": [
+          {
+            "code": "S21",
+            "why": "n=18 (<30 Shapiro; some group n small)"
+          }
+        ],
+        "snags_applied": [
+          2,
+          7
+        ],
+        "note": "header at row 4 (snag2: merged title rows are NOT header candidates); '~5.5' and text '5' failed cells; 1 blank each in stress/hrs/major."
+      }
+    }
+  ]
+}

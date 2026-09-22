@@ -1,0 +1,181 @@
+{
+  "file": "gen_s2_1.xlsx",
+  "fixture_id": "s2_1",
+  "wave": 1,
+  "source_kind": "xlsx",
+  "authored_from_bytes": true,
+  "sheets": [
+    {
+      "name": "Survey Data",
+      "role": "data",
+      "header_row": 3,
+      "two_row": false,
+      "header_row2": null,
+      "units_row": null,
+      "data_start_row": 4,
+      "n_rows": 52,
+      "n_cols": 7,
+      "layout": "long",
+      "dropped_rows": [
+        {
+          "row": 1,
+          "reason": "merged full-width title A1:G1"
+        },
+        {
+          "row": 2,
+          "reason": "blank spacer"
+        }
+      ],
+      "columns": [
+        {
+          "name": "RespondentID",
+          "col_index": 1,
+          "kind": "id",
+          "kinds": [
+            "id"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": null,
+          "flags": [
+            "text all-distinct id"
+          ],
+          "notes": ""
+        },
+        {
+          "name": "Age",
+          "col_index": 2,
+          "kind": "numeric",
+          "kinds": [
+            "numeric"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": null,
+          "flags": [],
+          "notes": ""
+        },
+        {
+          "name": "Gender",
+          "col_index": 3,
+          "kind": "categorical",
+          "kinds": [
+            "categorical"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": 3,
+          "flags": [],
+          "notes": ""
+        },
+        {
+          "name": "VisitFrequency",
+          "col_index": 4,
+          "kind": "categorical",
+          "kinds": [
+            "categorical"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": 5,
+          "flags": [
+            "ordered scale but NOT in ORDERED_VOCABS -> categorical (oracle diverges from truth.json 'ordinal')"
+          ],
+          "notes": ""
+        },
+        {
+          "name": "SatisfactionScore_1to5",
+          "col_index": 5,
+          "kind": "numeric",
+          "kinds": [
+            "numeric",
+            "ordinal",
+            "categorical"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": null,
+          "flags": [
+            "Likert 1-5"
+          ],
+          "notes": ""
+        },
+        {
+          "name": "WouldRecommend",
+          "col_index": 6,
+          "kind": "binary",
+          "kinds": [
+            "binary",
+            "categorical"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": 2,
+          "flags": [],
+          "notes": ""
+        },
+        {
+          "name": "AvgWeeklySpend_USD",
+          "col_index": 7,
+          "kind": "numeric",
+          "kinds": [
+            "numeric"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": "$",
+          "levels": null,
+          "flags": [
+            "currency number format on 52 floats"
+          ],
+          "notes": ""
+        }
+      ],
+      "expect_block": {
+        "served": true,
+        "block_reason": null,
+        "layout": "long",
+        "target_tests": [
+          "anova_1w",
+          "kruskal",
+          "t_ind",
+          "mwu",
+          "chi2_ind",
+          "fisher",
+          "prop_2",
+          "logistic"
+        ],
+        "checks_expected": [
+          {
+            "code": "D3",
+            "why": "Gender x Recommend 'Prefer not to say' n=4 -> fisher flag"
+          }
+        ],
+        "snags_applied": [
+          2
+        ],
+        "note": "snag2: header at row 3 (merged title not a candidate); currency number format on spend; VisitFrequency ordered vocab NOT in ORDERED_VOCABS -> categorical."
+      }
+    }
+  ]
+}

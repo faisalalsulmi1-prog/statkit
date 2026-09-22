@@ -1,0 +1,86 @@
+{
+  "id": "w2_5_1",
+  "generator_model": "haiku",
+  "field": "public_health",
+  "persona": "Health department epidemiologist analyzing vaccine acceptance trends",
+  "source_style": "aggregated survey results from municipal health department, manually entered into Excel",
+  "file": "gen_w2_5_1.xlsx",
+  "file_kind": "xlsx",
+  "sheets": [
+    {
+      "name": "VaccineAcceptance",
+      "is_data": true,
+      "header_row": 3,
+      "n_data_rows": 2,
+      "columns": [
+        {
+          "name": "Age Group",
+          "true_type": "categorical",
+          "notes": "Row labels: 18-35 years, 36-65 years"
+        },
+        {
+          "name": "Accepted",
+          "true_type": "count",
+          "notes": "Number of respondents who accepted vaccine"
+        },
+        {
+          "name": "Declined",
+          "true_type": "count",
+          "notes": "Number of respondents who declined vaccine"
+        },
+        {
+          "name": "Total",
+          "true_type": "count",
+          "notes": "Row marginal totals"
+        }
+      ]
+    }
+  ],
+  "clean_table": {
+    "18-35 years": {
+      "Accepted": 87,
+      "Declined": 23,
+      "Total": 110
+    },
+    "36-65 years": {
+      "Accepted": 124,
+      "Declined": 16,
+      "Total": 140
+    },
+    "Totals": {
+      "Accepted": 211,
+      "Declined": 39,
+      "Total": 250
+    }
+  },
+  "intended_analysis": "Chi-square test of independence to assess whether vaccine acceptance differs by age group",
+  "mess_applied": [
+    "counts not raw rows (contingency grid format)",
+    "Total row and Total column included",
+    "merged title in row 1",
+    "Source footer line below data"
+  ],
+  "what_a_naive_reader_would_get_wrong": "A naive reader might treat the Total row as a third age group category or include it in chi-square contingency table calculations; might also misinterpret column percentages as the statistic of interest rather than row-conditional acceptance rates",
+  "verified_by_readback": true,
+  "readback_counts": {
+    "merged_title": "Vaccine Acceptance by Age Group (row 1, A1:D1)",
+    "header_row": 3,
+    "data_rows": "4-6 (including Total)",
+    "source_footer": "Row 8",
+    "row_1_18_35": {
+      "Accepted": 87,
+      "Declined": 23,
+      "Total": 110
+    },
+    "row_2_36_65": {
+      "Accepted": 124,
+      "Declined": 16,
+      "Total": 140
+    },
+    "row_3_total": {
+      "Accepted": 211,
+      "Declined": 39,
+      "Total": 250
+    }
+  }
+}

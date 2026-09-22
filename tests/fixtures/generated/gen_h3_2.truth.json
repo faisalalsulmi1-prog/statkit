@@ -1,0 +1,228 @@
+{
+  "id": "h3_2",
+  "generator_model": "haiku",
+  "field": "education research",
+  "persona": "Graduate student administering a stress survey to first-year college students via paper forms, hand-entered into Excel",
+  "source_style": "transcribed from paper survey responses into Excel by hand",
+  "file": "gen_h3_2.xlsx",
+  "file_kind": "xlsx",
+  "sheets": [
+    {
+      "name": "Survey Data",
+      "is_data": true,
+      "header_row": 4,
+      "n_data_rows": 18,
+      "columns": [
+        {
+          "name": "ID",
+          "true_type": "id",
+          "notes": "Student identifier 1\u201318"
+        },
+        {
+          "name": "How stressed?",
+          "true_type": "ordinal",
+          "notes": "Likert 1\u201310 (1=no stress, 10=extreme stress); one value missing (student 6)"
+        },
+        {
+          "name": "Study Hrs/Wk",
+          "true_type": "numeric",
+          "notes": "Hours per week spent studying; one value missing (student 18)"
+        },
+        {
+          "name": "Major",
+          "true_type": "categorical",
+          "notes": "Academic major; one missing (student 13)"
+        },
+        {
+          "name": "Year",
+          "true_type": "ordinal",
+          "notes": "Academic year: Sophomore, Junior, Senior"
+        },
+        {
+          "name": "GPA",
+          "true_type": "numeric",
+          "notes": "Self-reported GPA, 2.8\u20133.9 scale"
+        },
+        {
+          "name": "Sleep (hrs)",
+          "true_type": "numeric",
+          "notes": "Typical hours slept per night; mostly numeric, some text formats (e.g., '~5.5'); one missing (student 18)"
+        }
+      ]
+    }
+  ],
+  "clean_table": [
+    {
+      "ID": 1,
+      "Stress": 8,
+      "Study_Hrs": 12,
+      "Major": "Engineering",
+      "Year": "Junior",
+      "GPA": 3.2,
+      "Sleep": 6
+    },
+    {
+      "ID": 2,
+      "Stress": 6,
+      "Study_Hrs": 8,
+      "Major": "Biology",
+      "Year": "Senior",
+      "GPA": 3.5,
+      "Sleep": 7
+    },
+    {
+      "ID": 3,
+      "Stress": 9,
+      "Study_Hrs": 15,
+      "Major": "Chemistry",
+      "Year": "Sophomore",
+      "GPA": 3.1,
+      "Sleep": 5.5
+    },
+    {
+      "ID": 4,
+      "Stress": 5,
+      "Study_Hrs": 5,
+      "Major": "English",
+      "Year": "Junior",
+      "GPA": 3.7,
+      "Sleep": 8
+    },
+    {
+      "ID": 5,
+      "Stress": 7,
+      "Study_Hrs": 10,
+      "Major": "Math",
+      "Year": "Senior",
+      "GPA": 3.3,
+      "Sleep": 6.5
+    },
+    {
+      "ID": 6,
+      "Stress": null,
+      "Study_Hrs": 9,
+      "Major": "Engineering",
+      "Year": "Junior",
+      "GPA": 3.0,
+      "Sleep": 7
+    },
+    {
+      "ID": 7,
+      "Stress": 4,
+      "Study_Hrs": 4,
+      "Major": "History",
+      "Year": "Sophomore",
+      "GPA": 3.8,
+      "Sleep": 8
+    },
+    {
+      "ID": 8,
+      "Stress": 8,
+      "Study_Hrs": 14,
+      "Major": "Physics",
+      "Year": "Senior",
+      "GPA": 2.9,
+      "Sleep": 5
+    },
+    {
+      "ID": 9,
+      "Stress": 6,
+      "Study_Hrs": 7,
+      "Major": "Psychology",
+      "Year": "Junior",
+      "GPA": 3.4,
+      "Sleep": 7.5
+    },
+    {
+      "ID": 10,
+      "Stress": 9,
+      "Study_Hrs": 18,
+      "Major": "Pre-Med",
+      "Year": "Junior",
+      "GPA": 3.2,
+      "Sleep": 4
+    },
+    {
+      "ID": 11,
+      "Stress": 5,
+      "Study_Hrs": 6,
+      "Major": "English",
+      "Year": "Senior",
+      "GPA": 3.6,
+      "Sleep": 9
+    },
+    {
+      "ID": 12,
+      "Stress": 7,
+      "Study_Hrs": 11,
+      "Major": "Biology",
+      "Year": "Junior",
+      "GPA": 3.3,
+      "Sleep": 6
+    },
+    {
+      "ID": 13,
+      "Stress": 8,
+      "Study_Hrs": 13,
+      "Major": null,
+      "Year": "Senior",
+      "GPA": 3.4,
+      "Sleep": 5.5
+    },
+    {
+      "ID": 14,
+      "Stress": 6,
+      "Study_Hrs": 9,
+      "Major": "Engineering",
+      "Year": "Sophomore",
+      "GPA": 3.1,
+      "Sleep": 7
+    },
+    {
+      "ID": 15,
+      "Stress": 9,
+      "Study_Hrs": 16,
+      "Major": "Chemistry",
+      "Year": "Junior",
+      "GPA": 2.8,
+      "Sleep": 5
+    },
+    {
+      "ID": 16,
+      "Stress": 4,
+      "Study_Hrs": 5,
+      "Major": "Math",
+      "Year": "Junior",
+      "GPA": 3.9,
+      "Sleep": 8
+    },
+    {
+      "ID": 17,
+      "Stress": 7,
+      "Study_Hrs": 10,
+      "Major": "Philosophy",
+      "Year": "Senior",
+      "GPA": 3.2,
+      "Sleep": 6.5
+    },
+    {
+      "ID": 18,
+      "Stress": 8,
+      "Study_Hrs": null,
+      "Major": "Biology",
+      "Year": "Junior",
+      "GPA": 3.3,
+      "Sleep": null
+    }
+  ],
+  "intended_analysis": "Is there a relationship between self-reported stress and study hours? Does year in school predict stress? Is GPA correlated with sleep hours or study time?",
+  "mess_applied": [
+    "Title and instructions in rows 1\u20132 above the data",
+    "Headers in row 4 with vague labels ('How stressed?' instead of 'Stress Level')",
+    "Missing values in scattered cells (student 6 stress, student 13 major, student 18 study hours and sleep)",
+    "Mixed format for sleep data (numeric and text like '~5.5')",
+    "Researcher comments below the data explaining missing values and outliers",
+    "Data is NOT cleaned or validated\u2014as a student would actually receive it"
+  ],
+  "what_a_naive_reader_would_get_wrong": "A naive CSV parser might fail on the header row count and miss rows 1\u20132, or fail to parse the sleep column due to text like '~5.5'. Missing values stored as empty cells (not as 'NA' or 'missing') could be interpreted as 0 instead of null. The sheet title and notes rows could be misread as data."
+}

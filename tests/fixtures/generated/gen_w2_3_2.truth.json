@@ -1,0 +1,127 @@
+{
+  "id": "w2_3_2",
+  "generator_model": "sonnet",
+  "field": "food science / biotechnology (procurement)",
+  "persona": "European raw-material suppliers (a German sugar producer, French and Dutch commodity suppliers) sending the lab's purchasing office shipment records; the sheet was opened and re-saved in Excel under a decimal-comma European locale, which forces Excel to switch the CSV field delimiter to semicolon so that the comma decimal marks inside numeric fields aren't mistaken for delimiters",
+  "source_style": "supplier shipment / price sheet exported from Excel under a European (decimal-comma) locale",
+  "file": "gen_w2_3_2.csv",
+  "file_kind": "csv",
+  "sheets": [
+    {
+      "name": null,
+      "is_data": true,
+      "header_row": 1,
+      "n_data_rows": 27,
+      "columns": [
+        {
+          "name": "ShipmentID",
+          "true_type": "id",
+          "notes": "SH2026-001..SH2026-027"
+        },
+        {
+          "name": "Supplier",
+          "true_type": "categorical",
+          "notes": "Nordzucker AG, Sudzucker AG, Cargill Nederland BV, Tereos France SA"
+        },
+        {
+          "name": "Material",
+          "true_type": "categorical",
+          "notes": "Glucose Syrup, Sucrose, Maltose, Lactose"
+        },
+        {
+          "name": "Quantity_kg",
+          "true_type": "numeric",
+          "notes": "REQUIRED QUIRK: written with European convention, e.g. '1.279,2' (true value 1279.2) -- '.' thousands separator, ',' decimal separator. Every value in the column contains a comma decimal."
+        },
+        {
+          "name": "UnitPrice_EUR_per_kg",
+          "true_type": "numeric",
+          "notes": "REQUIRED QUIRK: decimal-comma value, e.g. '1,23'. Row index 2 (SH2026-002) is exactly '12,75' (true value 12.75), the literal example from spec."
+        },
+        {
+          "name": "Yield_Percent",
+          "true_type": "numeric",
+          "notes": "Decimal-comma percent-as-number (not a formatted percent cell, since CSV can't carry cell formats) e.g. '98,1' meaning 98.1%. Range 88.0-99.5."
+        },
+        {
+          "name": "DeliveryDate",
+          "true_type": "text",
+          "notes": "European dd.mm.yyyy text, e.g. '15.01.2026'"
+        },
+        {
+          "name": "Notes",
+          "true_type": "text",
+          "notes": "Free text, mostly empty (13 of 27 rows filled): 'on time', 'delayed 2 days', 'partial shipment', 'quality cert attached'"
+        }
+      ]
+    }
+  ],
+  "clean_table": {
+    "description": "After cleaning: split on ';' (NOT ','), strip the UTF-8 BOM from the first header cell ('ShipmentID', not '\\ufeffShipmentID'), then for Quantity_kg/UnitPrice_EUR_per_kg/Yield_Percent strip '.' thousands separators and replace ',' with '.' before casting to float (e.g. '1.279,2' -> 1279.2, '12,75' -> 12.75, '98,1' -> 98.1). DeliveryDate parsed as dd.mm.yyyy. 27 data rows, no missing values in ShipmentID/Supplier/Material/Quantity/UnitPrice/Yield/DeliveryDate; Notes has 14 blanks.",
+    "structure": "One row per ShipmentID (SH2026-001..SH2026-027), no repeats or nesting.",
+    "total_rows": 27,
+    "sample_cleaned": [
+      {
+        "ShipmentID": "SH2026-001",
+        "Supplier": "Tereos France SA",
+        "Material": "Lactose",
+        "Quantity_kg": 1279.2,
+        "UnitPrice_EUR_per_kg": 1.23,
+        "Yield_Percent": 98.1,
+        "DeliveryDate": "2026-01-15",
+        "Notes": "quality cert attached"
+      },
+      {
+        "ShipmentID": "SH2026-002",
+        "Supplier": "Nordzucker AG",
+        "Material": "Maltose",
+        "Quantity_kg": 952.6,
+        "UnitPrice_EUR_per_kg": 12.75,
+        "Yield_Percent": 92.6,
+        "DeliveryDate": "2026-01-17",
+        "Notes": ""
+      },
+      {
+        "ShipmentID": "SH2026-003",
+        "Supplier": "Tereos France SA",
+        "Material": "Glucose Syrup",
+        "Quantity_kg": 959.8,
+        "UnitPrice_EUR_per_kg": 0.37,
+        "Yield_Percent": 90.5,
+        "DeliveryDate": "2026-01-19",
+        "Notes": ""
+      }
+    ]
+  },
+  "intended_analysis": "Track raw-material cost per kg and delivered yield by supplier/material over time to negotiate future contracts.",
+  "mess_applied": [
+    "semicolon-delimited instead of comma-delimited (forced by the European decimal-comma Excel locale that produced the file)",
+    "UTF-8 encoded WITH a byte-order mark (BOM) prepended",
+    "Quantity_kg, UnitPrice_EUR_per_kg, and Yield_Percent all written with European decimal-comma convention; Quantity_kg additionally uses '.' as a thousands separator above 1000 kg",
+    "DeliveryDate is text in dd.mm.yyyy order",
+    "Notes column mostly empty (free text)"
+  ],
+  "what_a_naive_reader_would_get_wrong": "A CSV reader that assumes the default comma delimiter (never checking for ';') would shred every numeric field at its decimal comma into two bogus columns -- e.g. 'ShipmentID;Supplier;Material;Quantity_kg;...' parsed on ',' produces a single one-column row per line, and a line like the 'Tereos France SA;Lactose;1.279,2;1,23;98,1;...' row would instead split '1.279,2' into '1.279' and '2' as separate fields if it guessed ',' as the delimiter, corrupting every column downstream. A reader that doesn't decode with utf-8-sig (or strip the BOM) will see the first header as '\\ufeffShipmentID', which fails to match a lookup for 'ShipmentID' and silently drops/renames the first column. Even once the delimiter and BOM are handled correctly, naively casting the numeric text columns with a US-locale float parser will mis-parse '1.279,2' (thousands dot + decimal comma) as 1.279 or throw, and misparse '12,75' as 1275 if the comma is stripped as a thousands separator instead of a decimal mark."
+  ,
+  "verified_by_readback": true,
+  "readback_counts": {
+    "n_data_rows": 27,
+    "per_column_non_empty_counts": {
+      "ShipmentID": 27,
+      "Supplier": 27,
+      "Material": 27,
+      "Quantity_kg": 27,
+      "UnitPrice_EUR_per_kg": 27,
+      "Yield_Percent": 27,
+      "DeliveryDate": 27,
+      "Notes": 13
+    },
+    "first_bytes_hex": "efbbbf536869",
+    "starts_with_utf8_bom_confirmed": true,
+    "delimiter_confirmed_semicolon": true,
+    "every_data_row_field_count": 8,
+    "decimal_comma_present_in_quantity_kg_all_rows": true,
+    "decimal_comma_present_in_unitprice_all_rows": true,
+    "literal_example_12_75_present_in_unitprice": true
+  }
+}

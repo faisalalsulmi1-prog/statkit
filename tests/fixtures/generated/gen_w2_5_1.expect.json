@@ -1,0 +1,140 @@
+{
+  "file": "gen_w2_5_1.xlsx",
+  "fixture_id": "w2_5_1",
+  "wave": 2,
+  "source_kind": "xlsx",
+  "authored_from_bytes": true,
+  "sheets": [
+    {
+      "name": "VaccineAcceptance",
+      "role": "data",
+      "header_row": 3,
+      "two_row": false,
+      "header_row2": null,
+      "units_row": null,
+      "data_start_row": 4,
+      "n_rows": 2,
+      "n_cols": 4,
+      "layout": "table",
+      "dropped_rows": [
+        {
+          "row": 1,
+          "reason": "merged title A1:D1"
+        },
+        {
+          "row": 2,
+          "reason": "blank spacer"
+        },
+        {
+          "row": 6,
+          "reason": "summary 'Total' row"
+        },
+        {
+          "row": 7,
+          "reason": "blank spacer"
+        },
+        {
+          "row": 8,
+          "reason": "'Source:' footer"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Age Group",
+          "col_index": 1,
+          "kind": "categorical",
+          "kinds": [
+            "categorical"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": 2,
+          "flags": [
+            "row-label column (table layout)"
+          ],
+          "notes": ""
+        },
+        {
+          "name": "Accepted",
+          "col_index": 2,
+          "kind": "numeric",
+          "kinds": [
+            "numeric",
+            "binary",
+            "categorical"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": null,
+          "flags": [
+            "count column (table layout); d==2 only because 2 rows"
+          ],
+          "notes": ""
+        },
+        {
+          "name": "Declined",
+          "col_index": 3,
+          "kind": "numeric",
+          "kinds": [
+            "numeric",
+            "binary",
+            "categorical"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": null,
+          "flags": [
+            "count column"
+          ],
+          "notes": ""
+        },
+        {
+          "name": "Total",
+          "col_index": 4,
+          "kind": "numeric",
+          "kinds": [
+            "numeric",
+            "binary",
+            "categorical"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": null,
+          "flags": [
+            "marginal Total COLUMN (table layout) -> dropped when table_to_long expands"
+          ],
+          "notes": ""
+        }
+      ],
+      "expect_block": {
+        "served": true,
+        "block_reason": null,
+        "layout": "table",
+        "target_tests": [
+          "chi2_ind",
+          "fisher"
+        ],
+        "checks_expected": [
+          {
+            "code": "S15",
+            "why": "table total 250 (< 1e6, ok)"
+          }
+        ],
+        "snags_applied": [],
+        "note": "TABLE layout 2x2 count grid: row labels col A, Total row + Total column, Source footer. n=2 data (age-group) rows; expected counts all >=17 -> chi2 runs unblocked. (R×C grid still uncovered.)"
+      }
+    }
+  ]
+}

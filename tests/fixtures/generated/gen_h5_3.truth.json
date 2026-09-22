@@ -1,0 +1,219 @@
+{
+  "id": "h5_3",
+  "generator_model": "haiku",
+  "field": "sports science",
+  "persona": "University strength and conditioning coach running a full fitness battery on a track and field team",
+  "source_style": "Three separate assessment sheets merged into one workbook from different test sessions and equipment",
+  "file": "gen_h5_3.xlsx",
+  "file_kind": "xlsx",
+  "sheets": [
+    {
+      "name": "Beep Test",
+      "is_data": true,
+      "header_row": 1,
+      "n_data_rows": 8,
+      "columns": [
+        {
+          "name": "Athlete",
+          "true_type": "text",
+          "notes": "Full name"
+        },
+        {
+          "name": "Test Date",
+          "true_type": "date",
+          "notes": "YYYY-MM-DD format"
+        },
+        {
+          "name": "Age",
+          "true_type": "numeric",
+          "notes": "Age in years"
+        },
+        {
+          "name": "Distance (m)",
+          "true_type": "numeric",
+          "notes": "Total distance covered in beep test"
+        },
+        {
+          "name": "Level",
+          "true_type": "numeric",
+          "notes": "Shuttle level reached"
+        },
+        {
+          "name": "VO2 Max (ml/kg/min)",
+          "true_type": "numeric",
+          "notes": "Estimated aerobic capacity"
+        }
+      ]
+    },
+    {
+      "name": "Body Comp",
+      "is_data": true,
+      "header_row": 3,
+      "n_data_rows": 8,
+      "columns": [
+        {
+          "name": "Athlete",
+          "true_type": "text",
+          "notes": "Full name"
+        },
+        {
+          "name": "Date",
+          "true_type": "date",
+          "notes": "YYYY-MM-DD format"
+        },
+        {
+          "name": "Height (cm)",
+          "true_type": "numeric",
+          "notes": "Height in centimeters"
+        },
+        {
+          "name": "Weight (kg)",
+          "true_type": "numeric",
+          "notes": "Weight in kilograms"
+        },
+        {
+          "name": "Body Fat %",
+          "true_type": "numeric",
+          "notes": "Percentage body fat"
+        },
+        {
+          "name": "Notes",
+          "true_type": "text",
+          "notes": "Casual notes (OK, Good, Needs improvement, etc)"
+        }
+      ]
+    },
+    {
+      "name": "Strength 1RM",
+      "is_data": true,
+      "header_row": 3,
+      "n_data_rows": 8,
+      "columns": [
+        {
+          "name": "Athlete",
+          "true_type": "text",
+          "notes": "Full name"
+        },
+        {
+          "name": "Bench Press (kg)",
+          "true_type": "numeric",
+          "notes": "1-rep max in kilograms"
+        },
+        {
+          "name": "Squat (kg)",
+          "true_type": "numeric",
+          "notes": "1-rep max in kg; 1 missing value (knee pain)"
+        },
+        {
+          "name": "Deadlift (kg)",
+          "true_type": "numeric",
+          "notes": "1-rep max in kg; 1 missing value (scheduled later)"
+        },
+        {
+          "name": "Notes",
+          "true_type": "text",
+          "notes": "Injury or scheduling notes"
+        }
+      ]
+    }
+  ],
+  "clean_table": [
+    {
+      "athlete": "Marcus Johnson",
+      "date": "2024-10-10",
+      "age": 18,
+      "distance_m": 1273,
+      "level": 8,
+      "vo2_max": 42.4
+    },
+    {
+      "athlete": "James Chen",
+      "date": "2024-10-10",
+      "age": 17,
+      "distance_m": 1573,
+      "level": 10,
+      "vo2_max": 42.4
+    },
+    {
+      "athlete": "Derek Thompson",
+      "date": "2024-10-10",
+      "age": 18,
+      "distance_m": 1987,
+      "level": 14,
+      "vo2_max": 46.3
+    },
+    {
+      "athlete": "Tyrone Robinson",
+      "date": "2024-10-10",
+      "age": 17,
+      "distance_m": 1424,
+      "level": 10,
+      "vo2_max": 42.4
+    },
+    {
+      "athlete": "Andre Williams",
+      "date": "2024-10-10",
+      "age": 18,
+      "distance_m": 2182,
+      "level": 14,
+      "vo2_max": 43.9
+    },
+    {
+      "athlete": "Chris Patterson",
+      "date": "2024-10-10",
+      "age": 17,
+      "distance_m": 1811,
+      "level": 12,
+      "vo2_max": 45.6
+    },
+    {
+      "athlete": "Brandon Lee",
+      "date": "2024-10-10",
+      "age": 18,
+      "distance_m": 1729,
+      "level": 11,
+      "vo2_max": 42.9
+    },
+    {
+      "athlete": "Anthony Moore",
+      "date": "2024-10-10",
+      "age": 17,
+      "distance_m": 1828,
+      "level": 12,
+      "vo2_max": 42.5
+    },
+    {
+      "separator": "---"
+    },
+    {
+      "athlete": "Marcus Johnson",
+      "date": "2024-10-10",
+      "height_cm": 174,
+      "weight_kg": 88.7,
+      "body_fat_pct": 8.2
+    },
+    {
+      "athlete": "James Chen",
+      "date": "2024-10-10",
+      "height_cm": 184,
+      "weight_kg": 73.0,
+      "body_fat_pct": 16.4
+    },
+    {
+      "athlete": "Derek Thompson",
+      "date": "2024-10-10",
+      "height_cm": 179,
+      "weight_kg": 89.0,
+      "body_fat_pct": 10.1
+    }
+  ],
+  "intended_analysis": "Is there a significant relationship between cardiovascular fitness (VO2 Max) and body composition (body fat %)? For the athletes who have complete strength data, does upper-body strength (bench press) correlate with lower-body strength (squat)?",
+  "mess_applied": [
+    "Sheet 1 (Beep Test) is clean and consistent",
+    "Sheet 2 (Body Comp) has an extra title row at the top and starts the header at row 3 (not row 1)",
+    "Sheet 3 (Strength 1RM) has title and date info above data (rows 1-2 before header), making it harder to parse programmatically",
+    "Sheet 3 has 2 missing numeric values (blank cells) for squat and deadlift with explanatory notes",
+    "Different sheets have different formatting styles and header positions"
+  ],
+  "what_a_naive_reader_would_get_wrong": "A reader that expects header_row to always be row 1 would miss the data in sheets 2 and 3. Missing values in the strength sheet could be interpreted as zeros instead of truly missing. The title rows in sheets 2 and 3 could be accidentally included as data if the parser doesn't detect offset headers."
+}

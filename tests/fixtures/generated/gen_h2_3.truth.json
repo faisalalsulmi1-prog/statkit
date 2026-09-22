@@ -1,0 +1,132 @@
+{
+  "id": "h2_3",
+  "generator_model": "haiku",
+  "field": "psychology",
+  "persona": "Undergrad distributing Google Form survey to classmates about study habits",
+  "source_style": "Google Forms export to Excel",
+  "file": "gen_h2_3.xlsx",
+  "file_kind": "xlsx",
+  "sheets": [
+    {
+      "name": "Form Responses 1",
+      "is_data": true,
+      "header_row": 1,
+      "n_data_rows": 35,
+      "columns": [
+        {
+          "name": "Timestamp",
+          "true_type": "date",
+          "notes": "Google Forms format MM/DD/YYYY HH:MM:SS AM/PM"
+        },
+        {
+          "name": "Email Address",
+          "true_type": "text",
+          "notes": "Respondent email, one duplicate (student1)"
+        },
+        {
+          "name": "How many hours per week do you study? (estimate)",
+          "true_type": "numeric",
+          "notes": "Decimal hours, range 5-15"
+        },
+        {
+          "name": "Major",
+          "true_type": "categorical",
+          "notes": "Psychology, Biology, Chemistry, Physics, English"
+        },
+        {
+          "name": "Current GPA",
+          "true_type": "numeric",
+          "notes": "Decimal GPA, 0-4.0 scale, range 3.12-3.97"
+        },
+        {
+          "name": "On average, how many study sessions per week?",
+          "true_type": "numeric",
+          "notes": "Integer, range 2-6"
+        },
+        {
+          "name": "Rate your sleep quality (1=Poor, 5=Excellent)",
+          "true_type": "ordinal",
+          "notes": "Likert 1-5, integer"
+        }
+      ]
+    }
+  ],
+  "clean_table": {
+    "note": "34 unique responses (row 16 = student1@uni.edu duplicate at row 3), 35 rows total including header",
+    "first_5_rows": [
+      {
+        "Timestamp": "9/19/2024 11:34:22 PM",
+        "Email": "student1@uni.edu",
+        "StudyHours": 8,
+        "Major": "Psychology",
+        "GPA": 3.45,
+        "SessionsPerWeek": 3,
+        "SleepQuality": 4
+      },
+      {
+        "Timestamp": "9/19/2024 11:42:15 PM",
+        "Email": "student2@uni.edu",
+        "StudyHours": 12,
+        "Major": "Biology",
+        "GPA": 3.78,
+        "SessionsPerWeek": 5,
+        "SleepQuality": 3
+      },
+      {
+        "Timestamp": "9/20/2024 12:03:44 AM",
+        "Email": "student3@uni.edu",
+        "StudyHours": 6,
+        "Major": "Psychology",
+        "GPA": 3.12,
+        "SessionsPerWeek": 2,
+        "SleepQuality": 5
+      },
+      {
+        "Timestamp": "9/20/2024 8:15:33 AM",
+        "Email": "student4@uni.edu",
+        "StudyHours": 10,
+        "Major": "Chemistry",
+        "GPA": 3.89,
+        "SessionsPerWeek": 4,
+        "SleepQuality": 3
+      },
+      {
+        "Timestamp": "9/20/2024 1:29:18 PM",
+        "Email": "student5@uni.edu",
+        "StudyHours": 7.5,
+        "Major": "Psychology",
+        "GPA": 3.56,
+        "SessionsPerWeek": 3,
+        "SleepQuality": 4
+      }
+    ],
+    "last_2_rows": [
+      {
+        "Timestamp": "9/27/2024 4:33:27 PM",
+        "Email": "student33@uni.edu",
+        "StudyHours": 8,
+        "Major": "Psychology",
+        "GPA": 3.59,
+        "SessionsPerWeek": 4,
+        "SleepQuality": 4
+      },
+      {
+        "Timestamp": "9/27/2024 5:44:55 PM",
+        "Email": "student34@uni.edu",
+        "StudyHours": 10,
+        "Major": "English",
+        "GPA": 3.47,
+        "SessionsPerWeek": 3,
+        "SleepQuality": 4
+      }
+    ]
+  },
+  "intended_analysis": "Regression of GPA on weekly study hours and number of study sessions; compare study time by major; ANOVA on sleep quality by major",
+  "mess_applied": [
+    "duplicate respondent (student1 at rows 3 and 16, same data)",
+    "timestamps in Google Forms format, not ISO 8601",
+    "email column included (typical Google Forms export but unusual for analysis)",
+    "column headers are long question text, not variable names"
+  ],
+  "what_a_naive_reader_would_get_wrong": "A naive reader might not detect the duplicate response (student1 appears twice with identical answers). They might incorrectly treat the email column as relevant for analysis or use the timestamp as-is without parsing. They would need to rename the long question-text headers to usable variable names."
+}

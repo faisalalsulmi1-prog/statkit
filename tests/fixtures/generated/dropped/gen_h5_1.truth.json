@@ -1,0 +1,127 @@
+{
+  "id": "h5_1",
+  "generator_model": "haiku",
+  "field": "sports science",
+  "persona": "High school basketball coach tracking vertical jump progress over a season",
+  "source_style": "Exported from coach's training log spreadsheet, one session per date",
+  "file": "gen_h5_1.xlsx",
+  "file_kind": "xlsx",
+  "sheets": [
+    {
+      "name": "Jump Sessions",
+      "is_data": true,
+      "header_row": 1,
+      "n_data_rows": 96,
+      "columns": [
+        {
+          "name": "Date",
+          "true_type": "date",
+          "notes": "YYYY-MM-DD format"
+        },
+        {
+          "name": "Athlete ID",
+          "true_type": "id",
+          "notes": "101-112"
+        },
+        {
+          "name": "Athlete Name",
+          "true_type": "text",
+          "notes": "Full name"
+        },
+        {
+          "name": "Trial 1 (cm)",
+          "true_type": "numeric",
+          "notes": "Vertical jump height in centimeters"
+        },
+        {
+          "name": "Trial 2 (cm)",
+          "true_type": "numeric",
+          "notes": "Vertical jump height in centimeters"
+        },
+        {
+          "name": "Trial 3 (cm)",
+          "true_type": "numeric",
+          "notes": "Vertical jump height in centimeters"
+        },
+        {
+          "name": "Best (cm)",
+          "true_type": "numeric",
+          "notes": "Best of three trials"
+        }
+      ]
+    }
+  ],
+  "clean_table": [
+    {
+      "date": "2024-09-15",
+      "athlete_id": 101,
+      "athlete_name": "Marcus Johnson",
+      "trial_1": 50.9,
+      "trial_2": 50.1,
+      "trial_3": 50.6,
+      "best": 50.9
+    },
+    {
+      "date": "2024-09-15",
+      "athlete_id": 102,
+      "athlete_name": "James Chen",
+      "trial_1": 50.7,
+      "trial_2": 53.2,
+      "trial_3": 53.2,
+      "best": 53.2
+    },
+    {
+      "date": "2024-09-15",
+      "athlete_id": 103,
+      "athlete_name": "Derek Thompson",
+      "trial_1": 53.7,
+      "trial_2": 52.3,
+      "trial_3": 53.2,
+      "best": 53.7
+    },
+    {
+      "date": "2024-09-15",
+      "athlete_id": 104,
+      "athlete_name": "Tyrone Robinson",
+      "trial_1": 52.1,
+      "trial_2": 53.7,
+      "trial_3": 54.5,
+      "best": 54.5
+    },
+    {
+      "date": "2024-09-15",
+      "athlete_id": 105,
+      "athlete_name": "Andre Williams",
+      "trial_1": 53.1,
+      "trial_2": 54.6,
+      "trial_3": 56.1,
+      "best": 56.1
+    },
+    {
+      "date": "2024-10-13",
+      "athlete_id": 110,
+      "athlete_name": "Steven Jackson",
+      "trial_1": 61.2,
+      "trial_2": 63.5,
+      "trial_3": 64.1,
+      "best": 64.1
+    },
+    {
+      "date": "2024-12-01",
+      "athlete_id": 112,
+      "athlete_name": "David Garcia",
+      "trial_1": 62.8,
+      "trial_2": 61.4,
+      "trial_3": 64.3,
+      "best": 64.3
+    },
+    {
+      "rows_elided": "... 89 rows ..."
+    }
+  ],
+  "intended_analysis": "How much did each athlete's best vertical jump improve from September to December? Which athletes showed the most consistent performance across trials?",
+  "mess_applied": [
+    "none, it is clean"
+  ],
+  "what_a_naive_reader_would_get_wrong": "Nothing obviously \u2014 this is a straightforward rectangular dataset with consistent formatting."
+}

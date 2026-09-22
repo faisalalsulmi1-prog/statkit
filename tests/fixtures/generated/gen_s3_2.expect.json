@@ -1,0 +1,250 @@
+{
+  "file": "gen_s3_2.xlsx",
+  "fixture_id": "s3_2",
+  "wave": 1,
+  "source_kind": "xlsx",
+  "authored_from_bytes": true,
+  "sheets": [
+    {
+      "name": "Sheet1",
+      "role": "data",
+      "header_row": 17,
+      "two_row": false,
+      "header_row2": null,
+      "units_row": null,
+      "data_start_row": 18,
+      "n_rows": 8,
+      "n_cols": 7,
+      "layout": "long",
+      "dropped_rows": [
+        {
+          "row": 1,
+          "reason": "merged title A1:G1"
+        },
+        {
+          "row": 2,
+          "reason": "instrument metadata"
+        },
+        {
+          "row": 3,
+          "reason": "metadata"
+        },
+        {
+          "row": 4,
+          "reason": "metadata"
+        },
+        {
+          "row": 5,
+          "reason": "metadata"
+        },
+        {
+          "row": 6,
+          "reason": "blank"
+        },
+        {
+          "row": 7,
+          "reason": "stacked calibration table title"
+        },
+        {
+          "row": 8,
+          "reason": "stacked calibration table header"
+        },
+        {
+          "row": 9,
+          "reason": "calibration data"
+        },
+        {
+          "row": 10,
+          "reason": "calibration data"
+        },
+        {
+          "row": 11,
+          "reason": "calibration data"
+        },
+        {
+          "row": 12,
+          "reason": "calibration data"
+        },
+        {
+          "row": 13,
+          "reason": "calibration data"
+        },
+        {
+          "row": 14,
+          "reason": "calibration data"
+        },
+        {
+          "row": 15,
+          "reason": "blank"
+        },
+        {
+          "row": 16,
+          "reason": "section label 'Sample Extracts'"
+        },
+        {
+          "row": 26,
+          "reason": "blank"
+        },
+        {
+          "row": 27,
+          "reason": "footer note"
+        },
+        {
+          "row": 28,
+          "reason": "footer note"
+        },
+        {
+          "row": 29,
+          "reason": "footer note"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Sample Name",
+          "col_index": 1,
+          "kind": "categorical",
+          "kinds": [
+            "categorical"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": 8,
+          "flags": [
+            "8 spice extracts"
+          ],
+          "notes": ""
+        },
+        {
+          "name": "Abs 1",
+          "col_index": 2,
+          "kind": "numeric",
+          "kinds": [
+            "numeric"
+          ],
+          "n_missing": 0,
+          "n_censored": 1,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": null,
+          "flags": [
+            "snag14: 'n.d.' (not determined) treated as missing via non-detect branch; neutral wording"
+          ],
+          "notes": ""
+        },
+        {
+          "name": "Abs 2",
+          "col_index": 3,
+          "kind": "numeric",
+          "kinds": [
+            "numeric"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": null,
+          "flags": [],
+          "notes": ""
+        },
+        {
+          "name": "Abs 3",
+          "col_index": 4,
+          "kind": "numeric",
+          "kinds": [
+            "numeric"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": null,
+          "flags": [],
+          "notes": ""
+        },
+        {
+          "name": "Mean Abs",
+          "col_index": 5,
+          "kind": "empty",
+          "kinds": [
+            "empty"
+          ],
+          "n_missing": 8,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": null,
+          "flags": [
+            "UNCOMPUTED FORMULA column -> BLOCK ('open in Excel, press Save, re-upload')"
+          ],
+          "notes": ""
+        },
+        {
+          "name": "Dilution Factor",
+          "col_index": 6,
+          "kind": "numeric",
+          "kinds": [
+            "numeric",
+            "binary",
+            "categorical"
+          ],
+          "n_missing": 0,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": null,
+          "flags": [
+            "1/5 dilution d==2"
+          ],
+          "notes": ""
+        },
+        {
+          "name": "TPC (mg GAE/g)",
+          "col_index": 7,
+          "kind": "empty",
+          "kinds": [
+            "empty"
+          ],
+          "n_missing": 8,
+          "n_censored": 0,
+          "failed_cells": 0,
+          "failed_examples": [],
+          "unit": null,
+          "levels": null,
+          "flags": [
+            "UNCOMPUTED FORMULA column -> BLOCK"
+          ],
+          "notes": ""
+        }
+      ],
+      "expect_block": {
+        "served": true,
+        "block_reason": null,
+        "layout": "long",
+        "target_tests": [
+          "rm_anova",
+          "friedman",
+          "describe"
+        ],
+        "checks_expected": [
+          {
+            "code": "S21",
+            "why": "n=8 samples"
+          }
+        ],
+        "snags_applied": [
+          6,
+          14
+        ],
+        "note": "snag6: header at row 17 (15th non-empty; window must be >=25); two stacked tables; Mean Abs & TPC are UNCACHED FORMULA columns -> BLOCKED per 4.4 ('open in Excel, Save, re-upload'); 'n.d.' = not determined (snag14, neutral)."
+      }
+    }
+  ]
+}

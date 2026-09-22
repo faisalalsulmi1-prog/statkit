@@ -1,0 +1,190 @@
+{
+  "id": "w2_1_1",
+  "generator_model": "sonnet",
+  "field": "Public Health / Health Services Research",
+  "persona": "Graduate research assistant in a rural health services program, digitizing a decade-old paper-derived clinic audit for a retrospective study of chronic-disease follow-up and hospital referral patterns in an underserved rural clinic; working directly from the original 2009 Excel file handed over by her faculty supervisor, who inherited it from the county health department field auditor who built it.",
+  "source_style": "Legacy Excel 97-2003 (.xls) clinic audit workbook, originally compiled by a county health department field auditor in 2009 by re-keying a paper visit log; never reformatted or cleaned since.",
+  "file": "gen_w2_1_1.xls",
+  "file_kind": "xls",
+  "sheets": [
+    {
+      "name": "Sheet1",
+      "is_data": true,
+      "header_row": 2,
+      "n_data_rows": 40,
+      "columns": [
+        {
+          "name": "Patient_ID",
+          "true_type": "id (text, mostly)",
+          "notes": "Format 'CHC-00NN' for 38 of 40 rows. Rows 16 and 34 (physical rows) were re-keyed as bare numbers (15, 33) instead of the text ID -- a real re-entry slip, not synthetic noise for its own sake."
+        },
+        {
+          "name": "Visit_Date",
+          "true_type": "date",
+          "notes": "Real Excel date-typed cells (xlwt date format, MM/DD/YYYY display), all 40 rows populated. Range 2009-01-12 to 2009-06-08, weekdays only, matching the title band's stated Jan-Jun 2009 audit period."
+        },
+        {
+          "name": "Age_Years",
+          "true_type": "int (mostly)",
+          "notes": "Integer age for 39 of 40 rows. Row 23 (physical) is the text 'approx 80' -- an elderly patient with no birth record, a common rural-clinic transcription pattern."
+        },
+        {
+          "name": "Sex",
+          "true_type": "categorical (M/F)",
+          "notes": "2 rows blank (sex not recorded at intake)."
+        },
+        {
+          "name": "Diagnosis_ICD9",
+          "true_type": "categorical (ICD-9 code, text)",
+          "notes": "10 recurring ICD-9 codes (e.g. 401.9 hypertension, 250.00 diabetes, 466.0 acute bronchitis). 1 row blank, noted by the auditor as pending lab confirmation."
+        },
+        {
+          "name": "Weight_kg",
+          "true_type": "float",
+          "notes": "3 rows blank (patient not weighed that visit)."
+        },
+        {
+          "name": "Chronic_Case",
+          "true_type": "bool",
+          "notes": "Real Excel boolean cells (xlwt/xlrd ctype 4, stored 0/1 under a boolean type tag), not TRUE/FALSE strings. All 40 rows populated: 9 True, 31 False. Set True for chronic diagnoses (hypertension, diabetes, asthma)."
+        },
+        {
+          "name": "Referred_Hospital",
+          "true_type": "bool",
+          "notes": "Real Excel boolean cells, same encoding as Chronic_Case. All 40 rows populated: 4 True, 36 False."
+        },
+        {
+          "name": "Auditor_Notes",
+          "true_type": "free text",
+          "notes": "Mostly blank (29 of 40). Where present: administrative remarks. Row 27 (data index, physical row 29) carries 'Duplicate entry - retained per audit trail, do not delete' -- this is the hidden row."
+        }
+      ]
+    }
+  ],
+  "clean_table": {
+    "description": "A correctly parsed table skips the merged title band (physical row 0) and reads physical row 1 as the header, physical rows 2-41 as the 40 data records -- including the HIDDEN physical row 29 (data record 27, patient CHC-0028), which is real data, not a formatting artifact, and must not be silently dropped just because Excel is hiding it from view. Patient_ID should coerce to a consistent text/string dtype (the two numeric-looking cells, 15 and 33, are the same kind of value as 'CHC-0015'/'CHC-0033', just missing the prefix -- they are not a different entity). Age_Years should coerce to numeric with 1 row unparseable ('approx 80', row 23) becoming a missing value rather than crashing the whole-column conversion. Chronic_Case and Referred_Hospital should be read as boolean dtype, not 0/1 integers or 'TRUE'/'FALSE' strings. Blank cells in Sex, Diagnosis_ICD9, Weight_kg and Auditor_Notes are missing data (NaN/null), not a valid empty-string category.",
+    "expected_shape": [
+      40,
+      9
+    ],
+    "header_is_physical_row": 1,
+    "first_data_physical_row": 2
+  },
+  "intended_analysis": {
+    "primary_goal": "Cross-tabulate Chronic_Case x Referred_Hospital (Fisher's exact test, given the small referral counts) to test whether patients with a chronic diagnosis were more likely to be referred to the county hospital.",
+    "secondary": "Descriptive summary of the visit cohort: age and weight distribution by sex, ICD-9 diagnosis frequency table, and visit volume over the Jan-Jun 2009 audit window.",
+    "note": "N is small (40) and the intended use here is testing whether a stats tool can even ingest the file correctly (dates, booleans, mixed-type ID column, the merged title band, the hidden duplicate row) before any inferential result can be trusted."
+  },
+  "mess_applied": [
+    "REQUIRED: genuine legacy .xls (BIFF, Excel 97-2003) written with xlwt -- confirmed openable by xlrd 2.0.2, which only reads the real .xls binary format.",
+    "REQUIRED: 40 data rows (>=30).",
+    "REQUIRED: real date-typed cells in Visit_Date -- confirmed xlrd ctype==3 (XL_CELL_DATE) on all 40 data rows.",
+    "REQUIRED: real boolean-typed cells in Chronic_Case (and also Referred_Hospital) -- confirmed xlrd ctype==4 (XL_CELL_BOOLEAN) on all 40 data rows in both columns, written as Python True/False via xlwt.",
+    "REQUIRED: one merged title row above the header -- confirmed via sheet.merged_cells == [(0, 1, 0, 9)], spanning physical row 0 across all 9 columns.",
+    "REQUIRED: one hidden data row -- confirmed via sheet.rowinfo_map[29].hidden == 1 (physical row 29, i.e. data record 27), set with ws.row(29).hidden = 1. The hidden row is a real, fully-populated record (a duplicate visit entry the original auditor chose to hide rather than delete, per its own Auditor_Notes text), not a blank placeholder.",
+    "EXTRA (authentic, not required): Patient_ID mixed types -- 2 of 40 rows (physical rows 16 and 34) stored as numeric cells instead of the 'CHC-00NN' text pattern used elsewhere, a realistic re-keying slip.",
+    "EXTRA (authentic, not required): Age_Years has 1 text cell ('approx 80', physical row 23) among otherwise-integer cells, reflecting an elderly patient with no exact birth record.",
+    "EXTRA (authentic, not required): scattered missing values with no fill marker -- Sex (2 blank), Diagnosis_ICD9 (1 blank), Weight_kg (3 blank), Auditor_Notes (29 blank) -- ordinary not-recorded-at-intake gaps rather than a coded missing value."
+  ],
+  "what_a_naive_reader_would_get_wrong": [
+    "Reading physical row 0 (the merged title band) as either the header or as a data row, since a naive reader has no special handling for a merged cell sitting above the real header -- this misaligns every column.",
+    "Silently dropping the hidden row (physical row 29 / data record 27) if the reader filters on Excel's visible-rows-only view rather than reading every cell in the sheet -- this understates n from 40 to 39 without any error or warning.",
+    "Coercing Patient_ID entirely to numeric (turning the 38 'CHC-00NN' text cells into NaN and keeping only the 2 stray numeric ones), or the reverse -- treating the whole column as text and never noticing 2 of the 40 values are structurally different from the rest.",
+    "Coercing Age_Years to numeric and letting the single text cell ('approx 80') either crash the conversion for the whole column or silently vanish without being logged as a parse failure.",
+    "Treating Chronic_Case/Referred_Hospital as plain 0/1 integers rather than recognizing the underlying boolean cell type -- this changes how a tool would offer them for filtering/grouping (e.g. as a numeric variable to average instead of a binary group variable).",
+    "Treating a blank Sex/Diagnosis_ICD9/Weight_kg/Auditor_Notes cell as a valid empty-string category rather than as missing data, which would show up as a spurious extra level in any categorical summary.",
+    "Assuming Auditor_Notes is essentially unused because 29 of 40 cells are blank, and dropping the column -- which would also discard the only textual clue (on the hidden row) explaining why that record was hidden rather than deleted."
+  ],
+  "verified_by_readback": true,
+  "readback_counts": {
+    "n_data_rows": 40,
+    "sheet_nrows": 42,
+    "sheet_ncols": 9,
+    "header_physical_row": 1,
+    "first_data_physical_row": 2,
+    "date_cells_ctype3": 40,
+    "chronic_case_bool_cells_ctype4": 40,
+    "referred_hospital_bool_cells_ctype4": 40,
+    "merged_cells": [
+      [
+        0,
+        1,
+        0,
+        9
+      ]
+    ],
+    "hidden_physical_rows": [
+      29
+    ],
+    "hidden_row_data_index": 27,
+    "hidden_row_values": [
+      "CHC-0028",
+      "2009-xx-xx (date serial 39930.0)",
+      2.0,
+      "F",
+      "466.0",
+      91.9,
+      0,
+      0,
+      "Duplicate entry - retained per audit trail, do not delete"
+    ],
+    "missing_counts_per_column": {
+      "Patient_ID": 0,
+      "Visit_Date": 0,
+      "Age_Years": 0,
+      "Sex": 2,
+      "Diagnosis_ICD9": 1,
+      "Weight_kg": 3,
+      "Chronic_Case": 0,
+      "Referred_Hospital": 0,
+      "Auditor_Notes": 29
+    },
+    "type_mismatch_failed_cell_counts_per_column": {
+      "Patient_ID": 2,
+      "Visit_Date": 0,
+      "Age_Years": 1,
+      "Sex": 0,
+      "Diagnosis_ICD9": 0,
+      "Weight_kg": 0,
+      "Chronic_Case": 0,
+      "Referred_Hospital": 0,
+      "Auditor_Notes": 0
+    },
+    "type_mismatch_examples": {
+      "Patient_ID": [
+        {
+          "physical_row": 16,
+          "value": 15.0,
+          "ctype": "number"
+        },
+        {
+          "physical_row": 34,
+          "value": 33.0,
+          "ctype": "number"
+        }
+      ],
+      "Age_Years": [
+        {
+          "physical_row": 23,
+          "value": "approx 80",
+          "ctype": "text"
+        }
+      ]
+    },
+    "chronic_case_true_false": {
+      "true": 9,
+      "false": 31
+    },
+    "referred_hospital_true_false": {
+      "true": 4,
+      "false": 36
+    },
+    "visit_date_range": {
+      "first": "2009-01-12",
+      "last": "2009-06-08"
+    }
+  },
+  "_corrections": [
+    "header_row 1 (0-based) -> 2 (1-based Excel row; title band is row 1, header is row 2)."
+  ]
+}

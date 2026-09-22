@@ -1,0 +1,71 @@
+PatCode,MedicationName,Dose,DoseUnit,Time_Administered,NurseInitials,Notes
+W-4201,Amoxicillin,500,mg,8:01 AM,JM,
+W-4202,AMOXICILLIN,750,mg,9.02,SM,Given with breakfast
+W-4203,amoxicillin,250,mg,10:03,RK,GIVEN WITH FOOD
+W-4204,Metformin,500,mg,11:04 AM,AB,given after meal
+W-4205,metformin,7,mL,12.05,CD,patient refused
+W-4206,Lisinopril,250,mg,13:06,EF,Patient REFUSED
+W-4207,LISINOPRIL,500,,2:07 PM,KL,diarrhea noted
+W-4208,Aspirin,750,mg,15.08,JM,DIARRHEA NOTED
+W-4209,ASPIRIN,250,mg,16:09,SM,rash observed
+W-4210,Ibuprofen,6,mL,5:10 PM,RK,renal impairment
+,paracetamol,750,mg,18.11,AB,see lab results p.2
+W-4212,Paracetamol,250,mg,19:12,CD,
+W-4213,Amoxicillin,500,mg,8:13 PM,ef,Given with breakfast
+W-4214,AMOXICILLIN,750,,21.14,KL,GIVEN WITH FOOD
+W-4215,amoxicillin,5,mL,22:15,JM,given after meal
+W-4216,Metformin,500,mg,11:16 PM,SM,patient refused
+W-4217,metformin,750,mg,7.17,RK,Patient REFUSED
+W-4218,Lisinopril,250,mg,08:18,AB,diarrhea noted
+W-4219,LISINOPRIL,500,mg,9:19 AM,CD,DIARRHEA NOTED
+W-4220,Aspirin,7,mL,10.20,EF,rash observed
+W-4221,ASPIRIN,250,,11:21,KL,renal impairment
+,Ibuprofen,500,mg,12:22 PM,JM,see lab results p.2
+W-4223,paracetamol,750,mg,13.23,SM,
+W-4224,Paracetamol,250,mg,14:24,RK,Given with breakfast
+W-4225,Amoxicillin,6,mL,3:25 PM,AB,GIVEN WITH FOOD
+W-4226,AMOXICILLIN,750,mg,16.26,cd,given after meal
+W-4227,amoxicillin,250,mg,17:27,EF,patient refused
+W-4228,Metformin,500,,6:28 PM,KL,Patient REFUSED
+W-4229,metformin,750,mg,19.29,JM,diarrhea noted
+W-4230,Lisinopril,5,mL,20:30,SM,DIARRHEA NOTED
+W-4231,LISINOPRIL,500,mg,9:31 PM,RK,rash observed
+W-4232,Aspirin,750,mg,22.32,AB,renal impairment
+,ASPIRIN,250,mg,23:33,CD,see lab results p.2
+W-4234,Ibuprofen,500,mg,7:34 AM,EF,
+W-4235,paracetamol,7,mL,8.35,KL,Given with breakfast
+W-4236,Paracetamol,250,mg,09:36,JM,GIVEN WITH FOOD
+W-4237,Amoxicillin,500,mg,10:37 AM,SM,given after meal
+W-4238,AMOXICILLIN,750,mg,11.38,RK,patient refused
+W-4239,amoxicillin,250,mg,12:39,ab,Patient REFUSED
+W-4240,Metformin,6,mL,1:40 PM,CD,diarrhea noted
+W-4241,metformin,750,mg,14.41,EF,DIARRHEA NOTED
+W-4242,Lisinopril,250,,15:42,KL,rash observed
+W-4243,LISINOPRIL,500,mg,4:43 PM,JM,renal impairment
+,Aspirin,750,mg,17.44,SM,see lab results p.2
+W-4245,ASPIRIN,5,mL,18:45,RK,
+W-4246,Ibuprofen,500,mg,7:46 PM,AB,Given with breakfast
+W-4247,paracetamol,750,mg,20.47,CD,GIVEN WITH FOOD
+W-4248,Paracetamol,250,mg,21:48,EF,given after meal
+W-4249,Amoxicillin,500,,10:49 PM,KL,patient refused
+W-4250,AMOXICILLIN,7,mL,23.50,JM,Patient REFUSED
+W-4251,amoxicillin,250,mg,07:51,SM,diarrhea noted
+W-4252,Metformin,500,mg,8:52 AM,rk,DIARRHEA NOTED
+W-4253,metformin,750,mg,9.53,AB,rash observed
+W-4254,Lisinopril,250,mg,10:54,CD,renal impairment
+,LISINOPRIL,6,mL,11:55 AM,EF,see lab results p.2
+W-4256,Aspirin,750,,12.56,KL,
+W-4257,ASPIRIN,250,mg,13:57,JM,Given with breakfast
+W-4258,Ibuprofen,500,mg,2:58 PM,SM,GIVEN WITH FOOD
+W-4259,paracetamol,750,mg,15.59,RK,given after meal
+W-4260,Paracetamol,5,mL,16:00,AB,patient refused
+W-4261,Amoxicillin,500,mg,5:01 PM,CD,Patient REFUSED
+W-4262,AMOXICILLIN,750,mg,18.02,EF,diarrhea noted
+W-4263,amoxicillin,250,,19:03,KL,DIARRHEA NOTED
+W-4264,Metformin,500,mg,8:04 PM,JM,rash observed
+W-4265,metformin,7,mL,21.05,sm,renal impairment
+,Lisinopril,250,mg,22:06,RK,see lab results p.2
+W-4267,LISINOPRIL,500,mg,11:07 PM,AB,
+W-4268,Aspirin,750,mg,7.08,CD,Given with breakfast
+W-4269,ASPIRIN,250,mg,08:09,EF,GIVEN WITH FOOD
+W-4270,Ibuprofen,6,mL,9:10 AM,KL,given after meal

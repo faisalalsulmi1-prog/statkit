@@ -1,0 +1,191 @@
+{
+  "id": "s1_1",
+  "generator_model": "sonnet",
+  "field": "ecology",
+  "persona": "Field biologist running a breeding-bird point-count survey comparing forest and meadow sites over one field season",
+  "source_style": "typed by hand into Excel each evening after transcribing paper field data sheets from the point counts",
+  "file": "gen_s1_1.xlsx",
+  "file_kind": "xlsx",
+  "sheets": [
+    {
+      "name": "PointCounts",
+      "is_data": true,
+      "header_row": 1,
+      "n_data_rows": 69,
+      "columns": [
+        {
+          "name": "Date",
+          "true_type": "date",
+          "notes": "survey date, 4 visits biweekly through the breeding season, stored as an Excel date"
+        },
+        {
+          "name": "Site",
+          "true_type": "categorical",
+          "notes": "4 site codes: FOR-1, FOR-2 (forest), MDW-1, MDW-2 (meadow)"
+        },
+        {
+          "name": "Habitat",
+          "true_type": "binary",
+          "notes": "'forest' or 'meadow', redundant with the Site prefix but kept as its own column for easy filtering"
+        },
+        {
+          "name": "Observer",
+          "true_type": "categorical",
+          "notes": "observer initials; KP always covers the forest sites, JL always covers the meadow sites"
+        },
+        {
+          "name": "Species",
+          "true_type": "categorical",
+          "notes": "common name; not every species in the habitat's pool is detected on every visit"
+        },
+        {
+          "name": "Count",
+          "true_type": "numeric",
+          "notes": "number of individuals of that species detected on that visit; flocking species (Red-winged Blackbird, Eastern Meadowlark) can run higher"
+        },
+        {
+          "name": "Distance_band",
+          "true_type": "ordinal",
+          "notes": "detection distance from observer: 0-25m < 25-50m < 50-100m < >100m"
+        },
+        {
+          "name": "Temp_C",
+          "true_type": "numeric",
+          "notes": "air temperature at the start of that site-visit, one value repeated across every species row of the same visit"
+        },
+        {
+          "name": "Wind_Beaufort",
+          "true_type": "ordinal",
+          "notes": "Beaufort wind scale 0-3, one value per visit, repeated across its species rows"
+        },
+        {
+          "name": "Time_start",
+          "true_type": "text",
+          "notes": "24-hour clock HH:MM, start time of that point count"
+        },
+        {
+          "name": "Notes",
+          "true_type": "text",
+          "notes": "free text, blank for ~92% of rows"
+        }
+      ]
+    }
+  ],
+  "clean_table": {
+    "first_5_rows": [
+      [
+        "2024-05-04",
+        "FOR-1",
+        "forest",
+        "KP",
+        "American Robin",
+        1,
+        "25-50m",
+        9.4,
+        0,
+        "06:10",
+        "singing male"
+      ],
+      [
+        "2024-05-04",
+        "FOR-1",
+        "forest",
+        "KP",
+        "Black-capped Chickadee",
+        2,
+        "0-25m",
+        9.4,
+        0,
+        "06:10",
+        ""
+      ],
+      [
+        "2024-05-04",
+        "FOR-1",
+        "forest",
+        "KP",
+        "Eastern Wood-Pewee",
+        2,
+        "50-100m",
+        9.4,
+        0,
+        "06:10",
+        ""
+      ],
+      [
+        "2024-05-04",
+        "FOR-1",
+        "forest",
+        "KP",
+        "Yellow Warbler",
+        4,
+        "0-25m",
+        9.4,
+        0,
+        "06:10",
+        ""
+      ],
+      [
+        "2024-05-04",
+        "FOR-1",
+        "forest",
+        "KP",
+        "Red-eyed Vireo",
+        1,
+        "50-100m",
+        9.4,
+        0,
+        "06:10",
+        ""
+      ]
+    ],
+    "last_2_rows": [
+      [
+        "2024-06-15",
+        "MDW-2",
+        "meadow",
+        "JL",
+        "Red-winged Blackbird",
+        5,
+        ">100m",
+        17.0,
+        0,
+        "07:34",
+        ""
+      ],
+      [
+        "2024-06-15",
+        "MDW-2",
+        "meadow",
+        "JL",
+        "American Robin",
+        2,
+        ">100m",
+        17.0,
+        0,
+        "07:34",
+        ""
+      ]
+    ],
+    "n": 69,
+    "columns_in_order": [
+      "Date",
+      "Site",
+      "Habitat",
+      "Observer",
+      "Species",
+      "Count",
+      "Distance_band",
+      "Temp_C",
+      "Wind_Beaufort",
+      "Time_start",
+      "Notes"
+    ],
+    "generation_rule": "Long/stacked format: one row per (site, date, detected species). 4 sites (FOR-1, FOR-2 = forest; MDW-1, MDW-2 = meadow) x 4 dates (2024-05-04, 2024-05-18, 2024-06-01, 2024-06-15) = 16 site-visits, iterated date-major then site-major in that fixed order. Each visit draws k=rng.randint(3,5) species without replacement (rng.sample) from a 5-species habitat pool (forest: American Robin, Yellow Warbler, Eastern Wood-Pewee, Red-eyed Vireo, Black-capped Chickadee; meadow: Song Sparrow, Red-winged Blackbird, Common Yellowthroat, Eastern Meadowlark, American Robin), in the order rng.sample returns them (not alphabetized). Count = rng.randint(1,4), plus rng.randint(0,3) extra if the species is Red-winged Blackbird or Eastern Meadowlark. Distance_band drawn with rng.choices weighted [0.35,0.30,0.20,0.15] over [0-25m,25-50m,50-100m,>100m]. Temp_C = round(10.0 + date_idx*2.5 + rng.uniform(-1,1), 1) (warms over the season, date_idx 0-3), same value for every species row of that visit. Wind_Beaufort = rng.randint(0,3), same per visit. Time_start built from start_minutes = 370 + site_idx*25 + date_idx*3 (site_idx 0-3 in the SITES list order above, date_idx 0-3), formatted HH:MM. Notes is one of ['singing male','flyover, not on point','pair observed','heard only'] with probability 0.08 per row (rng.random()<0.08), else blank. All randomness from a single random.Random(42), consumed in the exact call order: k, species sample, temp jitter, wind, then per species: count, extra-count (if flocking), distance, note-roll, note-choice (if triggered) -- looping site-major within each date, date outer loop."
+  },
+  "intended_analysis": "Does breeding-bird species richness and total abundance differ between forest and meadow point-count sites, and does detection change across the breeding season (biweekly visits)? A mixed model or repeated-measures comparison would treat site as the sampling unit with repeated visits.",
+  "mess_applied": [
+    "none, it is clean"
+  ],
+  "what_a_naive_reader_would_get_wrong": "Treating each row as an independent bird survey rather than recognizing that Temp_C, Wind_Beaufort, Site, Habitat, and Observer are repeated within a single site-visit (only Species/Count/Distance_band/Notes vary row to row); and missing that absence of a species-date-site combination means 'not detected', not a missing value to impute."
+}

@@ -1,0 +1,219 @@
+{
+  "id": "s3_1",
+  "generator_model": "sonnet",
+  "field": "food science / chemistry",
+  "persona": "Food science grad student measuring moisture loss in dried mango slices across two drying methods and three drying durations, four replicate slices each.",
+  "source_style": "typed by hand into Excel directly after each balance reading, one row per replicate",
+  "file": "gen_s3_1.xlsx",
+  "file_kind": "xlsx",
+  "sheets": [
+    {
+      "name": "Moisture_Data",
+      "is_data": true,
+      "header_row": 1,
+      "n_data_rows": 24,
+      "columns": [
+        {
+          "name": "Sample_ID",
+          "true_type": "id",
+          "notes": "Method code (OV=Oven, AD=Air-Dry) + time in hours + replicate number, e.g. OV2R1"
+        },
+        {
+          "name": "Drying_Method",
+          "true_type": "categorical",
+          "notes": "Two levels: 'Oven' (60C convection oven) or 'Air-Dry' (ambient bench air)"
+        },
+        {
+          "name": "Drying_Time_h",
+          "true_type": "ordinal",
+          "notes": "Drying duration in hours, one of 2, 4, 6; stored as plain integer, no units in cell"
+        },
+        {
+          "name": "Replicate",
+          "true_type": "id",
+          "notes": "Replicate slice number 1-4 within each method x time cell, not a measurement"
+        },
+        {
+          "name": "Moisture_Content_pct",
+          "true_type": "numeric",
+          "notes": "Percent moisture content (wet basis), 1 decimal place, no % symbol in cell"
+        }
+      ]
+    }
+  ],
+  "clean_table": [
+    {
+      "Sample_ID": "OV2R1",
+      "Drying_Method": "Oven",
+      "Drying_Time_h": 2,
+      "Replicate": 1,
+      "Moisture_Content_pct": 56.2
+    },
+    {
+      "Sample_ID": "OV2R2",
+      "Drying_Method": "Oven",
+      "Drying_Time_h": 2,
+      "Replicate": 2,
+      "Moisture_Content_pct": 54.8
+    },
+    {
+      "Sample_ID": "OV2R3",
+      "Drying_Method": "Oven",
+      "Drying_Time_h": 2,
+      "Replicate": 3,
+      "Moisture_Content_pct": 55.5
+    },
+    {
+      "Sample_ID": "OV2R4",
+      "Drying_Method": "Oven",
+      "Drying_Time_h": 2,
+      "Replicate": 4,
+      "Moisture_Content_pct": 57.1
+    },
+    {
+      "Sample_ID": "OV4R1",
+      "Drying_Method": "Oven",
+      "Drying_Time_h": 4,
+      "Replicate": 1,
+      "Moisture_Content_pct": 36.4
+    },
+    {
+      "Sample_ID": "OV4R2",
+      "Drying_Method": "Oven",
+      "Drying_Time_h": 4,
+      "Replicate": 2,
+      "Moisture_Content_pct": 34.9
+    },
+    {
+      "Sample_ID": "OV4R3",
+      "Drying_Method": "Oven",
+      "Drying_Time_h": 4,
+      "Replicate": 3,
+      "Moisture_Content_pct": 35.8
+    },
+    {
+      "Sample_ID": "OV4R4",
+      "Drying_Method": "Oven",
+      "Drying_Time_h": 4,
+      "Replicate": 4,
+      "Moisture_Content_pct": 33.7
+    },
+    {
+      "Sample_ID": "OV6R1",
+      "Drying_Method": "Oven",
+      "Drying_Time_h": 6,
+      "Replicate": 1,
+      "Moisture_Content_pct": 19.2
+    },
+    {
+      "Sample_ID": "OV6R2",
+      "Drying_Method": "Oven",
+      "Drying_Time_h": 6,
+      "Replicate": 2,
+      "Moisture_Content_pct": 17.8
+    },
+    {
+      "Sample_ID": "OV6R3",
+      "Drying_Method": "Oven",
+      "Drying_Time_h": 6,
+      "Replicate": 3,
+      "Moisture_Content_pct": 18.5
+    },
+    {
+      "Sample_ID": "OV6R4",
+      "Drying_Method": "Oven",
+      "Drying_Time_h": 6,
+      "Replicate": 4,
+      "Moisture_Content_pct": 16.9
+    },
+    {
+      "Sample_ID": "AD2R1",
+      "Drying_Method": "Air-Dry",
+      "Drying_Time_h": 2,
+      "Replicate": 1,
+      "Moisture_Content_pct": 69.3
+    },
+    {
+      "Sample_ID": "AD2R2",
+      "Drying_Method": "Air-Dry",
+      "Drying_Time_h": 2,
+      "Replicate": 2,
+      "Moisture_Content_pct": 67.8
+    },
+    {
+      "Sample_ID": "AD2R3",
+      "Drying_Method": "Air-Dry",
+      "Drying_Time_h": 2,
+      "Replicate": 3,
+      "Moisture_Content_pct": 68.5
+    },
+    {
+      "Sample_ID": "AD2R4",
+      "Drying_Method": "Air-Dry",
+      "Drying_Time_h": 2,
+      "Replicate": 4,
+      "Moisture_Content_pct": 70.1
+    },
+    {
+      "Sample_ID": "AD4R1",
+      "Drying_Method": "Air-Dry",
+      "Drying_Time_h": 4,
+      "Replicate": 1,
+      "Moisture_Content_pct": 53.6
+    },
+    {
+      "Sample_ID": "AD4R2",
+      "Drying_Method": "Air-Dry",
+      "Drying_Time_h": 4,
+      "Replicate": 2,
+      "Moisture_Content_pct": 51.9
+    },
+    {
+      "Sample_ID": "AD4R3",
+      "Drying_Method": "Air-Dry",
+      "Drying_Time_h": 4,
+      "Replicate": 3,
+      "Moisture_Content_pct": 52.8
+    },
+    {
+      "Sample_ID": "AD4R4",
+      "Drying_Method": "Air-Dry",
+      "Drying_Time_h": 4,
+      "Replicate": 4,
+      "Moisture_Content_pct": 54.2
+    },
+    {
+      "Sample_ID": "AD6R1",
+      "Drying_Method": "Air-Dry",
+      "Drying_Time_h": 6,
+      "Replicate": 1,
+      "Moisture_Content_pct": 41.4
+    },
+    {
+      "Sample_ID": "AD6R2",
+      "Drying_Method": "Air-Dry",
+      "Drying_Time_h": 6,
+      "Replicate": 2,
+      "Moisture_Content_pct": 39.8
+    },
+    {
+      "Sample_ID": "AD6R3",
+      "Drying_Method": "Air-Dry",
+      "Drying_Time_h": 6,
+      "Replicate": 3,
+      "Moisture_Content_pct": 40.6
+    },
+    {
+      "Sample_ID": "AD6R4",
+      "Drying_Method": "Air-Dry",
+      "Drying_Time_h": 6,
+      "Replicate": 4,
+      "Moisture_Content_pct": 42.1
+    }
+  ],
+  "intended_analysis": "Two-way ANOVA of moisture content on Drying_Method x Drying_Time_h (with Replicate as the repeated unit), to test whether oven drying removes moisture faster than air-drying and whether the two methods diverge more at longer times.",
+  "mess_applied": [
+    "none, it is clean"
+  ],
+  "what_a_naive_reader_would_get_wrong": "Nothing structural; the only trap is treating Drying_Time_h (2/4/6) as a free numeric predictor rather than the three fixed levels of the drying-time factor actually used in the design."
+}

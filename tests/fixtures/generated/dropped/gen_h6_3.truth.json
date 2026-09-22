@@ -1,0 +1,130 @@
+{
+  "id": "h6_3",
+  "generator_model": "haiku",
+  "field": "nursing / public health",
+  "persona": "Clinical nurse specialist reviewing outcomes data for quality assurance reporting",
+  "source_style": "extracted from hospital outcomes database, formatted for QA report",
+  "file": "gen_h6_3.xlsx",
+  "file_kind": "xlsx",
+  "sheets": [
+    {
+      "name": "Outcomes",
+      "is_data": true,
+      "header_row": 1,
+      "n_data_rows": 35,
+      "columns": [
+        {
+          "name": "EncounterID",
+          "true_type": "id",
+          "notes": "ENC2024-prefixed sequential"
+        },
+        {
+          "name": "AdmitType",
+          "true_type": "categorical",
+          "notes": "Emergency, Planned, or Transfer"
+        },
+        {
+          "name": "Age_at_admit",
+          "true_type": "numeric",
+          "notes": "integer years; range 42-99"
+        },
+        {
+          "name": "Comorbidities_count",
+          "true_type": "ordinal",
+          "notes": "count 0-4; no. of pre-existing conditions"
+        },
+        {
+          "name": "Treatment_type",
+          "true_type": "categorical",
+          "notes": "Conservative, Pharmacological, Surgical, or Mixed"
+        },
+        {
+          "name": "OutcomeCode",
+          "true_type": "categorical",
+          "notes": "Discharge (most common), Transfer, Readmit, or Death"
+        },
+        {
+          "name": "Days_to_outcome",
+          "true_type": "numeric",
+          "notes": "integer days 1-45 to final outcome"
+        }
+      ]
+    }
+  ],
+  "clean_table": {
+    "first_5": [
+      {
+        "EncounterID": "ENC20241001",
+        "AdmitType": "Emergency",
+        "Age_at_admit": 43,
+        "Comorbidities_count": 1,
+        "Treatment_type": "Conservative",
+        "OutcomeCode": "Discharge",
+        "Days_to_outcome": 2
+      },
+      {
+        "EncounterID": "ENC20241002",
+        "AdmitType": "Planned",
+        "Age_at_admit": 44,
+        "Comorbidities_count": 2,
+        "Treatment_type": "Pharmacological",
+        "OutcomeCode": "Discharge",
+        "Days_to_outcome": 3
+      },
+      {
+        "EncounterID": "ENC20241003",
+        "AdmitType": "Transfer",
+        "Age_at_admit": 45,
+        "Comorbidities_count": 3,
+        "Treatment_type": "Surgical",
+        "OutcomeCode": "Discharge",
+        "Days_to_outcome": 4
+      },
+      {
+        "EncounterID": "ENC20241004",
+        "AdmitType": "Emergency",
+        "Age_at_admit": 46,
+        "Comorbidities_count": 4,
+        "Treatment_type": "Mixed",
+        "OutcomeCode": "Transfer",
+        "Days_to_outcome": 5
+      },
+      {
+        "EncounterID": "ENC20241005",
+        "AdmitType": "Planned",
+        "Age_at_admit": 47,
+        "Comorbidities_count": 0,
+        "Treatment_type": "Conservative",
+        "OutcomeCode": "Readmit",
+        "Days_to_outcome": 6
+      }
+    ],
+    "last_2": [
+      {
+        "EncounterID": "ENC20241034",
+        "AdmitType": "Emergency",
+        "Age_at_admit": 76,
+        "Comorbidities_count": 4,
+        "Treatment_type": "Pharmacological",
+        "OutcomeCode": "Transfer",
+        "Days_to_outcome": 35
+      },
+      {
+        "EncounterID": "ENC20241035",
+        "AdmitType": "Planned",
+        "Age_at_admit": 77,
+        "Comorbidities_count": 0,
+        "Treatment_type": "Surgical",
+        "OutcomeCode": "Readmit",
+        "Days_to_outcome": 36
+      }
+    ],
+    "exact_n": 35,
+    "generation_rule": "35 rows: i from 1-35; EncounterID=ENC2024-(1000+i); AdmitType cycles through 3 types; Age_at_admit=42+(i mod 58); Comorbidities_count=i mod 5; Treatment_type cycles through 4; OutcomeCode cycles through 6 (Discharge\u00d73, Transfer, Readmit, Death); Days_to_outcome=1+(i mod 45)"
+  },
+  "intended_analysis": "Outcome distribution by admission type; effect of comorbidity count on outcome; treatment effectiveness by outcome; relationship between age and length of stay (Days_to_outcome); mortality/readmission rates",
+  "mess_applied": [
+    "none, it is clean"
+  ],
+  "what_a_naive_reader_would_get_wrong": "Nothing obvious \u2014 properly formatted, consistent types, no missing data, clear semantics."
+}

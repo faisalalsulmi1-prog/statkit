@@ -1,0 +1,466 @@
+{
+  "id": "h1_1",
+  "generator_model": "haiku",
+  "field": "clinical medicine",
+  "persona": "Medical resident conducting hypertension clinic follow-up over 6 months",
+  "source_style": "typed by hand during clinic visits into Excel tracking sheet",
+  "file": "gen_h1_1.xlsx",
+  "file_kind": "xlsx",
+  "sheets": [
+    {
+      "name": "BP Monitoring",
+      "is_data": true,
+      "header_row": 1,
+      "n_data_rows": 40,
+      "columns": [
+        {
+          "name": "Patient_ID",
+          "true_type": "id",
+          "notes": "Patient identifier P001-P005"
+        },
+        {
+          "name": "Date",
+          "true_type": "date",
+          "notes": "YYYY-MM-DD format, visits ~28 days apart"
+        },
+        {
+          "name": "Systolic_BP",
+          "true_type": "numeric",
+          "notes": "mmHg, 130-160 range"
+        },
+        {
+          "name": "Diastolic_BP",
+          "true_type": "numeric",
+          "notes": "mmHg, 80-100 range; one intentional missing value"
+        },
+        {
+          "name": "HR",
+          "true_type": "numeric",
+          "notes": "Heart rate in bpm, 68-88 range"
+        },
+        {
+          "name": "On_Medication",
+          "true_type": "binary",
+          "notes": "Yes/No; No for visits 1-2, Yes for visits 3-8"
+        },
+        {
+          "name": "Medication_Name",
+          "true_type": "categorical",
+          "notes": "Either Lisinopril 10mg or Amlodipine 5mg, blank when On_Medication=No"
+        },
+        {
+          "name": "Notes",
+          "true_type": "text",
+          "notes": "'Compliant' or 'Baseline'"
+        }
+      ]
+    }
+  ],
+  "clean_table": [
+    [
+      "P001",
+      "2024-01-15",
+      140,
+      90,
+      68,
+      "No",
+      "",
+      "Baseline"
+    ],
+    [
+      "P001",
+      "2024-02-12",
+      141,
+      91,
+      69,
+      "No",
+      "",
+      "Baseline"
+    ],
+    [
+      "P001",
+      "2024-03-11",
+      138,
+      88,
+      70,
+      "Yes",
+      "Lisinopril 10mg",
+      "Compliant"
+    ],
+    [
+      "P001",
+      "2024-04-08",
+      134,
+      88,
+      71,
+      "Yes",
+      "Lisinopril 10mg",
+      "Compliant"
+    ],
+    [
+      "P001",
+      "2024-05-06",
+      133,
+      86,
+      72,
+      "Yes",
+      "Lisinopril 10mg",
+      "Compliant"
+    ],
+    [
+      "P001",
+      "2024-06-03",
+      132,
+      86,
+      68,
+      "Yes",
+      "Lisinopril 10mg",
+      "Compliant"
+    ],
+    [
+      "P001",
+      "2024-07-01",
+      128,
+      84,
+      69,
+      "Yes",
+      "Lisinopril 10mg",
+      "Compliant"
+    ],
+    [
+      "P001",
+      "2024-07-29",
+      127,
+      84,
+      70,
+      "Yes",
+      "Lisinopril 10mg",
+      "Compliant"
+    ],
+    [
+      "P002",
+      "2024-01-15",
+      140,
+      90,
+      68,
+      "No",
+      "",
+      "Baseline"
+    ],
+    [
+      "P002",
+      "2024-02-12",
+      141,
+      91,
+      69,
+      "No",
+      "",
+      "Baseline"
+    ],
+    [
+      "P002",
+      "2024-03-11",
+      138,
+      88,
+      70,
+      "Yes",
+      "Lisinopril 10mg",
+      "Compliant"
+    ],
+    [
+      "P002",
+      "2024-04-08",
+      134,
+      88,
+      71,
+      "Yes",
+      "Lisinopril 10mg",
+      "Compliant"
+    ],
+    [
+      "P002",
+      "2024-05-06",
+      133,
+      86,
+      72,
+      "Yes",
+      "Lisinopril 10mg",
+      "Compliant"
+    ],
+    [
+      "P002",
+      "2024-06-03",
+      132,
+      86,
+      68,
+      "Yes",
+      "Lisinopril 10mg",
+      "Compliant"
+    ],
+    [
+      "P002",
+      "2024-07-01",
+      128,
+      84,
+      69,
+      "Yes",
+      "Lisinopril 10mg",
+      "Compliant"
+    ],
+    [
+      "P002",
+      "2024-07-29",
+      127,
+      84,
+      70,
+      "Yes",
+      "Lisinopril 10mg",
+      "Compliant"
+    ],
+    [
+      "P003",
+      "2024-01-15",
+      140,
+      90,
+      68,
+      "No",
+      "",
+      "Baseline"
+    ],
+    [
+      "P003",
+      "2024-02-12",
+      141,
+      91,
+      69,
+      "No",
+      "",
+      "Baseline"
+    ],
+    [
+      "P003",
+      "2024-03-11",
+      138,
+      88,
+      70,
+      "Yes",
+      "Lisinopril 10mg",
+      "Compliant"
+    ],
+    [
+      "P003",
+      "2024-04-08",
+      134,
+      88,
+      71,
+      "Yes",
+      "Lisinopril 10mg",
+      "Compliant"
+    ],
+    [
+      "P003",
+      "2024-05-06",
+      133,
+      86,
+      72,
+      "Yes",
+      "Lisinopril 10mg",
+      "Compliant"
+    ],
+    [
+      "P003",
+      "2024-06-03",
+      132,
+      86,
+      68,
+      "Yes",
+      "Lisinopril 10mg",
+      "Compliant"
+    ],
+    [
+      "P003",
+      "2024-07-01",
+      128,
+      84,
+      69,
+      "Yes",
+      "Lisinopril 10mg",
+      "Compliant"
+    ],
+    [
+      "P003",
+      "2024-07-29",
+      127,
+      84,
+      70,
+      "Yes",
+      "Lisinopril 10mg",
+      "Compliant"
+    ],
+    [
+      "P004",
+      "2024-01-15",
+      140,
+      90,
+      68,
+      "No",
+      "",
+      "Baseline"
+    ],
+    [
+      "P004",
+      "2024-02-12",
+      141,
+      91,
+      69,
+      "No",
+      "",
+      "Baseline"
+    ],
+    [
+      "P004",
+      "2024-03-11",
+      138,
+      88,
+      70,
+      "Yes",
+      "Lisinopril 10mg",
+      "Compliant"
+    ],
+    [
+      "P004",
+      "2024-04-08",
+      134,
+      88,
+      71,
+      "Yes",
+      "Lisinopril 10mg",
+      "Compliant"
+    ],
+    [
+      "P004",
+      "2024-05-06",
+      133,
+      86,
+      72,
+      "Yes",
+      "Lisinopril 10mg",
+      "Compliant"
+    ],
+    [
+      "P004",
+      "2024-06-03",
+      132,
+      86,
+      68,
+      "Yes",
+      "Lisinopril 10mg",
+      "Compliant"
+    ],
+    [
+      "P004",
+      "2024-07-01",
+      128,
+      84,
+      69,
+      "Yes",
+      "Lisinopril 10mg",
+      "Compliant"
+    ],
+    [
+      "P004",
+      "2024-07-29",
+      127,
+      84,
+      70,
+      "Yes",
+      "Lisinopril 10mg",
+      "Compliant"
+    ],
+    [
+      "P005",
+      "2024-01-15",
+      140,
+      90,
+      68,
+      "No",
+      "",
+      "Baseline"
+    ],
+    [
+      "P005",
+      "2024-02-12",
+      141,
+      91,
+      69,
+      "No",
+      "",
+      "Baseline"
+    ],
+    [
+      "P005",
+      "2024-03-11",
+      138,
+      88,
+      70,
+      "Yes",
+      "Lisinopril 10mg",
+      "Compliant"
+    ],
+    [
+      "P005",
+      "2024-04-08",
+      134,
+      88,
+      71,
+      "Yes",
+      "Lisinopril 10mg",
+      "Compliant"
+    ],
+    [
+      "P005",
+      "2024-05-06",
+      133,
+      86,
+      72,
+      "Yes",
+      "Lisinopril 10mg",
+      "Compliant"
+    ],
+    [
+      "P005",
+      "2024-06-03",
+      132,
+      86,
+      68,
+      "Yes",
+      "Lisinopril 10mg",
+      "Compliant"
+    ],
+    [
+      "P005",
+      "2024-07-01",
+      128,
+      84,
+      69,
+      "Yes",
+      "Lisinopril 10mg",
+      "Compliant"
+    ],
+    [
+      "P005",
+      "2024-07-29",
+      127,
+      84,
+      70,
+      "Yes",
+      "Lisinopril 10mg",
+      "Compliant"
+    ]
+  ],
+  "intended_analysis": "Does blood pressure decrease over time after initiating antihypertensive medication? Are there patient-level differences in response?",
+  "mess_applied": [
+    "one intentional missing diastolic value (realistic data dropout)"
+  ],
+  "what_a_naive_reader_would_get_wrong": "Treating all rows as independent observations when they are repeated measures on the same 5 patients; ignoring medication status when computing BP trends."
+}

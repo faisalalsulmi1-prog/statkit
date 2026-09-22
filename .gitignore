@@ -1,0 +1,27 @@
+# Virtualenvs (never commit — .venv is the pinned py3.12 build env; .venv-gen is
+# the throwaway fixture-generation env).
+.venv/
+.venv-gen/
+
+# Python bytecode / caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# macOS Finder metadata
+.DS_Store
+
+# Streamlit secrets — StatKit needs none (no accounts, no keys); if a local file
+# is ever created for an experiment it must never reach the repo.
+.streamlit/secrets.toml
+
+# Real (de-identified) fixtures stay out of git (PLAN §9). The curated
+# tests/fixtures/generated/ corpus is committed on purpose and is NOT ignored.
+tests/fixtures/real/
+
+# Internal build log — kept local, not shipped in the app repo (app-only deploy
+# decision, 2026-09-22). The public repo carries the code + tests + README +
+# DEPLOY.md; the working notes / plan / grill findings stay on the build machine.
+STATE.md
+PLAN.md
+docs/

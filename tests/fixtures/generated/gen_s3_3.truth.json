@@ -1,0 +1,146 @@
+{
+  "id": "s3_3",
+  "generator_model": "sonnet",
+  "field": "food science / chemistry",
+  "persona": "Food scientist running a shelf-life stability study on fresh orange juice, tracking titratable acidity (% citric acid) of the same bottles over 21 days at three storage temperatures.",
+  "source_style": "hand-maintained lab tracking spreadsheet, one row per bottle, exported to CSV for sharing",
+  "file": "gen_s3_3.csv",
+  "file_kind": "csv",
+  "sheets": [
+    {
+      "name": "gen_s3_3",
+      "is_data": true,
+      "header_row": 1,
+      "n_data_rows": 9,
+      "columns": [
+        {
+          "name": "Bottle_ID",
+          "true_type": "id",
+          "notes": "Unique bottle identifier B1-B9, 3 bottles per temperature"
+        },
+        {
+          "name": "Storage_Temp_C",
+          "true_type": "categorical",
+          "notes": "Storage temperature in Celsius: 4, 25, or 37; only 3 fixed levels despite being numeric-looking, and row 2 repeats the unit 'C' as a fake data value"
+        },
+        {
+          "name": "Day_0",
+          "true_type": "numeric",
+          "notes": "Titratable acidity (% citric acid, w/v) measured at day 0"
+        },
+        {
+          "name": "Day_7",
+          "true_type": "numeric",
+          "notes": "Titratable acidity (%) at day 7"
+        },
+        {
+          "name": "Day_14",
+          "true_type": "numeric",
+          "notes": "Titratable acidity (%) at day 14"
+        },
+        {
+          "name": "Day_21",
+          "true_type": "numeric",
+          "notes": "Titratable acidity (%) at day 21; blank for bottle B8, which spoiled before that reading was taken"
+        },
+        {
+          "name": "Notes",
+          "true_type": "text",
+          "notes": "Free text, blank for all rows except B8, which explains the missing Day_21 value"
+        }
+      ]
+    }
+  ],
+  "clean_table": [
+    {
+      "Bottle_ID": "B1",
+      "Storage_Temp_C": 4,
+      "Day_0": 1.02,
+      "Day_7": 1.01,
+      "Day_14": 1.0,
+      "Day_21": 0.99,
+      "Notes": ""
+    },
+    {
+      "Bottle_ID": "B2",
+      "Storage_Temp_C": 4,
+      "Day_0": 0.98,
+      "Day_7": 0.97,
+      "Day_14": 0.97,
+      "Day_21": 0.96,
+      "Notes": ""
+    },
+    {
+      "Bottle_ID": "B3",
+      "Storage_Temp_C": 4,
+      "Day_0": 1.05,
+      "Day_7": 1.04,
+      "Day_14": 1.03,
+      "Day_21": 1.02,
+      "Notes": ""
+    },
+    {
+      "Bottle_ID": "B4",
+      "Storage_Temp_C": 25,
+      "Day_0": 1.0,
+      "Day_7": 0.94,
+      "Day_14": 0.87,
+      "Day_21": 0.79,
+      "Notes": ""
+    },
+    {
+      "Bottle_ID": "B5",
+      "Storage_Temp_C": 25,
+      "Day_0": 0.97,
+      "Day_7": 0.91,
+      "Day_14": 0.85,
+      "Day_21": 0.77,
+      "Notes": ""
+    },
+    {
+      "Bottle_ID": "B6",
+      "Storage_Temp_C": 25,
+      "Day_0": 1.03,
+      "Day_7": 0.96,
+      "Day_14": 0.89,
+      "Day_21": 0.81,
+      "Notes": ""
+    },
+    {
+      "Bottle_ID": "B7",
+      "Storage_Temp_C": 37,
+      "Day_0": 0.99,
+      "Day_7": 0.86,
+      "Day_14": 0.71,
+      "Day_21": 0.58,
+      "Notes": ""
+    },
+    {
+      "Bottle_ID": "B8",
+      "Storage_Temp_C": 37,
+      "Day_0": 1.01,
+      "Day_7": 0.88,
+      "Day_14": 0.74,
+      "Day_21": "",
+      "Notes": "visible fermentation at day 21, sample discarded"
+    },
+    {
+      "Bottle_ID": "B9",
+      "Storage_Temp_C": 37,
+      "Day_0": 0.96,
+      "Day_7": 0.83,
+      "Day_14": 0.69,
+      "Day_21": 0.55,
+      "Notes": ""
+    }
+  ],
+  "intended_analysis": "Repeated-measures / mixed-model ANOVA of titratable acidity on Storage_Temp_C and Day (time), using Bottle_ID as the repeated-measures unit, to test whether acidity declines faster at higher storage temperatures over the 21-day period; B8's missing Day_21 reading should be excluded (or modeled as missing), not imputed as zero.",
+  "mess_applied": [
+    "Wide (one row per bottle, one column per timepoint) rather than tidy long format \u2014 needs reshaping to long form (Bottle_ID, Day, TA_pct) before a repeated-measures model can be fit",
+    "A units row immediately under the header (row 2: '', 'C', '%', '%', '%', '%', '') that is not a data row and must be skipped, not parsed as bottle B0",
+    "Storage_Temp_C looks purely numeric but is really a 3-level categorical factor (only 4, 25, 37 occur) \u2014 a naive reader may treat it as continuous",
+    "One genuinely missing value (B8, Day_21) represented as an empty CSV field, explained only in the free-text Notes column, not by a sentinel like NA or -999",
+    "Trailing zeros are lost on export: two cells that were measured/recorded as 1.00 (B1 Day_14, B4 Day_0) appear in the file as '1.0' while every other value keeps 2 decimal places, so decimal-place count is not a reliable signal of precision"
+  ],
+  "what_a_naive_reader_would_get_wrong": "Reading row 2 as the first data row would inject a fake 'bottle' with Storage_Temp_C='C' (text) and TA values of '%' into the dataset; and treating Storage_Temp_C as a continuous numeric predictor (rather than 3 fixed levels) would turn a one-way/factorial design into a spurious linear-regression-on-temperature analysis."
+}

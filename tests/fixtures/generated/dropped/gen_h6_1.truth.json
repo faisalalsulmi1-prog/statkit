@@ -1,0 +1,130 @@
+{
+  "id": "h6_1",
+  "generator_model": "haiku",
+  "field": "nursing / public health",
+  "persona": "Ward nurse auditing patient admissions and outcomes for Q1-Q2 2024",
+  "source_style": "typed into electronic health record audit sheet, exported from hospital database",
+  "file": "gen_h6_1.xlsx",
+  "file_kind": "xlsx",
+  "sheets": [
+    {
+      "name": "Admissions",
+      "is_data": true,
+      "header_row": 1,
+      "n_data_rows": 45,
+      "columns": [
+        {
+          "name": "PatientID",
+          "true_type": "id",
+          "notes": "Hospital system ID: A-prefixed sequential"
+        },
+        {
+          "name": "AdmissionDate",
+          "true_type": "date",
+          "notes": "YYYY-MM-DD format; Q1-Q2 2024 only"
+        },
+        {
+          "name": "Age",
+          "true_type": "numeric",
+          "notes": "integer years; range 35-99"
+        },
+        {
+          "name": "Gender",
+          "true_type": "categorical",
+          "notes": "M or F"
+        },
+        {
+          "name": "PrimaryCond",
+          "true_type": "categorical",
+          "notes": "chief diagnosis (11 distinct values)"
+        },
+        {
+          "name": "LOS_days",
+          "true_type": "numeric",
+          "notes": "length of stay in days; range 2-21"
+        },
+        {
+          "name": "Readmitted_30days",
+          "true_type": "binary",
+          "notes": "Yes/No within 30 days"
+        }
+      ]
+    }
+  ],
+  "clean_table": {
+    "first_5": [
+      {
+        "PatientID": "A2024002",
+        "AdmissionDate": "2024-01-15",
+        "Age": 36,
+        "Gender": "F",
+        "PrimaryCond": "Pneumonia",
+        "LOS_days": 3,
+        "Readmitted_30days": "No"
+      },
+      {
+        "PatientID": "A2024003",
+        "AdmissionDate": "2024-01-18",
+        "Age": 37,
+        "Gender": "M",
+        "PrimaryCond": "COPD",
+        "LOS_days": 4,
+        "Readmitted_30days": "No"
+      },
+      {
+        "PatientID": "A2024004",
+        "AdmissionDate": "2024-01-21",
+        "Age": 38,
+        "Gender": "F",
+        "PrimaryCond": "CHF",
+        "LOS_days": 5,
+        "Readmitted_30days": "No"
+      },
+      {
+        "PatientID": "A2024005",
+        "AdmissionDate": "2024-01-24",
+        "Age": 39,
+        "Gender": "M",
+        "PrimaryCond": "Acute infection",
+        "LOS_days": 6,
+        "Readmitted_30days": "No"
+      },
+      {
+        "PatientID": "A2024006",
+        "AdmissionDate": "2024-01-27",
+        "Age": 40,
+        "Gender": "F",
+        "PrimaryCond": "Post-op",
+        "LOS_days": 7,
+        "Readmitted_30days": "No"
+      }
+    ],
+    "last_2": [
+      {
+        "PatientID": "A2024045",
+        "AdmissionDate": "2024-05-23",
+        "Age": 79,
+        "Gender": "M",
+        "PrimaryCond": "Diabetes complications",
+        "LOS_days": 6,
+        "Readmitted_30days": "No"
+      },
+      {
+        "PatientID": "A2024046",
+        "AdmissionDate": "2024-05-26",
+        "Age": 80,
+        "Gender": "F",
+        "PrimaryCond": "Pneumonia",
+        "LOS_days": 7,
+        "Readmitted_30days": "No"
+      }
+    ],
+    "exact_n": 45,
+    "generation_rule": "45 rows: rows i from 1 to 45; PatientID=A2024001+i; AdmissionDate=2024-01-15 + 3*(i-1) days; Age=35+(i mod 65); Gender=M if i even, else F; PrimaryCond cycles through 11 diagnoses; LOS_days=2+(i mod 20); Readmitted_30days=Yes if i\u22610 (mod 7), else No"
+  },
+  "intended_analysis": "Compare length of stay by diagnosis; compute readmission rate by age group; examine whether certain conditions have longer stays",
+  "mess_applied": [
+    "none, it is clean"
+  ],
+  "what_a_naive_reader_would_get_wrong": "Nothing obvious \u2014 this is a properly formatted clean audit table as it would come out of a hospital system."
+}

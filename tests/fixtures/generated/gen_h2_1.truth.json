@@ -1,0 +1,98 @@
+{
+  "id": "h2_1",
+  "generator_model": "haiku",
+  "field": "psychology",
+  "persona": "Undergrad running first questionnaire study on social media impact",
+  "source_style": "typed directly into Excel during data collection",
+  "file": "gen_h2_1.xlsx",
+  "file_kind": "xlsx",
+  "sheets": [
+    {
+      "name": "Study_Data",
+      "is_data": true,
+      "header_row": 1,
+      "n_data_rows": 28,
+      "columns": [
+        {
+          "name": "ParticipantID",
+          "true_type": "id",
+          "notes": "Sequential 1-28"
+        },
+        {
+          "name": "Age",
+          "true_type": "numeric",
+          "notes": "Years, integer, range 19-23"
+        },
+        {
+          "name": "Gender",
+          "true_type": "categorical",
+          "notes": "Female, Male, Other"
+        },
+        {
+          "name": "Hours_on_SM_Daily",
+          "true_type": "numeric",
+          "notes": "Decimal, hours/day, range ~1.9-7.9"
+        },
+        {
+          "name": "Life_Satisfaction_1to10",
+          "true_type": "ordinal",
+          "notes": "Likert 1-10, integer"
+        },
+        {
+          "name": "PHQ2_Score",
+          "true_type": "numeric",
+          "notes": "PHQ-2 depression screening, 0-6, one missing value at row 27"
+        }
+      ]
+    }
+  ],
+  "clean_table": [
+    {
+      "ParticipantID": 1,
+      "Age": 21,
+      "Gender": "Female",
+      "Hours_on_SM_Daily": 4.5,
+      "Life_Satisfaction_1to10": 7,
+      "PHQ2_Score": 3
+    },
+    {
+      "ParticipantID": 2,
+      "Age": 19,
+      "Gender": "Male",
+      "Hours_on_SM_Daily": 2.1,
+      "Life_Satisfaction_1to10": 8,
+      "PHQ2_Score": 1
+    },
+    {
+      "ParticipantID": 3,
+      "Age": 22,
+      "Gender": "Female",
+      "Hours_on_SM_Daily": 6.2,
+      "Life_Satisfaction_1to10": 5,
+      "PHQ2_Score": 5
+    },
+    {
+      "ParticipantID": 27,
+      "Age": 21,
+      "Gender": "Female",
+      "Hours_on_SM_Daily": 5.0,
+      "Life_Satisfaction_1to10": 6,
+      "PHQ2_Score": null
+    },
+    {
+      "ParticipantID": 28,
+      "Age": 19,
+      "Gender": "Female",
+      "Hours_on_SM_Daily": 3.9,
+      "Life_Satisfaction_1to10": 7,
+      "PHQ2_Score": 2
+    }
+  ],
+  "n_rows_total": 28,
+  "intended_analysis": "Correlation between daily social media hours and life satisfaction; ANOVA comparing PHQ2 scores by gender",
+  "mess_applied": [
+    "one missing PHQ2 value at participant 27",
+    "otherwise clean and well-formatted"
+  ],
+  "what_a_naive_reader_would_get_wrong": "Nothing major. A reader might incorrectly skip the missing value at row 27 or treat it as a placeholder."
+}

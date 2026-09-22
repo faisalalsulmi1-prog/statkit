@@ -1,0 +1,74 @@
+{
+  "id": "h4_3",
+  "generator_model": "haiku",
+  "field": "agronomy",
+  "persona": "Undergraduate assistant collecting weekly field measurements from a 4-treatment maize trial, recording observations as a CSV time series.",
+  "source_style": "field notebook + handheld measurements recorded into a CSV file each week",
+  "file": "gen_h4_3.csv",
+  "file_kind": "csv",
+  "sheets": [
+    {
+      "name": "raw data (single CSV)",
+      "is_data": true,
+      "header_row": 1,
+      "n_data_rows": 60,
+      "columns": [
+        {
+          "name": "Week",
+          "true_type": "ordinal",
+          "notes": "1\u201315, week of growing season"
+        },
+        {
+          "name": "Date",
+          "true_type": "date",
+          "notes": "YYYY-MM-DD format, April 1 through mid-July"
+        },
+        {
+          "name": "Treatment_ID",
+          "true_type": "categorical",
+          "notes": "T1_NoInput, T2_LowN, T3_MedN, T4_HighN"
+        },
+        {
+          "name": "Plant_Height_cm",
+          "true_type": "numeric",
+          "notes": "height in cm, some blank cells (missing measurements)"
+        },
+        {
+          "name": "Leaf_Area_Index",
+          "true_type": "numeric",
+          "notes": "LAI unitless, some blanks"
+        },
+        {
+          "name": "Stem_Diameter_mm",
+          "true_type": "numeric",
+          "notes": "diameter in mm"
+        },
+        {
+          "name": "Chlorophyll_SPAD",
+          "true_type": "numeric",
+          "notes": "SPAD meter reading (unitless proxy for chlorophyll)"
+        },
+        {
+          "name": "Disease_Incidence_Percent",
+          "true_type": "numeric",
+          "notes": "% of plant affected, increases late season"
+        },
+        {
+          "name": "Observations",
+          "true_type": "text",
+          "notes": "free-form field notes; blank for most rows"
+        }
+      ]
+    }
+  ],
+  "clean_table": "First 4 rows: [{'Week': 1, 'Date': '2024-04-01', 'Treatment_ID': 'T1_NoInput', 'Plant_Height_cm': 17.2, 'Leaf_Area_Index': 0.62, 'Stem_Diameter_mm': 3.8, 'Chlorophyll_SPAD': 27, 'Disease_Incidence_Percent': 0, 'Observations': ''}, {'Week': 1, 'Date': '2024-04-01', 'Treatment_ID': 'T2_LowN', 'Plant_Height_cm': 18.1, 'Leaf_Area_Index': 0.68, 'Stem_Diameter_mm': 3.9, 'Chlorophyll_SPAD': 30, 'Disease_Incidence_Percent': 0, 'Observations': ''}, ...]; last 2 rows (week 15): [{'Week': 15, 'Date': '2024-07-08', 'Treatment_ID': 'T3_MedN', 'Plant_Height_cm': 201.5, 'Leaf_Area_Index': 3.14, 'Stem_Diameter_mm': 17.8, 'Chlorophyll_SPAD': 48, 'Disease_Incidence_Percent': 8.2, 'Observations': ''}, {'Week': 15, 'Date': '2024-07-08', 'Treatment_ID': 'T4_HighN', 'Plant_Height_cm': 210.3, 'Leaf_Area_Index': 3.29, 'Stem_Diameter_mm': 18.9, 'Chlorophyll_SPAD': 51, 'Disease_Incidence_Percent': 5.8, 'Observations': ''}]; n=60 total (4 treatments \u00d7 15 weeks); height grows ~2.5 cm/week with nitrogen effect (+0.15 factor per treatment level); LAI plateau ~3.0; disease increases weeks 9\u201315.",
+  "intended_analysis": "Trajectory analysis: do growth curves differ significantly among treatments? Mixed model with week + treatment effects. Time-to-flowering (week 5 for T3, T4). Disease progression model. Recovery from week-10 waterlogging stress. Treatment ranking by final height and LAI.",
+  "mess_applied": [
+    "two missing numeric values (blank cells: week 6 T1 height, week 12 T4 LAI)",
+    "free-form observation text with occasional typos or abbreviations",
+    "observations column mostly blank, populated only at key events",
+    "CSV format (not Excel) requires different parsing",
+    "date format YYYY-MM-DD is consistent but parsing must recognize it"
+  ],
+  "what_a_naive_reader_would_get_wrong": "Blank cells in numeric columns could be interpreted as zero or silently dropped. Time-series analysis without accounting for the week variable or unequal spacing will be misleading. Missing observations (week 6, week 12) and event notes (week 10 rain, week 13 senescence) add context a simple mean-per-treatment misses."
+}

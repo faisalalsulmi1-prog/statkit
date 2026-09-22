@@ -1,0 +1,180 @@
+{
+  "id": "w2_6_1",
+  "generator_model": "haiku",
+  "field": "Nursing Education / Clinical Training",
+  "persona": "Dr. Sarah Chen, RN-BSN, Clinical Education Coordinator at Metropolitan Hospital Center; 12 years nursing education experience; researcher looking to measure workshop effectiveness and symptom improvement over time.",
+  "source_style": "Real workshop record (de-identified); nursing education literature standard for paired pre-test/post-test designs.",
+  "file": "gen_w2_6_1.xlsx",
+  "file_kind": "xlsx",
+  "sheets": [
+    {
+      "name": "Workshop Data",
+      "is_data": true,
+      "header_row": 1,
+      "n_data_rows": 28,
+      "columns": [
+        {
+          "name": "Participant_ID",
+          "true_type": "int",
+          "notes": "Sequential ID 1-28 for 28 registered nursing students in the workshop cohort."
+        },
+        {
+          "name": "Attended",
+          "true_type": "bool",
+          "notes": "Actual Python boolean (True/False cells). 20 attended full workshop, 8 did not (attended only part-time or dropped)."
+        },
+        {
+          "name": "Result_Before",
+          "true_type": "categorical (Pass/Fail)",
+          "notes": "Pre-workshop clinical assessment result. Deliberately includes case/space variants: 'pass', 'PASS', 'Pass', 'Pass ', 'fail', 'Fail', 'FAIL' to test normalization."
+        },
+        {
+          "name": "Result_After",
+          "true_type": "categorical (Pass/Fail)",
+          "notes": "Post-workshop clinical assessment result (8 weeks after). Same levels as Result_Before. Also includes variants: 'pass', 'PASS', 'Pass', 'Pass ', 'fail', 'Fail', 'Fail '. Paired with Result_Before for McNemar's test."
+        },
+        {
+          "name": "Symptom_Visit1",
+          "true_type": "categorical (Yes/No)",
+          "notes": "Baseline clinic visit: presence of target symptom cluster (e.g., 'anxiety during patient handoff'). Yes=15, No=13."
+        },
+        {
+          "name": "Symptom_Visit2",
+          "true_type": "categorical (Yes/No)",
+          "notes": "4-week follow-up clinic visit: same symptom. Yes=13, No=15. Repeated measure for Cochran's Q."
+        },
+        {
+          "name": "Symptom_Visit3",
+          "true_type": "categorical (Yes/No)",
+          "notes": "8-week follow-up clinic visit: same symptom. Yes=12, No=16. Repeated measure for Cochran's Q across all 3 visits."
+        },
+        {
+          "name": "Age",
+          "true_type": "int",
+          "notes": "Participant age at workshop enrollment (27–55 years). Demographic covariate, not required for primary analyses."
+        },
+        {
+          "name": "Experience_Years",
+          "true_type": "int",
+          "notes": "Years of clinical nursing experience prior to workshop (1–20 years). Demographic context."
+        }
+      ]
+    }
+  ],
+  "clean_table": {
+    "description": "What the 'correct' version would look like after naive cleaning",
+    "result_columns_normalized": [
+      "pass",
+      "fail"
+    ],
+    "symptom_columns_normalized": [
+      "Yes",
+      "No"
+    ],
+    "expected_shape": [
+      28,
+      9
+    ],
+    "expected_no_nulls": true
+  },
+  "intended_analysis": {
+    "primary_goal_1": "McNemar's test for paired binary outcomes: does the workshop move participants from Fail→Pass (improvement)? Compare Result_Before vs Result_After.",
+    "primary_goal_2": "Cochran's Q test for repeated measures: is there a significant trend in symptom presence across 3 clinic visits (baseline, 4wk, 8wk)? Test H0: symptom probability constant across Visit1, Visit2, Visit3.",
+    "secondary": "Descriptive: attendance rate (20/28=71%), baseline symptom prevalence (15/28=54%), age/experience distribution."
+  },
+  "mess_applied": [
+    "Case variance: 'pass'/'PASS'/'Pass' vs 'fail'/'Fail'/'FAIL' in Result_Before and Result_After cells (8 distinct strings for 2 logical values). Tests whether the tool normalizes category labels before analysis.",
+    "Trailing space: 'Pass ' (with trailing space) appears in both columns; 'Fail ' appears in Result_After only. Naive string matching fails.",
+    "Attended as actual boolean (True/False cells, not strings 'TRUE'/'FALSE'). Tests whether the tool correctly identifies and preserves boolean type.",
+    "Row order: Participant_ID is SORTED 1..28 (verified from bytes; an earlier claim of random ordering was false)."
+  ],
+  "what_a_naive_reader_would_get_wrong": [
+    "Counting distinct 'pass' vs 'PASS' as separate categories (8 categories instead of 2 for result columns). Inflates chi-square df.",
+    "Failing to normalize before McNemar test: computing 2×2 contingency table on all 8 variants separately, breaking the test structure.",
+    "Treating 'Pass ' (with space) as a separate level; missing concordant pairs that are semantically equivalent.",
+    "Misclassifying Attended as string 'True'/'False' instead of boolean, affecting filtering logic if the tool tries to subset(Attended==True).",
+    "Attempting Cochran's Q directly without recognizing that all three Symptom columns share the same (Yes/No) level set. Wrong test selection if treating them as independent.",
+    "Mixing attended and non-attended participants without stratification; symptom prevalence may be different by attendance, confounding the visit effect."
+  ],
+  "verified_by_readback": true,
+  "readback_counts": {
+    "n_data_rows": 28,
+    "result_before_unique_values": [
+      "pass",
+      "PASS",
+      "Pass",
+      "Pass ",
+      "fail",
+      "Fail",
+      "FAIL"
+    ],
+    "result_before_counts": {
+      "pass": 8,
+      "PASS": 5,
+      "fail": 4,
+      "Pass ": 1,
+      "Fail": 4,
+      "FAIL": 2,
+      "Pass": 4
+    },
+    "result_after_unique_values": [
+      "Pass",
+      "pass",
+      "PASS",
+      "fail",
+      "Fail",
+      "Pass ",
+      "Fail "
+    ],
+    "result_after_counts": {
+      "Pass": 5,
+      "pass": 4,
+      "PASS": 5,
+      "fail": 6,
+      "Fail": 6,
+      "Pass ": 1,
+      "Fail ": 1
+    },
+    "symptom_visit1_counts": {
+      "Yes": 15,
+      "No": 13
+    },
+    "symptom_visit2_counts": {
+      "No": 15,
+      "Yes": 13
+    },
+    "symptom_visit3_counts": {
+      "No": 16,
+      "Yes": 12
+    },
+    "attended_counts": {
+      "true": 20,
+      "false": 8
+    },
+    "case_variants_observed_in_result_columns": 8,
+    "space_variants_observed": 2,
+    "all_case_variants": [
+      "FAIL",
+      "Fail",
+      "Fail ",
+      "PASS",
+      "Pass",
+      "Pass ",
+      "fail",
+      "pass"
+    ]
+  },
+  "verification_notes": [
+    "✓ QUIRK 1 (Two binary columns, same levels): Result_Before and Result_After both contain Pass/Fail variants. Confirmed paired structure.",
+    "✓ QUIRK 2 (Case/space variants): 8 distinct strings across both columns. 'Pass ' (trailing space) in both; 'Fail ' in After only. 'PASS', 'pass', 'FAIL', 'fail', 'Pass', 'Fail' all present.",
+    "✓ QUIRK 3 (Three binary columns, repeated measures): Symptom_Visit1, Symptom_Visit2, Symptom_Visit3 all have {Yes, No} level set. Ready for Cochran's Q test.",
+    "✓ QUIRK 4 (Real boolean column): Attended contains actual Python bool type (not strings). openpyxl confirmed type='bool' in all 28 cells.",
+    "✓ QUIRK 5 (Data rows >= 25): 28 data rows (exceeds minimum). Headers in row 1, data rows 2-29.",
+    "✓ No NULL values. All 28 rows complete across all 9 columns.",
+    "✓ File format: .xlsx (Excel 2007+), readable by openpyxl."
+  ],
+  "_corrections": [
+    "mess_applied: corrected the row-order claim (IDs are sorted 1..28, not randomly ordered).",
+    "NOTE for the test author: normalised McNemar table is (pass,pass)=15, (fail,fail)=10, (pass->fail)=3, (fail->pass)=0 -> b=3, c=0 -> OR not estimable, p KEPT (snag 15)."
+  ]
+}

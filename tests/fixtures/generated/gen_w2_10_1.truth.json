@@ -1,0 +1,93 @@
+{
+  "id": "w2_10_1",
+  "generator_model": "sonnet",
+  "field": "cell biology / biochemistry core facility (protein quantification)",
+  "persona": "Dr. Elena Fischer, 3rd-year PhD student in a cell-signaling lab, running a BCA total-protein assay on cell-lysate samples (Vehicle vs two doses of 'Drug-A') to normalize protein loading before Western blots. Plate read on the department core facility's SpectraMax M2e reader, still driven by an old Windows XP PC running SoftMax Pro 5.4.1.",
+  "source_style": "Legacy plate-reader export via SoftMax Pro 5.4.1 'Export to File', which writes a flat tab-delimited .txt table using the Windows OS default codepage (Windows-1252 / cp1252) rather than UTF-8 -- a known gotcha with pre-2010s Windows-only lab instrument software.",
+  "file": "gen_w2_10_1.txt",
+  "file_kind": "txt",
+  "sheets": [
+    {
+      "name": "BCA_Plate1_Export",
+      "is_data": true,
+      "header_row": 1,
+      "n_data_rows": 40,
+      "columns": [
+        {
+          "name": "Plate ID",
+          "true_type": "string (categorical, constant)",
+          "notes": "Constant across the file; identifies this plate/run."
+        },
+        {
+          "name": "Well",
+          "true_type": "string (categorical, well coordinate)",
+          "notes": "96-well plate coordinate; only wells A1-D4 used in this partial run."
+        },
+        {
+          "name": "Sample ID",
+          "true_type": "string (categorical / id)",
+          "notes": "STD-<conc> for the 9 standard-curve calibrators, LYS-<n> for the 11 unknown lysate samples."
+        },
+        {
+          "name": "Treatment Group",
+          "true_type": "string (categorical)",
+          "notes": "'Standard' for calibrators; Vehicle / Drug-A 1uM / Drug-A 10uM for unknown lysates."
+        },
+        {
+          "name": "Absorbance (562nm)",
+          "true_type": "numeric (float, 3 decimals)",
+          "notes": "Raw instrument absorbance reading for the BCA colorimetric reaction."
+        },
+        {
+          "name": "Concentration (µg/mL)",
+          "true_type": "numeric (float)",
+          "notes": "Known nominal concentration for standards; back-calculated protein concentration for unknown samples. Header cell contains U+00B5 MICRO SIGN (0xB5 in cp1252) -- the byte that forces the non-UTF-8 encoding."
+        },
+        {
+          "name": "Dilution Factor",
+          "true_type": "integer",
+          "notes": "Constant 1 in this run (no pre-dilution applied to any sample)."
+        },
+        {
+          "name": "Temp (°C)",
+          "true_type": "numeric (float)",
+          "notes": "Reader chamber temperature at read time. Header cell contains U+00B0 DEGREE SIGN (0xB0 in cp1252), a second byte that forces the non-UTF-8 encoding."
+        },
+        {
+          "name": "Replicate",
+          "true_type": "integer (1 or 2)",
+          "notes": "Technical replicate number within the duplicate well pair for each sample/standard."
+        },
+        {
+          "name": "QC Flag",
+          "true_type": "string (categorical)",
+          "notes": "'OK', or 'OOR-HIGH' when absorbance exceeds the top standard's reliable range (>1.95)."
+        }
+      ]
+    }
+  ],
+  "clean_table": true,
+  "intended_analysis": "Fit a standard curve (linear or 4-parameter logistic) to the absorbance-vs-known-concentration Standard rows, use it to back-calculate protein concentration for each unknown lysate sample, average technical replicates per Sample ID, then compare mean concentration across Treatment Group (Vehicle vs Drug-A 1uM vs Drug-A 10uM) via one-way ANOVA -- the resulting concentrations are used to normalize protein loading for downstream Western blots.",
+  "mess_applied": [
+    "tab-delimited .txt",
+    "cp1252 (non-utf8) encoding",
+    "µ/° in header"
+  ],
+  "what_a_naive_reader_would_get_wrong": "A naive reader that assumes UTF-8 (Python's open() text-mode default, or a spreadsheet import left on UTF-8) raises UnicodeDecodeError right at the 'Concentration (µg/mL)' header cell, because 0xB5 ('µ' in cp1252) is not a valid UTF-8 leading byte -- the file fails to load at all rather than silently mis-decoding. A reader that gets the encoding right but assumes comma-separated values (a common default for .txt) sees every row collapse into a single garbage column instead of ten. And someone who correctly guesses 'it's not UTF-8' but decodes as latin-1/ISO-8859-1 instead of cp1252 is silently WRONG in general (cp1252 remaps 0x80-0x9F to printable characters that latin-1 leaves as control codes) -- though in this particular file µ=0xB5 and °=0xB0 happen to decode identically under latin-1 and cp1252, so those two header symbols would look correct by coincidence and mask that the wrong codec was used.",
+  "verified_by_readback": true,
+  "readback_counts": {
+    "n_bytes": 2551,
+    "n_header_cols": 10,
+    "n_data_rows": 40,
+    "mu_sign_0xB5_byte_count": 1,
+    "degree_sign_0xB0_byte_count": 1,
+    "utf8_strict_decode_raised": true,
+    "utf8_strict_decode_error": "invalid start byte at byte offset 74 (byte 0xB5)",
+    "cp1252_strict_decode_ok": true
+  },
+  "encoding": "cp1252",
+  "delimiter": "tab",
+  "_corrections": [
+    "header_row 0 (0-based) -> 1 (1-based Excel row)."
+  ]
+}

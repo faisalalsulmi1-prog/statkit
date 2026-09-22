@@ -1,0 +1,136 @@
+{
+  "id": "h6_2",
+  "generator_model": "haiku",
+  "field": "nursing / public health",
+  "persona": "Nurse transcribing medication administration from handwritten ward notes; not data-savvy",
+  "source_style": "hand-typed from paper MAR (medication administration record) into CSV, multiple data entry shifts",
+  "file": "gen_h6_2.csv",
+  "file_kind": "csv",
+  "sheets": [
+    {
+      "name": "csv (single)",
+      "is_data": true,
+      "header_row": 1,
+      "n_data_rows": 70,
+      "columns": [
+        {
+          "name": "PatCode",
+          "true_type": "id",
+          "notes": "W-NNNN format; some rows blank (merged cell simulation)"
+        },
+        {
+          "name": "MedicationName",
+          "true_type": "categorical",
+          "notes": "drug names; inconsistent capitalization (Amoxicillin/AMOXICILLIN/amoxicillin)"
+        },
+        {
+          "name": "Dose",
+          "true_type": "numeric",
+          "notes": "integer; 250/500/750 for mg, 5-7 for mL"
+        },
+        {
+          "name": "DoseUnit",
+          "true_type": "categorical",
+          "notes": "mg, mL, or blank"
+        },
+        {
+          "name": "Time_Administered",
+          "true_type": "text",
+          "notes": "three formats: HH:MM (24h), H:MM AM/PM (12h with space), HH.MM (dot)"
+        },
+        {
+          "name": "NurseInitials",
+          "true_type": "id",
+          "notes": "2-letter; inconsistent case (JM vs jm)"
+        },
+        {
+          "name": "Notes",
+          "true_type": "text",
+          "notes": "free text or blank; inconsistent capitalization"
+        }
+      ]
+    }
+  ],
+  "clean_table": {
+    "first_5": [
+      {
+        "PatCode": "W-4201",
+        "MedicationName": "Amoxicillin",
+        "Dose": 500,
+        "DoseUnit": "mg",
+        "Time_Administered": "08:01",
+        "NurseInitials": "JM",
+        "Notes": ""
+      },
+      {
+        "PatCode": "W-4202",
+        "MedicationName": "AMOXICILLIN",
+        "Dose": 750,
+        "DoseUnit": "mg",
+        "Time_Administered": "09:02",
+        "NurseInitials": "SM",
+        "Notes": "Given with breakfast"
+      },
+      {
+        "PatCode": "W-4203",
+        "MedicationName": "amoxicillin",
+        "Dose": 250,
+        "DoseUnit": "mg",
+        "Time_Administered": "10:03",
+        "NurseInitials": "RK",
+        "Notes": "GIVEN WITH FOOD"
+      },
+      {
+        "PatCode": "W-4204",
+        "MedicationName": "Metformin",
+        "Dose": 500,
+        "DoseUnit": "mg",
+        "Time_Administered": "11:04",
+        "NurseInitials": "AB",
+        "Notes": "given after meal"
+      },
+      {
+        "PatCode": "W-4205",
+        "MedicationName": "metformin",
+        "Dose": 7,
+        "DoseUnit": "mL",
+        "Time_Administered": "12:05",
+        "NurseInitials": "CD",
+        "Notes": "patient refused"
+      }
+    ],
+    "last_2": [
+      {
+        "PatCode": "W-4269",
+        "MedicationName": "ASPIRIN",
+        "Dose": 250,
+        "DoseUnit": "mg",
+        "Time_Administered": "08:09",
+        "NurseInitials": "EF",
+        "Notes": "GIVEN WITH FOOD"
+      },
+      {
+        "PatCode": "W-4270",
+        "MedicationName": "Ibuprofen",
+        "Dose": 6,
+        "DoseUnit": "mL",
+        "Time_Administered": "09:10",
+        "NurseInitials": "KL",
+        "Notes": "given after meal"
+      }
+    ],
+    "exact_n": 70,
+    "generation_rule": "70 rows: i from 1-70; PatCode=W-(4200+i) or blank if i\u22610(mod 11); MedicationName cycles through 12 variants; Dose=250,500,750 (pattern i%3) or 5-7 for mL (if i%5==0); DoseUnit=mL if i%5==0, blank if i%7==0, else mg; Time_Administered: three formats by i%3 (24h HH:MM, 12h H:MM AP, dot HH.MM); NurseInitials from 7 options or lowercase if i%13==0; Notes cycles through 11 options"
+  },
+  "intended_analysis": "Identify medication administration times (requires parsing 3 time formats); detect missing dose units; flag duplicate or missing patient codes; calculate doses by medication; audit administration patterns",
+  "mess_applied": [
+    "Inconsistent medication name capitalization (Amoxicillin/AMOXICILLIN/amoxicillin)",
+    "Three different time formats (HH:MM, H:MM AM/PM, HH.MM dot notation)",
+    "Missing dose units in ~1/7 of rows",
+    "Blank PatCode cells (simulating handwritten merged cells)",
+    "Nurse initials sometimes lowercase",
+    "Free-text Notes with inconsistent capitalization and punctuation",
+    "No standard order or structure beyond headers"
+  ],
+  "what_a_naive_reader_would_get_wrong": "A naive reader would parse all time values as text, miss the pattern in blank codes, and fail to standardize medication names or normalize dose units\u2014resulting in duplicate and unintelligible medication names and unparseable times."
+}

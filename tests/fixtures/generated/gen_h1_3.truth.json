@@ -1,0 +1,474 @@
+{
+  "id": "h1_3",
+  "generator_model": "haiku",
+  "field": "clinical medicine",
+  "persona": "Surgical resident maintaining a case log of 30 operations with post-operative complications tracking",
+  "source_style": "entered directly into Excel during daily rounds and case reviews",
+  "file": "gen_h1_3.xlsx",
+  "file_kind": "xlsx",
+  "sheets": [
+    {
+      "name": "OR Cases",
+      "is_data": true,
+      "header_row": 1,
+      "n_data_rows": 30,
+      "columns": [
+        {
+          "name": "Case#",
+          "true_type": "id",
+          "notes": "Sequential case number 1-30"
+        },
+        {
+          "name": "Patient_Age",
+          "true_type": "numeric",
+          "notes": "Age in years; ranges 25-74"
+        },
+        {
+          "name": "Sex",
+          "true_type": "binary",
+          "notes": "F or M"
+        },
+        {
+          "name": "BMI",
+          "true_type": "numeric",
+          "notes": "Body Mass Index; 22.0-26.5 range; decimal format"
+        },
+        {
+          "name": "Procedure_Code",
+          "true_type": "categorical",
+          "notes": "Codes: LHYST, CHOL, APPY, CS, HERNIA"
+        },
+        {
+          "name": "Procedure_Name",
+          "true_type": "text",
+          "notes": "Full procedure name corresponding to code"
+        },
+        {
+          "name": "Complication",
+          "true_type": "categorical",
+          "notes": "None, SSI, Bleed, Ileus, DVT, Seroma; or None"
+        },
+        {
+          "name": "Grade",
+          "true_type": "ordinal",
+          "notes": "If complication present: 'Grade 1' or 'Grade 2' or 'Minor', 'Moderate', 'Severe'; blank if no complication"
+        },
+        {
+          "name": "Days_to_Event",
+          "true_type": "numeric",
+          "notes": "Days post-op when complication occurred; 1-14; blank if no complication"
+        },
+        {
+          "name": "Readmitted",
+          "true_type": "binary",
+          "notes": "Yes/No; Yes only if complication occurred and case_num % 3 == 0"
+        },
+        {
+          "name": "Notes",
+          "true_type": "text",
+          "notes": "Free text clinical notes; varies from empty to detailed"
+        }
+      ]
+    }
+  ],
+  "clean_table": [
+    [
+      1,
+      32,
+      "M",
+      22.5,
+      "CHOL",
+      "Cholecystectomy",
+      "SSI",
+      "Grade 2",
+      2,
+      "No",
+      "Managed conservatively"
+    ],
+    [
+      2,
+      39,
+      "F",
+      23.0,
+      "APPY",
+      "Appendectomy",
+      "Bleed",
+      "Moderate",
+      3,
+      "No",
+      "Managed conservatively"
+    ],
+    [
+      3,
+      46,
+      "M",
+      23.5,
+      "CS",
+      "Cesarean Section",
+      "Ileus",
+      "Severe",
+      4,
+      "Yes",
+      "Managed conservatively"
+    ],
+    [
+      4,
+      53,
+      "F",
+      24.0,
+      "HERNIA",
+      "Hernia Repair",
+      "DVT",
+      "Grade 1",
+      5,
+      "No",
+      "Managed conservatively"
+    ],
+    [
+      5,
+      60,
+      "M",
+      24.5,
+      "LHYST",
+      "Laparoscopic Hysterectomy",
+      "Seroma",
+      "Grade 2",
+      6,
+      "No",
+      "Patient non-compliant with antibiotics"
+    ],
+    [
+      6,
+      67,
+      "F",
+      25.0,
+      "CHOL",
+      "Cholecystectomy",
+      "None",
+      "",
+      "",
+      "No",
+      "Routine recovery"
+    ],
+    [
+      7,
+      74,
+      "M",
+      25.5,
+      "APPY",
+      "Appendectomy",
+      "None",
+      "",
+      "",
+      "No",
+      "Routine recovery"
+    ],
+    [
+      8,
+      31,
+      "F",
+      26.0,
+      "CS",
+      "Cesarean Section",
+      "SSI",
+      "Grade 1",
+      9,
+      "No",
+      "Managed conservatively"
+    ],
+    [
+      9,
+      38,
+      "M",
+      26.5,
+      "HERNIA",
+      "Hernia Repair",
+      "Bleed",
+      "Grade 2",
+      10,
+      "Yes",
+      "Managed conservatively"
+    ],
+    [
+      10,
+      45,
+      "F",
+      22.0,
+      "LHYST",
+      "Laparoscopic Hysterectomy",
+      "Ileus",
+      "Moderate",
+      11,
+      "No",
+      "Managed conservatively"
+    ],
+    [
+      11,
+      52,
+      "M",
+      22.5,
+      "CHOL",
+      "Cholecystectomy",
+      "DVT",
+      "Severe",
+      12,
+      "No",
+      "Managed conservatively"
+    ],
+    [
+      12,
+      59,
+      "F",
+      23.0,
+      "APPY",
+      "Appendectomy",
+      "Seroma",
+      "Grade 1",
+      13,
+      "Yes",
+      "Reop POD 3"
+    ],
+    [
+      13,
+      66,
+      "M",
+      23.5,
+      "CS",
+      "Cesarean Section",
+      "None",
+      "",
+      "",
+      "No",
+      "Routine recovery"
+    ],
+    [
+      14,
+      73,
+      "F",
+      24.0,
+      "HERNIA",
+      "Hernia Repair",
+      "None",
+      "",
+      "",
+      "No",
+      "Routine recovery"
+    ],
+    [
+      15,
+      30,
+      "M",
+      24.5,
+      "LHYST",
+      "Laparoscopic Hysterectomy",
+      "SSI",
+      "Severe",
+      2,
+      "Yes",
+      "Managed conservatively"
+    ],
+    [
+      16,
+      37,
+      "F",
+      25.0,
+      "CHOL",
+      "Cholecystectomy",
+      "Bleed",
+      "Grade 1",
+      3,
+      "No",
+      "Managed conservatively"
+    ],
+    [
+      17,
+      44,
+      "M",
+      25.5,
+      "APPY",
+      "Appendectomy",
+      "Ileus",
+      "Grade 2",
+      4,
+      "No",
+      "Managed conservatively"
+    ],
+    [
+      18,
+      51,
+      "F",
+      26.0,
+      "CS",
+      "Cesarean Section",
+      "DVT",
+      "Moderate",
+      5,
+      "Yes",
+      ""
+    ],
+    [
+      19,
+      58,
+      "M",
+      26.5,
+      "HERNIA",
+      "Hernia Repair",
+      "Seroma",
+      "Severe",
+      6,
+      "No",
+      "Managed conservatively"
+    ],
+    [
+      20,
+      65,
+      "F",
+      22.0,
+      "LHYST",
+      "Laparoscopic Hysterectomy",
+      "None",
+      "",
+      "",
+      "No",
+      "Routine recovery"
+    ],
+    [
+      21,
+      72,
+      "M",
+      22.5,
+      "CHOL",
+      "Cholecystectomy",
+      "None",
+      "",
+      "",
+      "No",
+      "Routine recovery"
+    ],
+    [
+      22,
+      29,
+      "F",
+      23.0,
+      "APPY",
+      "Appendectomy",
+      "SSI",
+      "Moderate",
+      9,
+      "No",
+      "Managed conservatively"
+    ],
+    [
+      23,
+      36,
+      "M",
+      23.5,
+      "CS",
+      "Cesarean Section",
+      "Bleed",
+      "Severe",
+      10,
+      "No",
+      "Managed conservatively"
+    ],
+    [
+      24,
+      43,
+      "F",
+      24.0,
+      "HERNIA",
+      "Hernia Repair",
+      "Ileus",
+      "Grade 1",
+      11,
+      "Yes",
+      "Discharged, followed in clinic"
+    ],
+    [
+      25,
+      50,
+      "M",
+      24.5,
+      "LHYST",
+      "Laparoscopic Hysterectomy",
+      "DVT",
+      "Grade 2",
+      12,
+      "No",
+      "Managed conservatively"
+    ],
+    [
+      26,
+      57,
+      "F",
+      25.0,
+      "CHOL",
+      "Cholecystectomy",
+      "Seroma",
+      "Moderate",
+      13,
+      "No",
+      "Managed conservatively"
+    ],
+    [
+      27,
+      64,
+      "M",
+      25.5,
+      "APPY",
+      "Appendectomy",
+      "None",
+      "",
+      "",
+      "No",
+      "Routine recovery"
+    ],
+    [
+      28,
+      71,
+      "F",
+      26.0,
+      "CS",
+      "Cesarean Section",
+      "None",
+      "",
+      "",
+      "No",
+      "Routine recovery"
+    ],
+    [
+      29,
+      28,
+      "M",
+      26.5,
+      "HERNIA",
+      "Hernia Repair",
+      "SSI",
+      "Grade 2",
+      2,
+      "No",
+      "Managed conservatively"
+    ],
+    [
+      30,
+      35,
+      "F",
+      22.0,
+      "LHYST",
+      "Laparoscopic Hysterectomy",
+      "Bleed",
+      "Moderate",
+      3,
+      "Yes",
+      "Managed conservatively"
+    ]
+  ],
+  "intended_analysis": "What is the complication rate? Do older patients or higher BMI patients have more complications? Which procedures have the highest complication risk?",
+  "mess_applied": [
+    "Grading format inconsistent: 'Grade 1' vs 'Grade 2' vs 'Minor', 'Moderate', 'Severe'",
+    "Days_to_Event is blank for no-complication cases (not zero)",
+    "Mix of empty notes vs filled notes; some abbreviations (POD, reop) not defined",
+    "Procedure both as code and full name (redundant but realistic)"
+  ],
+  "what_a_naive_reader_would_get_wrong": "Treating blank Days_to_Event as zero instead of missing; not recognizing that grade values are non-standardized across rows; assuming all patients with complications were readmitted when in fact only a subset were."
+}
