@@ -564,18 +564,30 @@ def _levels_count(dataset, name: str) -> int:
 
 # S-P(bind): a Total / % / percentage column is a SUMMARY of the counts, not a
 # category count column -- offering it to the count-grid role double-counts the
-# table (and a percent column is not even a count). Skipped ONLY for the multi-
-# column count GRID role (chi2_ind / fisher: ``max=None``) -- chi2_gof's single
-# count column may legitimately be called 'Total'.
+# table (and a percent column is not even a count).
 # NB5: match WHOLE WORDS ('_' read as a space), never substrings -- a Likert
 # answer column 'Totally agree' is a real count column. 'sum' / 'all' stay
 # exact-match via _TOTAL_RE.
-_SUMMARY_RE = re.compile(r"\b(sub)?totals?\b|\bpct\b|\bpercent|%")
+# R1: CamelCase is split at each lower->upper seam BEFORE the word match, so a
+# glued 'GrandTotal' / 'RowTotal' reads 'grand total' / 'row total' (a summary)
+# while 'TotallyAgree' reads 'totally agree' (a real count column).
+# R2: the two kinds of summary have different SCOPE -- a percent-like header is a
+# RATE, never a count, so it is skipped for EVERY counts role (chi2_gof's single
+# count column included); a Total-like header only double-counts the multi-
+# column GRID (chi2_ind / fisher: ``max=None``) -- chi2_gof's single count column
+# may legitimately be called 'Total'.
+# R3: 'percent' / 'percentage(s)' are whole words -- 'Percentile' is a real column.
+_PERCENT_RE = re.compile(r"%|\bpct\b|\bpercent(age)?s?\b")
+_TOTAL_WORD_RE = re.compile(r"\b(sub)?totals?\b")
 
 
-def _is_summary_header(name) -> bool:
-    cf = str(name).strip().casefold().replace("_", " ")
-    return cf in _TOTAL_RE or _SUMMARY_RE.search(cf) is not None
+def _is_summary_header(name, role: Role) -> bool:
+    words = (re.sub(r"(?<=[a-z])(?=[A-Z])", " ", str(name))     # R1: GrandTotal -> Grand Total
+             .strip().casefold().replace("_", " "))
+    if _PERCENT_RE.search(words) is not None:                   # R2: every counts role
+        return True
+    return role.max is None and (                               # S-P/NB5: the GRID only
+        words in _TOTAL_RE or _TOTAL_WORD_RE.search(words) is not None)
 
 
 def role_columns(role: Role, dataset) -> list[str]:
@@ -589,8 +601,7 @@ def role_columns(role: Role, dataset) -> list[str]:
             continue
         if not any(k in p.kinds for k in role.accepts):
             continue
-        if (role.name == "counts" and role.max is None      # the count GRID only
-                and _is_summary_header(p.name)):
+        if role.name == "counts" and _is_summary_header(p.name, role):
             continue
         if bounded:
             nl = _levels_count(dataset, p.name)

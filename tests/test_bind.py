@@ -16,7 +16,7 @@ import math
 import pandas as pd
 import pytest
 
-from statkit import assoc, bind, check, means, ranks
+from statkit import assoc, bind, cat, check, means, ranks
 from statkit.clean import Table
 from statkit.grid import Cell
 from statkit.infer import Dataset
@@ -705,3 +705,93 @@ def test_gof_single_count_column_named_total_is_offered():
     b = bind.bind(spec, gof, {"category": ("Phenotype",), "counts": ("Total",)},
                   layout="table")
     assert b.n_used == 556
+
+
+# --------------------------------------------------------------------------
+# R1 (NB5 follow-on) -- the whole-word skip read 'GrandTotal' / 'RowTotal' as
+# ONE word, so a CamelCase summary column slipped INTO the count grid: chi2 ran
+# status ok on n=315 (true 105) over a 3x4 crosstab (df 6, not 2 -> wrong p too).
+# CamelCase is split BEFORE the word match; 'TotallyAgree' (Likert) stays a real
+# count column; a Total-like header is skipped for the GRID role only (chi2_gof's
+# single count column keeps 'TotalRevenue', as does a numeric outcome role).
+# --------------------------------------------------------------------------
+def test_counts_grid_role_skips_camelcase_total_columns():
+    grid = _infer_ds({
+        "Region":     ["North", "South", "East"],
+        "Yes":        [20, 15, 10],
+        "No":         [25, 20, 15],
+        "GrandTotal": [45, 35, 25],
+        "RowTotal":   [45, 35, 25],
+        "TOTAL":      [45, 35, 25],
+    })
+    grid_role = next(r for r in REGISTRY["chi2_ind"].contract.roles_by_layout["table"]
+                     if r.name == "counts")
+    assert bind.role_columns(grid_role, grid) == ["Yes", "No"]
+    # pre-fix: ['Yes', 'No', 'GrandTotal', 'RowTotal'] (only the all-caps TOTAL caught)
+    auto = bind.auto_columns(REGISTRY["chi2_ind"], grid, "table")
+    assert auto == {"counts": ("Yes", "No")}
+    b = bind.bind(REGISTRY["chi2_ind"], grid, auto, layout="table")
+    assert b.n_used == 105                                 # pre-fix: 315, status ok, 0 blocks
+    b.findings = check.gate(b)
+    assert cat.chi2_ind(b).status == "ok"                  # the corrected grid still runs
+    # keep-guards: CamelCase Likert answers are real count columns; 'TotalRevenue'
+    # is skipped for the GRID role only.
+    likert = _infer_ds({
+        "Question":        ["Q1", "Q2", "Q3"],
+        "TotallyDisagree": [10, 12, 8],
+        "Disagree":        [15, 10, 14],
+        "Agree":           [14, 16, 12],
+        "TotallyAgree":    [11, 12, 16],
+        "TotalRevenue":    [100, 200, 300],
+    })
+    four = ["TotallyDisagree", "Disagree", "Agree", "TotallyAgree"]
+    assert bind.role_columns(grid_role, likert) == four    # pre-fix: four + ['TotalRevenue']
+    gof_role = next(r for r in REGISTRY["chi2_gof"].contract.roles_by_layout["table"]
+                    if r.name == "counts")
+    assert bind.role_columns(gof_role, likert) == four + ["TotalRevenue"]
+    outcome_role = next(r for r in REGISTRY["t_ind"].contract.roles_by_layout["long"]
+                        if r.name == "outcome")
+    assert "TotalRevenue" in bind.role_columns(outcome_role, likert)
+
+
+# --------------------------------------------------------------------------
+# R2 (NB5 follow-on) -- NB5 scoped the WHOLE summary skip to the grid role, which
+# re-opened a percent column to chi2_gof's single count column: with '% of Total'
+# BEFORE 'Count' and whole-number percents, auto_columns bound the percents and
+# gof ran status ok on n=100 (true 200). A percent-like header is a RATE, never a
+# count -- skipped for EVERY counts role; only the Total-like skip is grid-only.
+# --------------------------------------------------------------------------
+def test_gof_count_role_never_offers_a_percent_column():
+    gof = _infer_ds({"Phenotype":  ["Purple", "White", "Pink", "Red"],
+                     "% of Total": [50, 25, 15, 10],
+                     "Count":      [100, 50, 30, 20]})
+    spec = REGISTRY["chi2_gof"]
+    gof_role = next(r for r in spec.contract.roles_by_layout["table"] if r.name == "counts")
+    assert gof_role.max == 1                               # the SINGLE count column role
+    assert bind.role_columns(gof_role, gof) == ["Count"]   # pre-fix: ['% of Total', 'Count']
+    auto = bind.auto_columns(spec, gof, "table")
+    assert auto == {"category": ("Phenotype",), "counts": ("Count",)}
+    # pre-fix: counts=('% of Total',)
+    b = bind.bind(spec, gof, auto, layout="table")
+    assert b.n_used == 200                                 # pre-fix: 100 (the percents)
+
+
+# --------------------------------------------------------------------------
+# R3 (cosmetic) -- `\bpercent` had no closing word boundary, so a 'Percentile'
+# column vanished from the count-grid picker (a missing option, not a wrong
+# answer). 'percent' / 'percentage' / 'percentages' stay whole-word summaries.
+# --------------------------------------------------------------------------
+def test_counts_grid_role_keeps_percentile_column():
+    ds = _ds({
+        "Group":       (["A", "B", "C"], (C,)),
+        "Percentile":  ([90, 50, 10], (N,)),
+        "Yes":         ([20, 15, 10], (N,)),
+        "No":          ([25, 20, 15], (N,)),
+        "Percentage":  ([44, 43, 40], (N,)),
+        "Percentages": ([44, 43, 40], (N,)),
+        "percent_yes": ([44, 43, 40], (N,)),
+    })
+    grid_role = next(r for r in REGISTRY["chi2_ind"].contract.roles_by_layout["table"]
+                     if r.name == "counts")
+    assert bind.role_columns(grid_role, ds) == ["Percentile", "Yes", "No"]
+    # pre-fix: ['Yes', 'No'] -- 'Percentile' swallowed by the open-ended `\bpercent`
