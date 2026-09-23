@@ -795,3 +795,88 @@ def test_counts_grid_role_keeps_percentile_column():
                      if r.name == "counts")
     assert bind.role_columns(grid_role, ds) == ["Percentile", "Yes", "No"]
     # pre-fix: ['Yes', 'No'] -- 'Percentile' swallowed by the open-ended `\bpercent`
+
+
+# --------------------------------------------------------------------------
+# R4 (row-total backstop) -- a "row total" is a ticked grid column equal to the
+# row-wise sum of the OTHER ticked columns. The header-based summary skip
+# (_is_summary_header) only knows total-ish WORDS, so a total column headed 'N',
+# 'Overall', 'Row Sum' (sum is exact-match only), a glued 'GRANDTOTAL', a
+# digit-glued 'Total2024'/'Q1Total', or a non-English 'Gesamt'/'合計'/'Итого'
+# slips INTO the grid -- chi2 then runs status ok on a silently DOUBLE-COUNTED n
+# (Agree+Disagree ticked a second time). _check_row_total is a numeric BindError
+# backstop inside _table_bind (same class/site/handler as the _check_count
+# BindError), blocking a ticked summary column (#2) only; a MISSING count column
+# (#1) is out of scope (deferred).
+# --------------------------------------------------------------------------
+def test_count_grid_blocks_a_ticked_column_that_is_the_row_sum_of_the_others():
+    spec = REGISTRY["chi2_ind"]
+    grid_role = next(r for r in spec.contract.roles_by_layout["table"]
+                     if r.name == "counts")
+    for header in ("N", "Overall", "Row Sum", "GRANDTOTAL", "Total2024",
+                   "Q1Total", "Gesamt", "合計", "Итого"):
+        ds = _ds({
+            "Item":     (["Q1", "Q2", "Q3"], (C,)),
+            "Agree":    ([20, 15, 10], (N,)),
+            "Disagree": ([25, 20, 15], (N,)),
+            header:     ([45, 35, 25], (N,)),
+        })
+        # the seam (green pre AND post): the header-based skip does NOT catch
+        # these, so the total column is offered -- only a numeric backstop bites.
+        assert header in bind.role_columns(grid_role, ds)
+        with pytest.raises(bind.BindError) as exc:
+            bind.bind(spec, ds, {"counts": ("Agree", "Disagree", header)},
+                      layout="table")
+        # pre-fix: DID NOT RAISE (n_used=210, chi2_ind ok
+        # χ²=0.1296296296296296 p=0.9979881129874916 -- Agree+Disagree doubled)
+        assert (f"The column '{header}' equals 'Agree' + 'Disagree' on every row"
+                in str(exc.value))
+        assert "Untick it" in str(exc.value)
+    # the true 2-column grid still binds, gates clean, and runs
+    ds2 = _ds({
+        "Item":     (["Q1", "Q2", "Q3"], (C,)),
+        "Agree":    ([20, 15, 10], (N,)),
+        "Disagree": ([25, 20, 15], (N,)),
+    })
+    b = bind.bind(spec, ds2, {"counts": ("Agree", "Disagree")}, layout="table")
+    assert b.n_used == 105
+    b.findings = check.gate(b)
+    assert cat.chi2_ind(b).status == "ok"
+
+
+def test_count_grid_row_sum_backstop_does_not_over_block():
+    spec = REGISTRY["chi2_ind"]
+
+    def binds(cols):
+        n = len(next(iter(cols.values())))
+        spec_cols = {"Row": ([f"r{i}" for i in range(n)], (C,))}
+        for name, vals in cols.items():
+            spec_cols[name] = (vals, (N,))
+        b = bind.bind(spec, _ds(spec_cols), {"counts": tuple(cols)}, layout="table")
+        return b.n_used
+
+    # legit 3-category grid: no column equals the sum of the other two
+    assert binds({"Yes": [20, 15, 10], "No": [25, 20, 15],
+                  "Maybe": [30, 5, 12]}) == 152
+    # two ticked columns can never be a row total (guard: >=3 live columns)
+    assert binds({"A": [10, 7], "B": [10, 7]}) == 34
+    # a single row: a match needs >=2 non-zero candidate rows
+    assert binds({"A": [10], "B": [20], "C": [30]}) == 60
+    # C == A+B only where all three are zero: <2 non-zero candidate rows
+    assert binds({"A": [0, 0, 10], "B": [0, 0, 20], "C": [0, 0, 30]}) == 60
+    # an all-zero column is dropped from 'live' -> a 2-column case, never blocks
+    assert binds({"A": [10, 5], "B": [10, 5], "C": [0, 0]}) == 30
+
+
+def test_count_grid_row_sum_backstop_skips_blank_cells_and_total_rows():
+    spec = REGISTRY["chi2_ind"]
+    ds = _ds({
+        "Region": (["North", "South", "East", "Total"], (C,)),
+        "Yes":    ([20, 15, 10, 45], (N,)),
+        "No":     ([25, 20, 15, 60], (N,)),
+        "N":      ([45, None, 25, 105], (N,)),
+    })
+    with pytest.raises(bind.BindError, match=r"'N' equals 'Yes' \+ 'No'"):
+        bind.bind(spec, ds, {"counts": ("Yes", "No", "N")}, layout="table")
+    # pre-fix: DID NOT RAISE (n_used=175, ok p~6.87e-06). The 'Total' row and the
+    # blank South cell are skipped; two clean non-zero rows still refuse.

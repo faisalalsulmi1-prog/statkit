@@ -486,6 +486,43 @@ def _sum_counts(df, count_col, label_col):
     return total
 
 
+# R4 (row-total backstop): a "row total" is a ticked grid column equal to the
+# row-wise sum of the OTHER ticked columns -- whatever its header. The header
+# skip (_is_summary_header) only knows total-ish WORDS, so a total column headed
+# 'N' / 'Overall' / 'Итого' / 'GRANDTOTAL' slips into the grid and chi2 runs on a
+# silently DOUBLE-COUNTED n. This numeric backstop refuses it, fail-closed.
+# Four guards keep it from biting a legitimate grid:
+#   * an all-zero column is dropped from `live` (a padding/absent category);
+#   * >=3 live columns (two columns can never be "the other columns' total");
+#   * >=2 rows where the candidate is non-zero (one coincidental row is not a
+#     pattern -- e.g. a 1-row table, or a match only on all-zero rows);
+#   * a Total row (via _is_total) and any row with a blank ticked cell are
+#     skipped, so a real table with a totals row / ragged cells still binds.
+# Residual (both negligible/deferred vs the silent double-count): a legit grid
+# where one category truly equals the sum of the others on >=2 non-zero rows with
+# >=3 live columns is over-blocked; and two summary columns ticked together mask
+# each other (neither equals the sum of the rest) and slip through.
+def _check_row_total(df, counts, label_col) -> None:
+    rows = [r for _, r in df.iterrows()
+            if not _is_total(r[label_col]) and not any(pd.isna(r[c]) for c in counts)]
+
+    def cell(r, c):
+        return int(round(float(r[c])))
+
+    live = [c for c in counts if any(cell(r, c) > 0 for r in rows)]
+    if len(live) < 3:
+        return
+    for c in live:
+        others = [o for o in live if o != c]
+        if (all(cell(r, c) == sum(cell(r, o) for o in others) for r in rows)
+                and sum(cell(r, c) > 0 for r in rows) >= 2):
+            named = " + ".join(f"'{o}'" for o in others)
+            raise BindError(
+                f"The column '{c}' equals {named} on every row, so it looks like "
+                "a row total, not a category. Untick it — a total column "
+                "double-counts the grid.")
+
+
 # S15 threshold: never materialise more rows than this; check.S15 then blocks.
 _EXPAND_CAP = 1_000_000
 
@@ -496,6 +533,9 @@ def _table_bind(spec, df, columns, excel):
     The count total is summed first; a grid over ``_EXPAND_CAP`` is NOT expanded
     (that would blow up memory) -- an empty frame is returned with n_used = total
     so check.S15 can block it.
+
+    A ticked grid column that is the row-wise sum of the other ticked columns is a
+    row total whatever its header -> BindError (R4, _check_row_total).
     """
     if "category" in columns:                       # chi2_gof
         cat, cnt = columns["category"][0], columns["counts"][0]
@@ -507,6 +547,7 @@ def _table_bind(spec, df, columns, excel):
         counts = list(columns["counts"])
         row_label = next(c for c in df.columns if c not in counts)
         total = sum(_sum_counts(df, c, label_col=row_label) for c in counts)
+        _check_row_total(df, counts, label_col=row_label)   # R4: a ticked row total
         if total > _EXPAND_CAP:
             return pd.DataFrame({"row": [], "col": []}), total, total, {}, []
         frame = table_to_long(df, counts=counts)
