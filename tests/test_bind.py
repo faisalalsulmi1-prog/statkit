@@ -910,3 +910,91 @@ def test_infinity_tokens_in_mixed_column_are_missing():
                   layout="long", params={"mu0": 0.0})
     assert (b.n_total, b.n_used, b.dropped) == (20, 16, {"missing value": 4})  # pre-fix: 19 / {…: 1}
     assert all(math.isfinite(v) for v in b.data["outcome"])
+
+
+# --------------------------------------------------------------------------
+# S-S (row-label backstop) -- in a count grid the FIRST column holds the row
+# labels (the categories). The counts role only knows NUMERIC, so a numeric
+# row-label column (Dose 1/2/3, Year, Grade) is OFFERED -- and auto-pick takes it.
+# Two faces, one cause: (a) every column ticked -> the row-label fallback
+# `next(c for c in df.columns if c not in counts)` raised StopIteration (the
+# app's generic "Sorry, I couldn't prepare your data" handler, no stated cause);
+# (b) the first column ticked while another column is free -> that column
+# silently became the row label and the label VALUES were counted (Dose 1+2+3 =
+# 6 phantom units: n=126 true 120, chi2 17.22 df=4 vs 16.28 df=2, status ok).
+# _check_row_label is a BindError backstop inside _table_bind (same class/site/
+# handler as _check_count and R4's _check_row_total): the first column ticked as
+# a count -> stated BindError, both faces.
+# --------------------------------------------------------------------------
+def test_count_grid_blocks_a_ticked_numeric_row_label_column():
+    spec = REGISTRY["chi2_ind"]
+    grid_role = next(r for r in spec.contract.roles_by_layout["table"]
+                     if r.name == "counts")
+    ds = _ds({
+        "Dose":     ([1, 2, 3], (N,)),
+        "Cured":    ([12, 20, 30], (N,)),
+        "NotCured": ([28, 20, 10], (N,)),
+        "Note":     (["pilot", "main", "repeat"], (C,)),
+    })
+    # the seam (green pre AND post): the counts role only knows NUMERIC, so the
+    # numeric row-label column is offered -- and auto-pick takes all three.
+    assert bind.role_columns(grid_role, ds) == ["Dose", "Cured", "NotCured"]
+    assert bind.auto_columns(spec, ds, "table") == {"counts": ("Dose", "Cured", "NotCured")}
+    real = _infer_ds({"Dose": [1, 2, 3], "Cured": [12, 20, 30],
+                      "NotCured": [28, 20, 10], "Note": ["pilot", "main", "repeat"]})
+    assert "Dose" in bind.role_columns(grid_role, real)     # the REAL infer pipeline too
+    with pytest.raises(bind.BindError) as exc:
+        bind.bind(spec, ds, {"counts": ("Dose", "Cured", "NotCured")}, layout="table")
+    # pre-fix: DID NOT RAISE -- 'Note' silently became the row label and the Dose
+    # values were COUNTED: n_used=126 (true 120), chi2_ind ok
+    # χ²=17.218274291028603 p=0.0017530069407236425 df=(4.0,)  (true 16.2848 / 0.000291 / df=2)
+    assert "The column 'Dose' is the first column of your table" in str(exc.value)
+    assert "Untick the row-label column" in str(exc.value)
+
+
+def test_count_grid_all_columns_ticked_is_a_row_label_bind_error_not_a_crash():
+    spec = REGISTRY["chi2_ind"]
+    ds = _ds({
+        "Dose":     ([1, 2, 3], (N,)),
+        "Cured":    ([12, 20, 30], (N,)),
+        "NotCured": ([28, 20, 10], (N,)),
+    })
+    with pytest.raises(bind.BindError, match=r"Untick the row-label column"):
+        bind.bind(spec, ds, {"counts": ("Dose", "Cured", "NotCured")}, layout="table")
+    # pre-fix: raised StopIteration('') -- no column left to be the row label --
+    # which the app's generic except-Exception handler swallowed with no stated cause.
+
+
+def test_count_grid_with_the_row_label_column_unticked_still_binds():
+    spec = REGISTRY["chi2_ind"]
+    ds = _ds({
+        "Dose":     ([1, 2, 3], (N,)),
+        "Cured":    ([12, 20, 30], (N,)),
+        "NotCured": ([28, 20, 10], (N,)),
+        "Note":     (["pilot", "main", "repeat"], (C,)),
+    })
+    b = bind.bind(spec, ds, {"counts": ("Cured", "NotCured")}, layout="table")
+    assert b.n_used == 120
+    assert sorted(set(b.data["row"])) == [1.0, 2.0, 3.0]        # Dose IS the row label
+    b.findings = check.gate(b)
+    r = cat.chi2_ind(b)
+    assert r.status == "ok"
+    assert round(r.statistic[1], 4) == 16.2848
+    assert r.statistic[1] == pytest.approx(16.284760845383758)
+    assert r.p == pytest.approx(0.00029094380404415325)
+    assert r.df == (2.0,)
+    # the same true grid on the 3-column sheet
+    ds3 = _ds({
+        "Dose":     ([1, 2, 3], (N,)),
+        "Cured":    ([12, 20, 30], (N,)),
+        "NotCured": ([28, 20, 10], (N,)),
+    })
+    assert bind.bind(spec, ds3, {"counts": ("Cured", "NotCured")}, layout="table").n_used == 120
+    # a label-first grid with a free trailing column is untouched (no over-block)
+    ds2 = _ds({
+        "Item":     (["Q1", "Q2", "Q3"], (C,)),
+        "Agree":    ([20, 15, 10], (N,)),
+        "Disagree": ([25, 20, 15], (N,)),
+        "Note":     (["a", "b", "c"], (C,)),
+    })
+    assert bind.bind(spec, ds2, {"counts": ("Agree", "Disagree")}, layout="table").n_used == 105

@@ -529,6 +529,30 @@ def _check_row_total(df, counts, label_col) -> None:
                 "double-counts the grid.")
 
 
+# S-S (row-label backstop): in a count grid the FIRST column holds the row labels
+# (the categories); the counts role only offers NUMERIC columns, so a numeric
+# row-label column (Dose 1/2/3, Year 2019/2020, Grade 1..5) is offered -- and
+# auto_columns takes every eligible column. Two faces, one cause: (a) every column
+# ticked -> the fallback `next(c for c in df.columns if c not in counts)` raised
+# StopIteration (the app's generic handler, no stated cause); (b) the first column
+# ticked while another column is free -> that column silently became the row
+# label and the label VALUES were counted (Dose 1+2+3 = 6 phantom units: n=126
+# true 120, chi2 17.22 df=4 vs 16.28 df=2, status ok). One predicate covers both:
+# the first column is in `counts`. Runs BEFORE the row-label fallback (so
+# StopIteration is unreachable) and before _sum_counts/_check_row_total (a
+# structural mistake beats a cell-level one). Residual (stated, not silent): a
+# grid whose count columns come FIRST and whose labels sit in a later column is
+# blocked too -- the message says where the labels must be.
+def _check_row_label(df, counts) -> None:
+    first = df.columns[0]
+    if first in counts:
+        raise BindError(
+            f"The column '{first}' is the first column of your table, which holds "
+            "the row labels, not counts. Untick the row-label column — a count "
+            "table needs its labels in the first column and its counts in the "
+            "others.")
+
+
 # S15 threshold: never materialise more rows than this; check.S15 then blocks.
 _EXPAND_CAP = 1_000_000
 
@@ -541,7 +565,10 @@ def _table_bind(spec, df, columns, excel):
     so check.S15 can block it.
 
     A ticked grid column that is the row-wise sum of the other ticked columns is a
-    row total whatever its header -> BindError (R4, _check_row_total).
+    row total whatever its header -> BindError (R4, _check_row_total). The first
+    sheet column ticked as a count (a numeric row-label column, or every column
+    ticked) -> BindError (S-S, _check_row_label); the row-label fallback below can
+    then never run dry.
     """
     if "category" in columns:                       # chi2_gof
         cat, cnt = columns["category"][0], columns["counts"][0]
@@ -551,6 +578,7 @@ def _table_bind(spec, df, columns, excel):
         frame = counts_to_long(df, cat, cnt)
     else:                                            # chi2_ind / fisher grid
         counts = list(columns["counts"])
+        _check_row_label(df, counts)                         # S-S: the row-label column ticked
         row_label = next(c for c in df.columns if c not in counts)
         total = sum(_sum_counts(df, c, label_col=row_label) for c in counts)
         _check_row_total(df, counts, label_col=row_label)   # R4: a ticked row total

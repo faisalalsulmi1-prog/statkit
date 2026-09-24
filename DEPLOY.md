@@ -28,7 +28,7 @@ his word. Nothing there has been done. The tool runs locally today
   files / < 2 MB.
 - `scipy.stats.studentized_range` present (Games-Howell) — confirmed.
 - The app runs headlessly through 6 end-to-end AppTest scenarios; full suite
-  **1149 tests, 0 failed (2026-09-24)**; both gates (no-AI/no-I/O allowlist,
+  **1152 tests, 0 failed (2026-09-24)**; both gates (no-AI/no-I/O allowlist,
   zero-streamlit package) and the readiness gate green.
 - CI (`.github/workflows/ci.yml`) runs the same suite on ubuntu / Python 3.12 — the first
   green run after the push is the proof that the pins resolve on Linux.
