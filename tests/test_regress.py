@@ -281,3 +281,36 @@ def test_runners_mapping_covers_the_three_ids():
     assert set(regress.RUNNERS) == {"ols_simple", "ols_multi", "logistic"}
     for fn in regress.RUNNERS.values():
         assert callable(fn)
+
+
+# ==========================================================================
+# S-R: infinity tokens ('inf' / '-inf' / 'Infinity') in a MIXED (text-stored)
+# column bound to a numeric role are MISSING values, never ±inf in the fit
+# ==========================================================================
+_INF_MIX = ["3", "5", "4", "8", "7", "9", "10", "13", "12", "14", "16", "15",
+            "18", "17", "20", "19", "inf", "-inf", "Infinity", "oops"]
+
+
+def test_ols_simple_never_ok_with_non_finite_f():
+    # face (a): inf in the OUTCOME. Pre-fix: n_used 19, status "ok", F = nan,
+    # p = nan, slope nan, f2 = inf -> a "did not find ..." sentence over n = 19.
+    b = _bind("ols_simple", {"x": (list(range(1, 21)), (N,)), "y": (_INF_MIX, (C, N))},
+              {"outcome": ("y",), "x": ("x",)})
+    r = regress.ols_simple(b)
+    assert (b.n_used, b.dropped) == (16, {"missing value": 4})   # pre-fix: (19, {...: 1})
+    assert r.status == "ok"
+    assert math.isfinite(r.statistic[1]) and math.isfinite(r.p)  # pre-fix: nan, nan
+    assert math.isfinite(r.estimate[1]) and math.isfinite(r.effect[1])
+    assert r.statistic[1] == pytest.approx(386.4339, abs=1e-3)
+    assert r.estimate[1] == pytest.approx(1.1324, abs=1e-3)
+
+
+def test_ols_simple_inf_predictor_is_missing_not_a_crash():
+    # face (b): inf in the PREDICTOR. Pre-fix: statsmodels raised
+    # MissingDataError("exog contains inf or nans") -> the app's generic handler.
+    b = _bind("ols_simple", {"x": (_INF_MIX, (C, N)), "y": (list(range(1, 21)), (N,))},
+              {"outcome": ("y",), "x": ("x",)})
+    r = regress.ols_simple(b)                                    # pre-fix: raises
+    assert (b.n_used, b.dropped) == (16, {"missing value": 4})
+    assert r.status == "ok" and math.isfinite(r.statistic[1]) and math.isfinite(r.p)
+    assert r.estimate[1] == pytest.approx(0.8522, abs=1e-3)

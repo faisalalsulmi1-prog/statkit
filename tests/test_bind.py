@@ -880,3 +880,33 @@ def test_count_grid_row_sum_backstop_skips_blank_cells_and_total_rows():
         bind.bind(spec, ds, {"counts": ("Yes", "No", "N")}, layout="table")
     # pre-fix: DID NOT RAISE (n_used=175, ok p~6.87e-06). The 'Total' row and the
     # blank South cell are skipped; two clean non-zero rows still refuse.
+
+
+# --------------------------------------------------------------------------
+# S-R: infinity tokens in a MIXED column are MISSING, not huge values
+# --------------------------------------------------------------------------
+def test_infinity_tokens_in_mixed_column_are_missing():
+    # infer already rejects 'inf'/'-inf'/'Infinity' ("treated as missing"), but
+    # bind's NUMERIC re-coercion used pd.to_numeric, which ACCEPTS them, so ±inf
+    # survived into the frame: describe n=19 / mean nan / min -inf, OLS "ok" with
+    # F = nan. An infinity token is an unmeasurable cell, i.e. missing.
+    ds = _infer_ds({"Val": ["3", "5", "4", "8", "7", "9", "10", "13", "12", "14",
+                            "16", "15", "18", "17", "20", "19",
+                            "inf", "-inf", "Infinity", "oops"]})
+    prof = {p.name: p for p in ds.profiles}["Val"]
+    assert prof.kinds == (C, N)                                   # mixed: 16/20 numeric
+    assert "4 text cell(s) treated as missing" in prof.notes      # infer's verdict
+    role = bind._role_by_name(REGISTRY["t_1s"].contract, "outcome")
+    coded, note = bind._code_series(ds.df["Val"], N, prof, role, "Val")
+    assert note is None
+    assert str(coded.dtype) == "Float64"                          # nullable float kept
+    assert coded.isna().tolist()[-4:] == [True] * 4               # pre-fix: [inf, -inf, inf, <NA>]
+    assert all(math.isfinite(v) for v in coded.dropna())
+    b = bind.bind(REGISTRY["describe"], ds, {"variables": ("Val",)}, layout="long")
+    row = means.describe(b).descriptives.iloc[0]
+    assert (row["n"], row["min"], row["max"]) == (16, 3.0, 20.0)  # pre-fix: (19, -inf, inf)
+    assert row["mean"] == pytest.approx(11.875)                   # pre-fix: nan
+    b = bind.bind(REGISTRY["t_1s"], ds, {"outcome": ("Val",)},
+                  layout="long", params={"mu0": 0.0})
+    assert (b.n_total, b.n_used, b.dropped) == (20, 16, {"missing value": 4})  # pre-fix: 19 / {…: 1}
+    assert all(math.isfinite(v) for v in b.data["outcome"])

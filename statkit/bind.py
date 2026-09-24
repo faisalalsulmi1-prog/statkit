@@ -200,7 +200,13 @@ def _code_series(series, effective_kind: Kind, profile, role=None, header=""):
             return None, None
         return _code_ordinal(series, profile, header)
     if effective_kind is Kind.NUMERIC:           # mixed numeric+junk: junk -> NaN
-        return pd.to_numeric(series, errors="coerce"), None
+        # S-R: infer already REJECTED 'inf' / '-inf' / 'Infinity' / '1e309' as text
+        # ("N text cell(s) treated as missing", coerce._try_number), but
+        # pd.to_numeric ACCEPTS them, so ±inf survived into the frame: OLS "ok"
+        # with F = nan / p = nan, describe min = -inf. An infinity token is not a
+        # huge measurement, it is a missing one -- honour infer's verdict.
+        coded = pd.to_numeric(series, errors="coerce")
+        return coded.where(coded.abs() < math.inf), None
     return None, None                            # CATEGORICAL/BINARY/... keep labels
 
 
