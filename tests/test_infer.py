@@ -340,6 +340,52 @@ def test_repeated_integer_id_column_binds_long_paired():
     assert spec.run(b).status == "ok"
 
 
+# --- S-T (N18): short subject-id headers the ID_RE did not know -------------
+def test_short_subject_id_headers_are_id():
+    ids = [i for i in range(1, 13) for _ in (0, 1)]   # 12 subjects x 2 visits, m=24
+    for name in ("Pt", "subj", "child", "animal", "rat", "mouse",
+                 "Pt ID", "Rat No", "Mouse#"):
+        assert prof(ids, name=name).kinds == (Kind.ID,), name        # pre-fix: (NUMERIC,)
+    # anchored ^...$: neighbours of the new tokens stay measurements
+    for name in ("Rate", "Ratio", "Rating", "Rats", "Children", "Childhood",
+                 "Mousepad", "Animal weight", "Dept", "Appt", "Receipt", "Ptx"):
+        assert prof(ids, name=name).kinds == (Kind.NUMERIC,), name
+    # `respondent` is deliberately NOT an id header: corpus s2_2 "Respondent ID"
+    # (one duplicate, r12=r7) is pinned (numeric,) by its oracle; adding it flips
+    # that sheet (KD 15 -> 16).
+    assert prof(ids, name="Respondent ID").kinds == (Kind.NUMERIC,)
+
+
+def test_pt_visit_bp_binds_long_paired_not_wide_pt_vs_bp():
+    # N18/S-T: `Pt, Visit, BP` (12 patients x 2 visits) used to bind t_paired WIDE
+    # with before=Pt after=BP and run "ok": t(23) = -131.61, p < .001,
+    # "Values were higher for BP" -- BP compared against the patient number.
+    from statkit import bind, check, sentences
+    from statkit.registry import REGISTRY
+    rows = []
+    for i in range(1, 13):
+        rows.append([Cell(i), Cell("Visit 1"), Cell(120 + i)])
+        rows.append([Cell(i), Cell("Visit 2"), Cell(128 + i + (i % 3))])
+    table = Table(header=["Pt", "Visit", "BP"], rows=rows,
+                  excel_rows=list(range(2, 26)), header_row=1)
+    ds = infer(table)
+    assert ds.profiles[0].kinds == (Kind.ID,)                          # pre-fix: (NUMERIC,)
+    spec = REGISTRY["t_paired"]
+    assert bind.satisfiable_layouts(spec, ds) == ["long"]              # pre-fix: ["wide"]
+    assert bind.auto_columns(spec, ds, "wide") is None                 # pre-fix: before=Pt, after=BP
+    assert bind.auto_columns(spec, ds, "long") == {
+        "subject": ("Pt",), "condition": ("Visit",), "outcome": ("BP",)}
+    assert bind.role_columns(spec.contract.roles_by_layout["wide"][0], ds) == ["BP"]
+    b = bind.bind(spec, ds, {"subject": ("Pt",), "condition": ("Visit",),
+                             "outcome": ("BP",)}, layout="long")
+    b.findings = check.gate(b, {p.name: p for p in ds.profiles})
+    r = spec.run(b)
+    assert r.status == "ok" and b.n_used == 12 and r.df == (11.0,)
+    assert r.labels == {"before": "Visit 1", "after": "Visit 2"}
+    s = sentences.render(r)
+    assert "between Visit 1 and Visit 2" in s and "between Pt and BP" not in s
+
+
 # --- satisfaction scale is an ordered vocabulary (W2) ----------------------
 def test_satisfaction_scale_is_ordered_vocab():
     p = prof(["Very dissatisfied", "Dissatisfied", "Neutral",

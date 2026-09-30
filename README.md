@@ -58,7 +58,7 @@ runs headless. That file is verified by the gate test too.
 
 ## Tests
 ```bash
-./.venv/bin/python -m pytest -q      # 1152 tests (2026-09-24)
+./.venv/bin/python -m pytest -q      # 1154 tests (2026-09-26)
 ```
 The statistics are checked against published/textbook constants and independent
 scipy/statsmodels cross-calls; the messy-sheet reader is checked against a curated corpus

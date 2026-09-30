@@ -64,8 +64,10 @@ APPROX_NOTE = "approximate value"
 # Numeric-column header pattern that promotes an all-distinct numeric column to
 # an ID (§4.4). Applied to the whitespace-stripped, casefolded header.
 ID_RE = re.compile(
-    r"^(id|code|no\.?|number|serial|subject|participant|patient|student|record|case|sample)"
+    r"^(id|code|no\.?|number|serial|subject|participant|patient|student|record|case|sample"
+    r"|pt|subj|child|animal|rat|mouse)"        # S-T: short subject-id headers (N18)
     r"([\s_#.\-]*(id|no\.?|number|code)|\s*#)?$",   # ...or a trailing '#' (Case#)
+    # NOT 'respondent': corpus s2_2 'Respondent ID' (one duplicate) is oracle-pinned (numeric,); adding it flips KD 15->16.
     re.IGNORECASE,
 )
 
